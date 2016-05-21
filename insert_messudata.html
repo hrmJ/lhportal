@@ -1,0 +1,27 @@
+<html lang="fi">
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+<head>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  <script>
+  $(function() {
+    $( "#first" ).datepicker();
+    $( "#last" ).datepicker();
+  });
+  </script>
+
+<title>Messujen syöttö järjestelmään</title>
+</head>
+
+<body>
+<h2>Syötä kauden messut tyhjäksi pohjaksi</h2>
+<label for="first">Ensimmäinen su</label>
+<input type="text" id="first" name="last" value="" maxlength="20" />
+<label for="last">Viimeinen su</label>
+<input type="text" id="last" name="last" value="" maxlength="20" />
+<input type = "button" onClick='LaskeMessut();' value = "Luo pohjat" />
+</body>
+<script src="scripts/pohjat.js"></script>
+</html>
+
