@@ -1,5 +1,6 @@
 <?php
 
+require('../sql/dbutils.php');
 session_start();
 
 function validate_login(){
@@ -20,36 +21,17 @@ if (isset( $_SESSION['user_id'] )){
     $msg = 'Kirjautuminen voimassa.';
 }
 elseif ($valid){
-
+    //if the login info passed validation and no active session, try to login
     $username = filter_var($_POST['username'], FILTER_SANITIZE_STRING);
     $password = filter_var($_POST['password'], FILTER_SANITIZE_STRING);
-    $password = sha1( $password ); //encrypt
-    $mysql_hostname = 'localhost';
-    $mysql_username = 'testuser';
-    $mysql_password = 'testpw';
-    $mysql_dbname = 'majakka_auth';
 
-    try {
-        $dbh = new PDO("mysql:host=$mysql_hostname;dbname=$mysql_dbname", $mysql_username, $mysql_password);
-        // set the error mode to exceptions
-        $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $con = new DbCon();
+    $con->Connect();
+    $usr_id = $con->SelectUser($username, $password);
 
-        // prepare and bind
-        $stmt = $dbh->prepare("SELECT user_id, username, password FROM majakka_users 
-                    WHERE username = :username AND password = :password");
-        $stmt->bindParam(':username', $username, PDO::PARAM_STR);
-        $stmt->bindParam(':password', $password, PDO::PARAM_STR, 40);
-
-        $stmt->execute();
-        $user_id = $stmt->fetchColumn();
-
-        if($user_id){
-            $_SESSION['user_id'] = $user_id;
-            $msg = 'Kirjautuminen onnistui';
-        }
-    }
-    catch(Exception $e) {
-        $msg = 'Virhe kirjautumisessa:' . $e;
+    if($usr_id){
+        $_SESSION['user_id'] = $usr_id;
+        $msg = 'Kirjautuminen onnistui';
     }
 
 }
