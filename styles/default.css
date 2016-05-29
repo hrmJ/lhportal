@@ -1,0 +1,13 @@
+input[type=text].regular{
+  border: none;
+  border-bottom: solid 2px #c9c9c9;
+  width:100%;
+}
+
+.hidden{
+    display:none;
+}
+
+.visible{
+    display:block;
+}
