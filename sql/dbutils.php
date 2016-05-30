@@ -28,6 +28,9 @@ class DbCon{
         return $this->query->fetchColumn();
     }
 
+    public function insert($something){
+    }
+
     public function Run(){
         try{
             $this->query->execute();
