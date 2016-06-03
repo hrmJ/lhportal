@@ -5,10 +5,11 @@
 </head>
 <?php
 session_start();
+mb_language('uni');
+mb_internal_encoding('UTF-8');
+mysql_query("SET NAMES utf8");
 require('sql/dbutils.php');
 $data = Array();
-var_dump($_POST);
-die();
 foreach($_POST as $fieldname => $value){
     $pos = strpos($fieldname,'_');
     $number = substr($fieldname,$pos+1);

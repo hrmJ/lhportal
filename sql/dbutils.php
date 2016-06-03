@@ -7,9 +7,10 @@ class DbCon{
         $hostname = 'localhost';
         $username = 'testuser';
         $dbname = 'majakka_auth';
-        $this->connection = new PDO("mysql:host=$hostname;dbname=$dbname", $username, $password);
+        $this->connection = new PDO("mysql:host=$hostname;dbname=$dbname;charset=utf8", $username, $password);
         // set the error mode to exceptions
-        $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        //$this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        //mysql_set_charset('utf8', $this->connection);  
     }
 
     public function SelectUser($username,$password){
@@ -67,5 +68,14 @@ class DbCon{
     }
 
 }
+
+function FixEncode($string){
+    return utf8_encode(utf8_decode($string)); 
+}
+
+iconv_set_encoding("internal_encoding", "UTF-8");
+$con = new DbCon();
+$con->Connect();
+$con->insert("messut", Array("pvm"=>"2015-01-01","teema"=>"ööööööööö"));
 
 ?>
