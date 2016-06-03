@@ -40,11 +40,13 @@ class DbCon{
             $columnlist .= $key;
             $valuelist .= ":$key";
         }
-        $this->query = $this->connection->prepare("INSERT INTO $tablename ($columnlist) values ($valuelist)");
+        $qstring = "INSERT INTO $tablename ($columnlist) values ($valuelist)";
+        $this->query = $this->connection->prepare($qstring);
 
         foreach($valuedict as $key=>$value){
             //TODO: check the PDO stuff
-            $this->query->bindParam(":$key", $value, PDO::PARAM_STR);
+            echo "$key:$value\n";
+            $this->query->bindParam(":$key", $valuedict[$key], PDO::PARAM_STR);
         }
         $this->Run();
     }
@@ -62,6 +64,6 @@ class DbCon{
 
 $con = new DbCon();
 $con->Connect();
-$con->insert("messut", Array("pvm"=>"2016-12-01","teema"=>"Teema 1"));
+$con->insert("messut", Array("pvm"=>"1999-01-07","teema"=>"Ihmeitten ihme"));
 
 ?>
