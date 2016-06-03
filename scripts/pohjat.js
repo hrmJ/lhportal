@@ -22,8 +22,8 @@ function CreateInputs(){
     table.AddRow(["Sunnuntai","Aihe"],true);
     for (s_idx in sundays){
         var thisday = sundays[s_idx];
-        var theme = TextField('theme_' + s_idx, 'regular', '');
-        var dateval = TextField('date_' + s_idx, 'hidden', thisday.toISOString().slice(0,10));
+        var theme = TextField('teema_' + s_idx, 'regular', '');
+        var dateval = TextField('pvm_' + s_idx, 'hidden', thisday.toISOString().slice(0,10));
         var formatteddate = $.datepicker.formatDate("d.m.yy", thisday);
         table.AddRow([formatteddate,theme,dateval],false);
     }

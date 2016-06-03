@@ -15,8 +15,13 @@ foreach($_POST as $fieldname => $value){
     }
 }
 
+
+//Syötä tiedot itse messusta:
 $con = new DbCon();
 $con->Connect();
+foreach($data as $row){
+    $con->insert("messut", Array("pvm"=>$row["pvm"],"teema"=>$row["teema"]));
+}
 ?>
 
 <html lang="fi">

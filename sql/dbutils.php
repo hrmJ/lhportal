@@ -45,7 +45,6 @@ class DbCon{
 
         foreach($valuedict as $key=>$value){
             //TODO: check the PDO stuff
-            echo "$key:$value\n";
             $this->query->bindParam(":$key", $valuedict[$key], PDO::PARAM_STR);
         }
         $this->Run();
@@ -62,8 +61,5 @@ class DbCon{
 
 }
 
-$con = new DbCon();
-$con->Connect();
-$con->insert("messut", Array("pvm"=>"1999-01-07","teema"=>"Ihmeitten ihme"));
 
 ?>
