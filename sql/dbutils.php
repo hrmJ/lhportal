@@ -28,7 +28,25 @@ class DbCon{
         return $this->query->fetchColumn();
     }
 
-    public function insert($something){
+    public function insert($tablename, $valuedict){
+        $columnlist = "";
+        $valuelist = "";
+        //Build the query strings
+        foreach($valuedict as $key => $value){
+            if (!empty($columnlist))
+                $columnlist .= ", ";
+            if (!empty($valuelist))
+                $valuelist .= ", ";
+            $columnlist .= $key;
+            $valuelist .= ":$key";
+        }
+        $this->query = $this->connection->prepare("INSERT INTO $tablename ($columnlist) values ($valuelist)");
+
+        foreach($valuedict as $key=>$value){
+            //TODO: check the PDO stuff
+            $this->query->bindParam(":$key", $value, PDO::PARAM_STR);
+        }
+        $this->Run();
     }
 
     public function Run(){
@@ -41,5 +59,9 @@ class DbCon{
     }
 
 }
+
+$con = new DbCon();
+$con->Connect();
+$con->insert("messut", Array("pvm"=>"2016-12-01","teema"=>"Teema 1"));
 
 ?>
