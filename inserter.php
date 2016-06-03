@@ -15,7 +15,6 @@ foreach($_POST as $fieldname => $value){
     }
 }
 
-
 //Syötä tiedot itse messusta:
 $con = new DbCon();
 $con->Connect();

@@ -14,18 +14,28 @@ function LaskeMessut(){
 }
 
 function CreateInputs(){
-    var form = document.getElementById('messusyotto')
+    var form = document.getElementById('messusyotto');
     var this_input = document.createElement('input');
     var sundays = LaskeMessut();
     this_input.type = 'text';
     var table = new Table();
-    table.AddRow(["Sunnuntai","Aihe"],true);
-    for (s_idx in sundays){
+    var messufields = ["Sunnuntai","Aihe"];
+    var vastuufields = ["Saarnateksti","Liturgi","Saarna","Juonto","Bändi","Sanailija","Pyhis","Klubi"];
+    table.AddRow(messufields.concat(vastuufields),true);
+    for (var s_idx in sundays){
         var thisday = sundays[s_idx];
-        var theme = TextField('teema_' + s_idx, 'regular', '');
-        var dateval = TextField('pvm_' + s_idx, 'hidden', thisday.toISOString().slice(0,10));
+        //erikseen messukentät
+        var hidden_date = TextField('pvm_' + s_idx, 'hidden', thisday.toISOString().slice(0,10));
+        //teemalla on erityinen kentän nimi, siksi se erikseen taulukon ensimmäiseksi
+        var inputs = [TextField('teema_' + s_idx, 'regular', '')];
+        //ja kaikki tarvittavat vastuukentät
+        for (var v_idx in vastuufields){
+            var vastuu = vastuufields[v_idx];
+            inputs.push(TextField(vastuu + "_" + s_idx, 'regular', ''));
+        }
         var formatteddate = $.datepicker.formatDate("d.m.yy", thisday);
-        table.AddRow([formatteddate,theme,dateval],false);
+        table.AddRow([formatteddate].concat(inputs).concat([hidden_date]),false);
+        //table.AddRow([formatteddate].concat(messu_inputs).concat(vastuu_inputs),false);
     }
     //table.appendChild(this_input);
     form.appendChild(table.table);
