@@ -5,9 +5,6 @@
 </head>
 <?php
 session_start();
-mb_language('uni');
-mb_internal_encoding('UTF-8');
-mysql_query("SET NAMES utf8");
 require('sql/dbutils.php');
 $data = Array();
 foreach($_POST as $fieldname => $value){
@@ -17,8 +14,7 @@ foreach($_POST as $fieldname => $value){
     if (!isset($data[$number]) AND $pos){
        $data[$number]  = Array($dbfield=>$value);
     }
-    elseif($pos){
-        end($data);
+    elseif($pos){ end($data);
         $data[$number][$dbfield] = $value;
     }
 }
