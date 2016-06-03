@@ -1,7 +1,14 @@
+<html lang="fi">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Messujen syöttö tietokantaan</title>
+</head>
 <?php
 session_start();
 require('sql/dbutils.php');
 $data = Array();
+var_dump($_POST);
+die();
 foreach($_POST as $fieldname => $value){
     $pos = strpos($fieldname,'_');
     $number = substr($fieldname,$pos+1);
@@ -15,19 +22,22 @@ foreach($_POST as $fieldname => $value){
     }
 }
 
-//Syötä tiedot itse messusta:
 $con = new DbCon();
 $con->Connect();
+$vastuufields = Array("Saarnateksti","Liturgi","Saarna","Juonto","Bändi","Sanailija","Pyhis","Klubi");
 foreach($data as $row){
+    //Syötä tiedot itse messusta:
     $con->insert("messut", Array("pvm"=>$row["pvm"],"teema"=>$row["teema"]));
+    //Syötä mahdolliset jo tiedossa olevat vastuut + saarnateksti
+    $max = $con->maxval("messut","id");
+    $vastuudata=Array();
+    foreach($vastuufields as $vastuufield){
+        $con->insert("vastuut", Array("messu_id"=>$max,"vastuu" => $vastuufield, "vastuullinen" =>$row[$vastuufield]));
+    }
 }
-?>
 
-<html lang="fi">
-<meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
-<head>
-<title>Messujen syöttö tietokantaan</title>
-</head>
+
+?>
 <body>
 <p></p>
 </body>

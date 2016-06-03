@@ -50,6 +50,13 @@ class DbCon{
         $this->Run();
     }
 
+    public function maxval($tablename, $colname){
+        $qstring = "SELECT max($colname) FROM $tablename";
+        $this->query = $this->connection->prepare($qstring);
+        $this->Run();
+        return $this->query->fetchColumn();
+    }
+
     public function Run(){
         try{
             $this->query->execute();
@@ -60,6 +67,5 @@ class DbCon{
     }
 
 }
-
 
 ?>
