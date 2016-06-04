@@ -51,6 +51,32 @@ class DbCon{
         $this->Run();
     }
 
+    public function select($tablename, $columns, $wheredict=Array()){
+        //$columns: array, $wheredict: array of arrays, with [0] as column name, [1] as =, not, LIke etc, [2] as the value
+        //TODO: LIKE conditions, e.g. with a leading # in the string + negative conditions
+
+        $columnlist = implode($columns,", ");
+        $whereclause = "";
+        //Build the WHERE clause, if present
+        if (isset($wheredict)){
+            foreach($wheredict as $condition){
+                if (!empty($whereclause))
+                    $whereclause .= " AND ";
+                else
+                    $whereclause = "WHERE ";
+                $whereclause .= "$condition[0] $condition[1] :$condition[0]";
+            }
+        }
+        $qstring = "SELECT $columnlist FROM $tablename $whereclause";
+        $this->query = $this->connection->prepare($qstring);
+
+        foreach($wheredict as $condition){
+            //TODO: check the PDO stuff
+            $this->query->bindParam(":$condition[0]", $condition[2], PDO::PARAM_STR);
+        }
+        $this->Run();
+    }
+
     public function maxval($tablename, $colname){
         $qstring = "SELECT max($colname) FROM $tablename";
         $this->query = $this->connection->prepare($qstring);
@@ -73,9 +99,16 @@ function FixEncode($string){
     return utf8_encode(utf8_decode($string)); 
 }
 
+/*
 iconv_set_encoding("internal_encoding", "UTF-8");
-$con = new DbCon();
 $con->Connect();
 $con->insert("messut", Array("pvm"=>"2015-01-01","teema"=>"ööööööööö"));
+$con = new DbCon();
+$con->Connect();
+$con->select("messut", Array("teema","pvm"), Array(Array("teema","LIKE","%öö%"),Array("pvm",">","2014-01-01")));
+//$con->select("messut", Array("teema","pvm"));
+$res = $con->query->fetchAll();
+var_dump($res);
+ */
 
 ?>
