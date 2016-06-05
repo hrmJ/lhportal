@@ -2,6 +2,10 @@
 
 class DbCon{
 
+    public function __construct () {
+        $this->Connect();
+    }
+
     public function Connect(){
         $password = 'testpw';
         $hostname = 'localhost';
@@ -58,23 +62,44 @@ class DbCon{
         $columnlist = implode($columns,", ");
         $whereclause = "";
         //Build the WHERE clause, if present
+        $usedkeys = Array();
         if (isset($wheredict)){
             foreach($wheredict as $condition){
                 if (!empty($whereclause))
                     $whereclause .= " AND ";
                 else
                     $whereclause = "WHERE ";
-                $whereclause .= "$condition[0] $condition[1] :$condition[0]";
+                //If this column name already used in a condition
+                if (array_key_exists($condition[0],$usedkeys)){
+                    $suffix = sizeof($usedkeys[$condition[0]]);
+                    $whereclause .= "$condition[0] $condition[1] :$condition[0]$suffix";
+                }
+                else{
+                    $usedkeys[$condition[0]] = Array();
+                    $suffix = "";
+                    $whereclause .= "$condition[0] $condition[1] :$condition[0]";
+                }
+                //For cases where multiple conditions for the same column
+                $usedkeys[$condition[0]][] = Array($condition[0] . $suffix, $condition[2]);
             }
         }
         $qstring = "SELECT $columnlist FROM $tablename $whereclause";
+        echo "$qstring\n";
         $this->query = $this->connection->prepare($qstring);
 
+        $appliedkeys = Array();
         foreach($wheredict as $condition){
             //TODO: check the PDO stuff
-            $this->query->bindParam(":$condition[0]", $condition[2], PDO::PARAM_STR);
+            if(!in_array($condition[0],$appliedkeys)){
+                foreach($usedkeys[$condition[0]] as $thispair){
+                    print(":$thispair[0]   >>   $thispair[1]\n");
+                    $this->query->bindParam(":$thispair[0]", $thispair[1], PDO::PARAM_STR);
+                }
+              $appliedkeys[] = $condition[0];
+           }
         }
         $this->Run();
+        return $this->query;
     }
 
     public function maxval($tablename, $colname){
@@ -93,22 +118,14 @@ class DbCon{
         }
     }
 
+
 }
 
-function FixEncode($string){
-    return utf8_encode(utf8_decode($string)); 
-}
 
-/*
-iconv_set_encoding("internal_encoding", "UTF-8");
-$con->Connect();
-$con->insert("messut", Array("pvm"=>"2015-01-01","teema"=>"ööööööööö"));
+
 $con = new DbCon();
-$con->Connect();
-$con->select("messut", Array("teema","pvm"), Array(Array("teema","LIKE","%öö%"),Array("pvm",">","2014-01-01")));
-//$con->select("messut", Array("teema","pvm"));
-$res = $con->query->fetchAll();
-var_dump($res);
- */
+$res = $con->select("messut",Array("pvm","teema"),Array(Array("pvm",">=","2016-11-09"),Array("pvm","<=","2016-11-19")));
+$all = $res->fetchAll();
+var_dump($all);
 
 ?>

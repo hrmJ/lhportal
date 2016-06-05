@@ -11,3 +11,7 @@ input[type=text].regular{
 .visible{
     display:block;
 }
+
+.withsomemargin{
+    margin-bottom:2em;
+}

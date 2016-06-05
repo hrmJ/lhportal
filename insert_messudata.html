@@ -16,9 +16,22 @@
 </head>
 
 <body>
+
 <h2>Syötä kauden messut tyhjäksi pohjaksi</h2>
+
+<div class='withsomemargin'>
+<label for="first">Kausi</label>
+<select name ='kausi'>
+    <option>Syksy</option>
+    <option>Kevät</option>
+    <option>Kesä</option>
+</select>
+<input type="text" id="vuosi" name="vuosi" value="" maxlength="20" />
+</div>
+
+<div>
 <label for="first">Ensimmäinen su</label>
-<input type="text" id="first" name="last" value="" maxlength="20" />
+<input type="text" id="first" name="first" value="" maxlength="20" />
 <label for="last">Viimeinen su</label>
 <input type="text" id="last" name="last" value="" maxlength="20" />
 <input type = "button" onClick='CreateInputs();' value = "Luo pohjat" />
@@ -26,6 +39,9 @@
 <form id='messusyotto' action="inserter.php" method="post" >
 <input value='Tallenna' class='hidden' type='submit' name='s1' id='s1'>
 </form>
+</div>
+
+
 
 </body>
 <script src="scripts/pohjat.js"></script>
