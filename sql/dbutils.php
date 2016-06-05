@@ -57,8 +57,6 @@ class DbCon{
 
     public function select($tablename, $columns, $wheredict=Array()){
         //$columns: array, $wheredict: array of arrays, with [0] as column name, [1] as =, not, LIke etc, [2] as the value
-        //TODO: LIKE conditions, e.g. with a leading # in the string + negative conditions
-
         $columnlist = implode($columns,", ");
         $whereclause = "";
         //Build the WHERE clause, if present
@@ -84,7 +82,6 @@ class DbCon{
             }
         }
         $qstring = "SELECT $columnlist FROM $tablename $whereclause";
-        echo "$qstring\n";
         $this->query = $this->connection->prepare($qstring);
 
         $appliedkeys = Array();
@@ -92,7 +89,6 @@ class DbCon{
             //TODO: check the PDO stuff
             if(!in_array($condition[0],$appliedkeys)){
                 foreach($usedkeys[$condition[0]] as $thispair){
-                    print(":$thispair[0]   >>   $thispair[1]\n");
                     $this->query->bindParam(":$thispair[0]", $thispair[1], PDO::PARAM_STR);
                 }
               $appliedkeys[] = $condition[0];
@@ -123,9 +119,11 @@ class DbCon{
 
 
 
+/*
 $con = new DbCon();
 $res = $con->select("messut",Array("pvm","teema"),Array(Array("pvm",">=","2016-11-09"),Array("pvm","<=","2016-11-19")));
 $all = $res->fetchAll();
 var_dump($all);
+ */
 
 ?>

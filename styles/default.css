@@ -15,3 +15,12 @@ input[type=text].regular{
 .withsomemargin{
     margin-bottom:2em;
 }
+
+.messurow{
+    cursor: pointer; 
+    cursor: hand;
+}
+
+.messurow:hover{
+    color:red;
+}
