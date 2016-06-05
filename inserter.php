@@ -5,7 +5,7 @@
 </head>
 <?php
 session_start();
-require('sql/dbutils.php');
+require('phputils/dbutils.php');
 $data = Array();
 foreach($_POST as $fieldname => $value){
     $pos = strpos($fieldname,'_');
