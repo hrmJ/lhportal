@@ -55,7 +55,7 @@ class DbCon{
         $this->Run();
     }
 
-    public function select($tablename, $columns, $wheredict=Array()){
+    public function select($tablename, $columns, $wheredict=Array(), $distinct = ''){
         //$columns: array, $wheredict: array of arrays, with [0] as column name, [1] as =, not, LIke etc, [2] as the value
         $columnlist = implode($columns,", ");
         $whereclause = "";
@@ -81,7 +81,7 @@ class DbCon{
                 $usedkeys[$condition[0]][] = Array($condition[0] . $suffix, $condition[2]);
             }
         }
-        $qstring = "SELECT $columnlist FROM $tablename $whereclause";
+        $qstring = "SELECT $distinct $columnlist FROM $tablename $whereclause";
         $this->query = $this->connection->prepare($qstring);
 
         $appliedkeys = Array();

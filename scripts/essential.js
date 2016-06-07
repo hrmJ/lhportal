@@ -15,4 +15,24 @@ function SelectMessu (evt){
     window.location.search += paramlist;
 }
 
+function SelectVastuu (evt){
+    var vastuulist = evt.target;
+    var vastuu = vastuulist[vastuulist.selectedIndex].text
+    window.location.search = "vastuu=" + vastuu;
+}
 
+function edit (evt){
+    var element = evt.target;
+    var text = element.textContent;
+    ClearContent(element);
+    element.appendChild(TextField('test', 'linestyle', text));
+}
+
+
+function ClearContent(myNode){
+    //Remove child nodes,
+    //see also http://stackoverflow.com/questions/3955229/remove-all-child-elements-of-a-dom-node-in-javascript
+    while (myNode.firstChild) {
+        myNode.removeChild(myNode.firstChild);
+    }
+}
