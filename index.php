@@ -1,12 +1,11 @@
-<html lang="fi">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" href="styles/default.css">
-<title>Majakkaportaali 0.1</title>
-</head>
 <?php
+var_dump($_POST);
+session_start();
 require('phputils/essential.php');
-//session_start();
+AddHeader();
+$url = SaveGetParams();
+if(isset($_POST)){
+}
 if (!isset($_GET["messuid"]) OR !isset($_GET)){
     if(isset($_GET["vastuu"])){
         $messulist =  CreateMessulist($_GET["vastuu"]);
@@ -24,6 +23,7 @@ elseif(isset($_GET["messuid"])){
 ?>
 
 <body>
+<form name='updater' id='updater' method="post" action="<?php echo $url;?>">
 <?php
 if (!isset($_GET["messuid"]) OR !isset($_GET)){
 ?>
@@ -46,7 +46,10 @@ if(isset($h2)){
 
 echo $messulist; 
 
+if (isset($_GET))
+    echo '<input type="submit" name="tallennus" value="Tallenna">';
 ?>
+</form>
 </body>
 
 <script src="scripts/pohjat.js"></script>
@@ -66,7 +69,9 @@ for(var row_idx = 0; row_idx < editables.length;row_idx++){
 }
 
 var vastuulist = document.getElementById('vastuulist');
-vastuulist.addEventListener('change',SelectVastuu,false);
+if (vastuulist){
+    vastuulist.addEventListener('change',SelectVastuu,false);
+}
 
 </script>
 </html>

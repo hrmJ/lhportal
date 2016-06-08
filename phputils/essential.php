@@ -2,6 +2,26 @@
 require('htmlutils.php');
 require('dbutils.php');
 
+function AddHeader(){
+
+echo '<html lang="fi">
+     <head>
+     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+     <link rel="stylesheet" href="styles/default.css">
+     <title>Majakkaportaali 0.1</title>
+     </head>';
+
+}
+
+function AttachEditable($parent, $name){
+    $input = new DomEl('input','',$parent);
+    $input->AddAttribute('type',"text");
+    $input->AddAttribute('class',"linestyle");
+    $input->AddAttribute('id',$name);
+    $input->AddAttribute('name',$name);
+    return $input;
+}
+
 function CreateMessulist($vastuu=''){
     $date = date('Y-m-d');
     $con = new DbCon();
@@ -20,14 +40,10 @@ function CreateMessulist($vastuu=''){
             $vastuures = $con->select("vastuut",Array("vastuullinen"),Array(Array("messu_id","=",$row["id"]),Array("vastuu","=",$vastuu)))->fetchAll();
             $vastuullinen = $vastuures[0]["vastuullinen"];
             $span1 = new DomEl('span',$row["pvm"],$li);
-            $span1->AddAttribute('class',"messurow");
+            //$span1->AddAttribute('class',"messurow");
             $span2 = new DomEl('span',$vastuullinen,$li);
-            if (empty($vastuullinen)){
-                $input = new DomEl('input','',$span2);
-                $input->AddAttribute('type',"text");
-                $input->AddAttribute('class',"linestyle");
-                $input->AddAttribute('id',"test");
-            }
+            if (empty($vastuullinen))
+                $input = AttachEditable($span2, $row["pvm"]);
             $span2->AddAttribute('class',"editable");
         }
         else
@@ -59,10 +75,32 @@ function MessuDetails($id){
     $tbody = new DomEl('tbody','',$table);
     foreach($result as $row){
         $tr = new DomEl('tr','',$tbody);
-        $td = new DomEl('td',$row["vastuu"],$tr);
-        $td = new DomEl('td',$row["vastuullinen"],$tr);
+        $td1 = new DomEl('td',$row["vastuu"],$tr);
+        $td2 = new DomEl('td',$row["vastuullinen"],$tr);
+        if (empty($row["vastuullinen"]))
+            $input = AttachEditable($td2,$row["vastuu"]);
+        else
+            $td2->AddAttribute("class","editable");
         }
     return $table->Show();
+}
+
+function SaveGetParams(){
+    $urlparams .= "?";
+
+    if (isset($_GET)){
+        //Tallenna parametrit, jotta sama sivu latautuisi myös tallennettaessa tietoja
+        foreach($_GET as $paramname => $param){
+            if ($urlparams !== "?")
+                $urlparams .= "&";
+            $urlparams .= "$paramname=$param";
+        }
+    $url = $_SERVER['PHP_SELF'] . $urlparams ;
+    }
+    else{
+        $url = $_SERVER['PHP_SELF'];
+    }
+    return $url;
 }
 
 ?>
