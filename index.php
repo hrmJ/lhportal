@@ -1,10 +1,13 @@
 <?php
-var_dump($_POST);
 session_start();
 require('phputils/essential.php');
 AddHeader();
 $url = SaveGetParams();
 if(isset($_POST)){
+    if(isset($_GET["vastuu"])){
+        $con = new DbCon();
+        $con->Connect();
+    }
 }
 if (!isset($_GET["messuid"]) OR !isset($_GET)){
     if(isset($_GET["vastuu"])){

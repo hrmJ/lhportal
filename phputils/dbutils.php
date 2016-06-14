@@ -23,8 +23,7 @@ class DbCon{
         $this->query->bindParam(':username', $username, PDO::PARAM_STR);
         $this->query->bindParam(':password', $password, PDO::PARAM_STR, 40);
         $this->Run();
-        return $this->query->fetchColumn();
-    }
+        return $this->query->fetchColumn(); }
 
     public function CheckLogin($userid){
         $this->query = $this->connection->prepare("SELECT username FROM majakka_users WHERE user_id = :user_id");
@@ -55,45 +54,36 @@ class DbCon{
         $this->Run();
     }
 
+    public function update($tablename, $valuedict, $wheredict){
+        $valuelist = "";
+
+        foreach($valuedict as $key => $value){
+            if (!empty($valuelist))
+                $valuelist .= ", ";
+            $valuelist .= "$key = :$key";
+        }
+
+        $this->BuildwhereClause($wheredict);
+        $qstring = "UPDATE $tablename SET $valuelist $this->whereclause";
+        $this->query = $this->connection->prepare($qstring);
+        $this->BindWhereClause();
+        foreach($valuedict as $key=>$value){
+            //TODO: check the PDO stuff
+            $this->query->bindParam(":$key", $valuedict[$key], PDO::PARAM_STR);
+        }
+        print($qstring . "\n");
+        $this->Run();
+
+    }
+
     public function select($tablename, $columns, $wheredict=Array(), $distinct = ''){
         //$columns: array, $wheredict: array of arrays, with [0] as column name, [1] as =, not, LIke etc, [2] as the value
         $columnlist = implode($columns,", ");
-        $whereclause = "";
         //Build the WHERE clause, if present
-        $usedkeys = Array();
-        if (isset($wheredict)){
-            foreach($wheredict as $condition){
-                if (!empty($whereclause))
-                    $whereclause .= " AND ";
-                else
-                    $whereclause = "WHERE ";
-                //If this column name already used in a condition
-                if (array_key_exists($condition[0],$usedkeys)){
-                    $suffix = sizeof($usedkeys[$condition[0]]);
-                    $whereclause .= "$condition[0] $condition[1] :$condition[0]$suffix";
-                }
-                else{
-                    $usedkeys[$condition[0]] = Array();
-                    $suffix = "";
-                    $whereclause .= "$condition[0] $condition[1] :$condition[0]";
-                }
-                //For cases where multiple conditions for the same column
-                $usedkeys[$condition[0]][] = Array($condition[0] . $suffix, $condition[2]);
-            }
-        }
-        $qstring = "SELECT $distinct $columnlist FROM $tablename $whereclause";
+        $this->BuildwhereClause($wheredict);
+        $qstring = "SELECT $distinct $columnlist FROM $tablename $this->whereclause";
         $this->query = $this->connection->prepare($qstring);
-
-        $appliedkeys = Array();
-        foreach($wheredict as $condition){
-            //TODO: check the PDO stuff
-            if(!in_array($condition[0],$appliedkeys)){
-                foreach($usedkeys[$condition[0]] as $thispair){
-                    $this->query->bindParam(":$thispair[0]", $thispair[1], PDO::PARAM_STR);
-                }
-              $appliedkeys[] = $condition[0];
-           }
-        }
+        $this->BindWhereClause();
         $this->Run();
         return $this->query;
     }
@@ -114,16 +104,53 @@ class DbCon{
         }
     }
 
+    public function BuildwhereClause($wheredict) {
+
+            $this->wheredict = $wheredict;
+            $this->whereclause = "";
+            $this->usedkeys = Array();
+            if (isset($this->wheredict)){
+                foreach($this->wheredict as $condition){
+                    if (!empty($this->whereclause))
+                        $this->whereclause .= " AND ";
+                    else
+                        $this->whereclause = "WHERE ";
+                    //If this column name already used in a condition
+                    if (array_key_exists($condition[0],$this->usedkeys)){
+                        $suffix = sizeof($this->usedkeys[$condition[0]]);
+                        $this->whereclause .= "$condition[0] $condition[1] :$condition[0]$suffix";
+                    }
+                    else{
+                        $this->usedkeys[$condition[0]] = Array();
+                        $suffix = "";
+                        $this->whereclause .= "$condition[0] $condition[1] :$condition[0]";
+                    }
+                    //For cases where multiple conditions for the same column
+                    $this->usedkeys[$condition[0]][] = Array($condition[0] . $suffix, $condition[2]);
+                }
+            }
+
+    }
+
+    public function BindWhereClause(){
+        $appliedkeys = Array();
+        foreach($this->wheredict as $condition){
+            //TODO: check the PDO stuff
+            if(!in_array($condition[0],$appliedkeys)){
+                foreach($this->usedkeys[$condition[0]] as $thispair){
+                    $this->query->bindParam(":$thispair[0]", $thispair[1], PDO::PARAM_STR);
+                }
+              $appliedkeys[] = $condition[0];
+           }
+        }
+    }
 
 }
 
 
 
-/*
+
 $con = new DbCon();
-$res = $con->select("messut",Array("pvm","teema"),Array(Array("pvm",">=","2016-11-09"),Array("pvm","<=","2016-11-19")));
-$all = $res->fetchAll();
-var_dump($all);
- */
+$con->update("vastuut",Array("vastuullinen" => "Kalle"), Array(Array("messu_id","=","72")));
 
 ?>
