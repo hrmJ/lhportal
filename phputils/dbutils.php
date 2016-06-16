@@ -147,10 +147,4 @@ class DbCon{
 
 }
 
-
-
-
-$con = new DbCon();
-$con->update("vastuut",Array("vastuullinen" => "Kalle"), Array(Array("messu_id","=","72")));
-
 ?>

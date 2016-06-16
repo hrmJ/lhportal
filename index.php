@@ -3,12 +3,15 @@ session_start();
 require('phputils/essential.php');
 AddHeader();
 $url = SaveGetParams();
+
 if(isset($_POST)){
     if(isset($_GET["vastuu"])){
         $con = new DbCon();
         $con->Connect();
+        #$con->update("vastuut",Array("vastuullinen" => "Kalle"), Array(Array("messu_id","=","72")));
     }
 }
+
 if (!isset($_GET["messuid"]) OR !isset($_GET)){
     if(isset($_GET["vastuu"])){
         $messulist =  CreateMessulist($_GET["vastuu"]);
@@ -23,6 +26,7 @@ elseif(isset($_GET["messuid"])){
     $h3 = new DomEl("h3", $_GET["teema"]);
     $messulist =  MessuDetails($_GET["messuid"]);
     }
+
 ?>
 
 <body>
