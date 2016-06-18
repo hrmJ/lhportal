@@ -9,15 +9,14 @@ $con->Connect();
 if(isset($_POST)){
         if (array_key_exists("messu_id",$_POST)){
             #Päivitykset messukohtaisesti, kaikki roolit mahdollisia
-                $updatables = Array("Pyhis","Klubi","Saarnateksti","Liturgi","Juonto","Bändi","Sanailija");
+                $updatables = Array("Saarna","Pyhis","Klubi","Saarnateksti","Liturgi","Juonto","Bändi","Sanailija");
                 foreach ($updatables as $vastuu){
                     if(array_key_exists($vastuu,$_POST)){
                         if (!empty($_POST[$vastuu])){
-                            echo "<br>!!!" . $_POST["messu_id"] . "!!!<br>";
                             $con->update("vastuut",
                                 Array("vastuullinen" =>$_POST[$vastuu]),
                                 Array(
-                                    Array("messu_id","=",intval("55")),
+                                    Array("messu_id","=",intval($_POST["messu_id"])),
                                     Array("vastuu","=",$vastuu))
                                 );
                         }
