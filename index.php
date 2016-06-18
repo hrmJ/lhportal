@@ -15,15 +15,10 @@ if(isset($_POST)){
                         if (!empty($_POST[$vastuu])){
                             $con->update("vastuut",
                                 Array("vastuullinen" =>$_POST[$vastuu]),
-                                Array(
-                                    Array("messu_id","=",intval($_POST["messu_id"])),
-                                    Array("vastuu","=",$vastuu))
-                                );
+                                Array(Array("messu_id","=",intval($_POST["messu_id"])), Array("vastuu","=",$vastuu)));
                         }
                     }
                 }
-        }
-        if(isset($_GET["vastuu"])){
         }
 }
 
