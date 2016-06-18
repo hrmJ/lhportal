@@ -3,13 +3,29 @@ session_start();
 require('phputils/essential.php');
 AddHeader();
 $url = SaveGetParams();
+$con = new DbCon();
+$con->Connect();
 
 if(isset($_POST)){
-    if(isset($_GET["vastuu"])){
-        $con = new DbCon();
-        $con->Connect();
-        #$con->update("vastuut",Array("vastuullinen" => "Kalle"), Array(Array("messu_id","=","72")));
-    }
+        if (array_key_exists("messu_id",$_POST)){
+            #Päivitykset messukohtaisesti, kaikki roolit mahdollisia
+                $updatables = Array("Pyhis","Klubi","Saarnateksti","Liturgi","Juonto","Bändi","Sanailija");
+                foreach ($updatables as $vastuu){
+                    if(array_key_exists($vastuu,$_POST)){
+                        if (!empty($_POST[$vastuu])){
+                            echo "<br>!!!" . $_POST["messu_id"] . "!!!<br>";
+                            $con->update("vastuut",
+                                Array("vastuullinen" =>$_POST[$vastuu]),
+                                Array(
+                                    Array("messu_id","=",intval("55")),
+                                    Array("vastuu","=",$vastuu))
+                                );
+                        }
+                    }
+                }
+        }
+        if(isset($_GET["vastuu"])){
+        }
 }
 
 if (!isset($_GET["messuid"]) OR !isset($_GET)){
@@ -54,7 +70,7 @@ if(isset($h2)){
 echo $messulist; 
 
 if (isset($_GET))
-    echo '<input type="submit" name="tallennus" value="Tallenna">';
+    echo '<input type="submit" name="updated" value="Tallenna">';
 ?>
 </form>
 </body>

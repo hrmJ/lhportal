@@ -22,6 +22,15 @@ function AttachEditable($parent, $name){
     return $input;
 }
 
+function AddHidden($parent, $name, $value){
+    $input = new DomEl('input',$value,$parent);
+    $input->AddAttribute('class',"hidden");
+    $input->AddAttribute('id',$name);
+    $input->AddAttribute('name',$name);
+    $input->AddAttribute('value',$value);
+    return $input;
+}
+
 function CreateMessulist($vastuu=''){
     $date = date('Y-m-d');
     $con = new DbCon();
@@ -82,6 +91,8 @@ function MessuDetails($id){
         else
             $td2->AddAttribute("class","editable");
         }
+    #Tallennetaan myös messuid  (piilotetusti)
+    $idfield = AddHidden($tr,"messu_id",$id);
     return $table->Show();
 }
 

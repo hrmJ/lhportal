@@ -71,7 +71,6 @@ class DbCon{
             //TODO: check the PDO stuff
             $this->query->bindParam(":$key", $valuedict[$key], PDO::PARAM_STR);
         }
-        print($qstring . "\n");
         $this->Run();
 
     }
