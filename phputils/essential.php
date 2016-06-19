@@ -76,25 +76,27 @@ function CreateVastuuList(){
     return $select->Show();
 }
 
+
 function MessuDetails($id){
     $con = new DbCon();
     $result = $con->select("vastuut",Array("vastuu","vastuullinen","id"),Array(Array("messu_id","=",$id)))->fetchAll();
-    $table = new DomEl("table");
-    $head = new DomEl('thead','',$table);
-    $tbody = new DomEl('tbody','',$table);
+    $table = new HtmlTable();
     foreach($result as $row){
-        $tr = new DomEl('tr','',$tbody);
-        $td1 = new DomEl('td',$row["vastuu"],$tr);
-        $td2 = new DomEl('td',$row["vastuullinen"],$tr);
-        if (empty($row["vastuullinen"]))
-            $input = AttachEditable($td2,$row["vastuu"]);
-        else
-            $td2->AddAttribute("class","editable");
-            $td2->AddAttribute("name",$row["vastuu"]);
+        $table->AddRow(Array($row["vastuu"],$row["vastuullinen"]));
+        $idx = sizeof($table->rows)-1;
+        if (empty($row["vastuullinen"])){
+            //Jos joku arvo jo annettu kentälle, tehdään tästä span-elementi, joka
+            //klikkaamalla muuttuu tekstikentäksi
+            $input = AttachEditable($table->rows[$idx]->cells[1],$row["vastuu"]);
         }
+        else{
+            $table->rows[$idx]->cells[1]->AddAttribute("class","editable");
+            $table->rows[$idx]->cells[1]->AddAttribute("name",$row["vastuu"]);
+        }
+    }
     #Tallennetaan myös messuid  (piilotetusti)
-    $idfield = AddHidden($tr,"messu_id",$id);
-    return $table->Show();
+    $idfield = AddHidden($table->element,"messu_id",$id);
+    return $table->element->Show();
 }
 
 function SaveGetParams(){

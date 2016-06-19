@@ -7,8 +7,9 @@ $con = new DbCon();
 $con->Connect();
 
 if(isset($_POST)){
+    #JOS käyttäjä on päivittänyt jotakin kenttää
         if (array_key_exists("messu_id",$_POST)){
-            #Päivitykset messukohtaisesti, kaikki roolit mahdollisia
+            #1. Päivitykset messukohtaisesti, kaikki roolit mahdollisia
                 $updatables = Array("Saarna","Pyhis","Klubi","Saarnateksti","Liturgi","Juonto","Bändi","Sanailija");
                 foreach ($updatables as $vastuu){
                     if(array_key_exists($vastuu,$_POST)){
@@ -19,6 +20,10 @@ if(isset($_POST)){
                         }
                     }
                 }
+        }
+        elseif (array_key_exists("updated",$_POST)){
+            //$result = $con->select("messut",Array("id"),Array(Array("pvm",">=",$),Array("pvm","<=","2017-01-01")))->fetchAll();
+            //var_dump($_POST);
         }
 }
 

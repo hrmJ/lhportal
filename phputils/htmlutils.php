@@ -1,5 +1,37 @@
 <?php
 
+class HtmlTable{
+
+
+    public function __construct(){
+        $this->element = new DomEl("table");
+        $this->head = new DomEl('thead','',$this->element);
+        $this->tbody = new DomEl('tbody','',$this->element);
+        $this->rows = Array();
+    }
+
+    public function AddRow($cells){
+        //$cells is an array containing the data to be put in the cells
+        $this->rows[] = new Row($this->tbody, $cells);
+    }
+
+}
+
+class Row{
+
+    public function __construct($tbody, $cells){
+        //excpets a DomEl Table as the table variable
+        $this->element = new DomEl("tr",'',$tbody);
+        $this->cells = Array();
+
+        foreach($cells as $cell){
+            $this->cells[] =  new DomEl('td',$cell,$this->element);
+        }
+    }
+
+
+}
+
 class DomEl{
 
     public function __construct ($tag,$text="",$parent=Null) {
