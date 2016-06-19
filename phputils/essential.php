@@ -52,6 +52,8 @@ function CreateMessulist($vastuu=''){
             $tr = $table->AddRow(Array($row["pvm"],""));
         }
         $tr->cells[0]->AddAttribute('id',"messu_" . $row["id"]);
+        $tr->cells[0]->AddAttribute('teema',$row["teema"]);
+        $tr->cells[0]->AddAttribute('pvm',$row["pvm"]);
         $tr->cells[0]->AddAttribute("class","messurow");
     }
     AddHidden($table->element,"vastuu",$vastuu);
