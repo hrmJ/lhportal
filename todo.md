@@ -1,6 +1,5 @@
 ## Critical
 
-- [ ] Teemat nollautuivat!
 - [ ] Kun klikkaa vastuukohtaisessa näkymässä päivämäärää???
 
 
