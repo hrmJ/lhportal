@@ -90,6 +90,7 @@ function MessuDetails($id){
             $input = AttachEditable($td2,$row["vastuu"]);
         else
             $td2->AddAttribute("class","editable");
+            $td2->AddAttribute("name",$row["vastuu"]);
         }
     #Tallennetaan myös messuid  (piilotetusti)
     $idfield = AddHidden($tr,"messu_id",$id);

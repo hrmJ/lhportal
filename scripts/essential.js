@@ -23,9 +23,16 @@ function SelectVastuu (evt){
 
 function edit (evt){
     var element = evt.target;
-    var text = element.textContent;
-    ClearContent(element);
-    element.appendChild(TextField('test', 'linestyle', text));
+    if (element.tagName == 'TD') {
+        //VAIN jos kyseessä ei jo ole tekstikenttä
+        var text = element.textContent;
+        var id_and_name = 'anonymous';
+        if (element.hasAttribute("name")){
+            id_and_name = element.getAttribute("name");
+        }
+        ClearContent(element);
+        element.appendChild(TextField(id_and_name, 'linestyle', text));
+    }
 }
 
 
