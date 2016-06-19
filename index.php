@@ -22,8 +22,19 @@ if(isset($_POST)){
                 }
         }
         elseif (array_key_exists("updated",$_POST)){
-            //$result = $con->select("messut",Array("id"),Array(Array("pvm",">=",$),Array("pvm","<=","2017-01-01")))->fetchAll();
-            //var_dump($_POST);
+            #2. Päivitykset roolikohtaisesti, kaikki messut mahdollisia
+            $updatables = Array();
+            foreach($_POST as $key => $value){
+                if(strpos($key, "id_") !== FALSE){
+                    #Tallenna ID taulukkoon pvm:n kanssa
+                    $pvm = substr($key,3,strlen($key));
+                    if (!empty($_POST[$pvm])) {
+                        $con->update("vastuut",
+                            Array("vastuullinen" =>$_POST[$pvm]),
+                            Array(Array("messu_id","=",intval($value)), Array("vastuu","=",$_POST["vastuu"])));
+                    }
+                }
+            }
         }
 }
 

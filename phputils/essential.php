@@ -37,20 +37,24 @@ function CreateMessulist($vastuu=''){
     $result = $con->select("messut",Array("pvm","teema","id"),Array(Array("pvm",">=",$date),Array("pvm","<=","2017-01-01")))->fetchAll();
     $table = new HtmlTable();
     foreach($result as $row){
-        $litext = $row["pvm"];
         if (!empty($vastuu)) {
+            //Jos halutaan filtteröidä vastuun ukaan
             $vastuures = $con->select("vastuut",Array("vastuullinen"),Array(Array("messu_id","=",$row["id"]),Array("vastuu","=",$vastuu)))->fetchAll();
-            $tr = $table->AddRow(Array($row["pvm"],$vastuures[0]["vastuullinen"]));
+            $tr = $table->AddRow(Array($row["pvm"],$vastuures[0]["vastuullinen"],""));
             $tr->cells[1]->AddAttribute("class","editable");
+            $tr->cells[1]->AddAttribute("name",$row["pvm"]);
+            AddHidden($tr->cells[2],"id_" . $row["pvm"], $row["id"]);
             if (empty($vastuures[0]["vastuullinen"]))
                 $input = AttachEditable($tr->cells[1], $row["pvm"]);
         }
         else{
+            //Jos katsellaan vain listaa ilman filtteriä
             $tr = $table->AddRow(Array($row["pvm"],""));
         }
         $tr->cells[0]->AddAttribute('id',"messu_" . $row["id"]);
         $tr->cells[0]->AddAttribute("class","messurow");
     }
+    AddHidden($table->element,"vastuu",$vastuu);
     return $table->element->Show();
 }
 
@@ -105,6 +109,10 @@ function SaveGetParams(){
         $url = $_SERVER['PHP_SELF'];
     }
     return $url;
+}
+
+function ParseMessuid($field){
+
 }
 
 ?>
