@@ -35,30 +35,23 @@ function CreateMessulist($vastuu=''){
     $date = date('Y-m-d');
     $con = new DbCon();
     $result = $con->select("messut",Array("pvm","teema","id"),Array(Array("pvm",">=",$date),Array("pvm","<=","2017-01-01")))->fetchAll();
-
-    $ul = new DomEl("ul");
+    $table = new HtmlTable();
     foreach($result as $row){
         $litext = $row["pvm"];
-        if (!empty($vastuu))
-            $litext = "";
-        $li = new DomEl('li',$litext,$ul);
-        $li->AddAttribute('id',"messu_" . $row["id"]);
-        $li->AddAttribute('teema',$row["teema"]);
-        $li->AddAttribute('pvm',$row["pvm"]);
-        if (!empty($vastuu)){
+        if (!empty($vastuu)) {
             $vastuures = $con->select("vastuut",Array("vastuullinen"),Array(Array("messu_id","=",$row["id"]),Array("vastuu","=",$vastuu)))->fetchAll();
-            $vastuullinen = $vastuures[0]["vastuullinen"];
-            $span1 = new DomEl('span',$row["pvm"],$li);
-            //$span1->AddAttribute('class',"messurow");
-            $span2 = new DomEl('span',$vastuullinen,$li);
-            if (empty($vastuullinen))
-                $input = AttachEditable($span2, $row["pvm"]);
-            $span2->AddAttribute('class',"editable");
+            $tr = $table->AddRow(Array($row["pvm"],$vastuures[0]["vastuullinen"]));
+            $tr->cells[1]->AddAttribute("class","editable");
+            if (empty($vastuures[0]["vastuullinen"]))
+                $input = AttachEditable($tr->cells[1], $row["pvm"]);
         }
-        else
-            $li->AddAttribute('class',"messurow");
+        else{
+            $tr = $table->AddRow(Array($row["pvm"],""));
         }
-    return $ul->Show();
+        $tr->cells[0]->AddAttribute('id',"messu_" . $row["id"]);
+        $tr->cells[0]->AddAttribute("class","messurow");
+    }
+    return $table->element->Show();
 }
 
 function CreateVastuuList(){
@@ -82,16 +75,13 @@ function MessuDetails($id){
     $result = $con->select("vastuut",Array("vastuu","vastuullinen","id"),Array(Array("messu_id","=",$id)))->fetchAll();
     $table = new HtmlTable();
     foreach($result as $row){
-        $table->AddRow(Array($row["vastuu"],$row["vastuullinen"]));
-        $idx = sizeof($table->rows)-1;
+        $tr = $table->AddRow(Array($row["vastuu"],$row["vastuullinen"]));
         if (empty($row["vastuullinen"])){
-            //Jos joku arvo jo annettu kentälle, tehdään tästä span-elementi, joka
-            //klikkaamalla muuttuu tekstikentäksi
-            $input = AttachEditable($table->rows[$idx]->cells[1],$row["vastuu"]);
+            $input = AttachEditable($tr->cells[1],$row["vastuu"]);
         }
         else{
-            $table->rows[$idx]->cells[1]->AddAttribute("class","editable");
-            $table->rows[$idx]->cells[1]->AddAttribute("name",$row["vastuu"]);
+            $tr->cells[1]->AddAttribute("class","editable");
+            $tr->cells[1]->AddAttribute("name",$row["vastuu"]);
         }
     }
     #Tallennetaan myös messuid  (piilotetusti)

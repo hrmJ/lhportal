@@ -13,6 +13,7 @@ class HtmlTable{
     public function AddRow($cells){
         //$cells is an array containing the data to be put in the cells
         $this->rows[] = new Row($this->tbody, $cells);
+        return $this->rows[sizeof($this->rows)-1];
     }
 
 }
