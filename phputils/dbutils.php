@@ -75,12 +75,12 @@ class DbCon{
 
     }
 
-    public function select($tablename, $columns, $wheredict=Array(), $distinct = ''){
+    public function select($tablename, $columns, $wheredict=Array(), $distinct = '', $orderby = ''){
         //$columns: array, $wheredict: array of arrays, with [0] as column name, [1] as =, not, LIke etc, [2] as the value
         $columnlist = implode($columns,", ");
         //Build the WHERE clause, if present
         $this->BuildwhereClause($wheredict);
-        $qstring = "SELECT $distinct $columnlist FROM $tablename $this->whereclause";
+        $qstring = "SELECT $distinct $columnlist FROM $tablename $this->whereclause $orderby";
         $this->query = $this->connection->prepare($qstring);
         $this->BindWhereClause();
         $this->Run();
@@ -145,5 +145,6 @@ class DbCon{
     }
 
 }
+
 
 ?>

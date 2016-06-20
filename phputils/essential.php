@@ -113,8 +113,51 @@ function SaveGetParams(){
     return $url;
 }
 
-function ParseMessuid($field){
+function UpdateMessudata($con){
+    //Jos käyttäjä on päivittänyt jotain tietoja messusta tai messuista, prosessoi dataa:
+    $con = new DbCon();
+    $con->Connect();
+    if(isset($_POST)){
+            if (array_key_exists("messu_id",$_POST)){
+                #1. Päivitykset messukohtaisesti, kaikki roolit mahdollisia
+                    $updatables = Array("Saarna","Pyhis","Klubi","Saarnateksti","Liturgi","Juonto","Bändi","Sanailija");
+                    foreach ($updatables as $vastuu){
+                        if(array_key_exists($vastuu,$_POST)){
+                            if (!empty($_POST[$vastuu])){
+                                $con->update("vastuut",
+                                    Array("vastuullinen" =>$_POST[$vastuu]),
+                                    Array(Array("messu_id","=",intval($_POST["messu_id"])), Array("vastuu","=",$vastuu)));
+                            }
+                        }
+                    }
+            }
+            elseif (array_key_exists("updated",$_POST)){
+                #2. Päivitykset roolikohtaisesti, kaikki messut mahdollisia
+                $updatables = Array();
+                foreach($_POST as $key => $value){
+                    if(strpos($key, "id_") !== FALSE){
+                        #Tallenna ID taulukkoon pvm:n kanssa
+                        $pvm = substr($key,3,strlen($key));
+                        if (!empty($_POST[$pvm])) {
+                            $con->update("vastuut",
+                                Array("vastuullinen" =>$_POST[$pvm]),
+                                Array(Array("messu_id","=",intval($value)), Array("vastuu","=",$_POST["vastuu"])));
+                        }
+                    }
+                }
+            }
+    }
+}
 
+function LoadComments(){
+    //TODO: Use only one open connection, pass it on as argument
+    $con = new DbCon();
+    $con->Connect();
+    if (array_key_exists("messuid",$_GET)){
+        $messuid = $_GET["messuid"];
+        $comments = $con->select("comments",Array("content","commentator","id","comment_time"),Array(Array("messu_id","=",intval($messuid))),'','ORDER BY comment_time')->fetchAll();
+        var_dump($comments);
+    }
 }
 
 ?>

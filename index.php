@@ -2,42 +2,10 @@
 session_start();
 require('phputils/essential.php');
 AddHeader();
+UpdateMessudata();
+
+
 $url = SaveGetParams();
-$con = new DbCon();
-$con->Connect();
-
-if(isset($_POST)){
-    #JOS käyttäjä on päivittänyt jotakin kenttää
-        if (array_key_exists("messu_id",$_POST)){
-            #1. Päivitykset messukohtaisesti, kaikki roolit mahdollisia
-                $updatables = Array("Saarna","Pyhis","Klubi","Saarnateksti","Liturgi","Juonto","Bändi","Sanailija");
-                foreach ($updatables as $vastuu){
-                    if(array_key_exists($vastuu,$_POST)){
-                        if (!empty($_POST[$vastuu])){
-                            $con->update("vastuut",
-                                Array("vastuullinen" =>$_POST[$vastuu]),
-                                Array(Array("messu_id","=",intval($_POST["messu_id"])), Array("vastuu","=",$vastuu)));
-                        }
-                    }
-                }
-        }
-        elseif (array_key_exists("updated",$_POST)){
-            #2. Päivitykset roolikohtaisesti, kaikki messut mahdollisia
-            $updatables = Array();
-            foreach($_POST as $key => $value){
-                if(strpos($key, "id_") !== FALSE){
-                    #Tallenna ID taulukkoon pvm:n kanssa
-                    $pvm = substr($key,3,strlen($key));
-                    if (!empty($_POST[$pvm])) {
-                        $con->update("vastuut",
-                            Array("vastuullinen" =>$_POST[$pvm]),
-                            Array(Array("messu_id","=",intval($value)), Array("vastuu","=",$_POST["vastuu"])));
-                    }
-                }
-            }
-        }
-}
-
 if (!isset($_GET["messuid"]) OR !isset($_GET)){
     if(isset($_GET["vastuu"])){
         $messulist =  CreateMessulist($_GET["vastuu"]);
@@ -58,6 +26,12 @@ elseif(isset($_GET["messuid"])){
 <body>
 <form name='updater' id='updater' method="post" action="<?php echo $url;?>">
 <?php
+if (sizeof($_GET)>0){
+    //Jos muu kuin alkunäkymä
+?>
+<a href="index.php">Alkuun</a>
+<?php
+}
 if (!isset($_GET["messuid"]) OR !isset($_GET)){
 ?>
 <div>
@@ -83,6 +57,13 @@ if (isset($_GET))
     echo '<input type="submit" name="updated" value="Tallenna">';
 ?>
 </form>
+
+<section id="comments">
+<?php
+LoadComments();
+?>
+</section>
+
 </body>
 
 <script src="scripts/pohjat.js"></script>

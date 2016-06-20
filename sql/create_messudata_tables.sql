@@ -25,3 +25,15 @@ create table `vastuut` (
   foreign key (`messu_id`) references messut(`id`) on delete cascade,
   primary key(`id`)
 );
+
+
+create table `comments`(
+  `id` int unsigned not null auto_increment,
+  `messu_id` int unsigned not null,
+  `content` TEXT,
+  `commentator` varchar(100),
+  `comment_time` DATETIME not null,
+  index messu_index(`messu_id`),
+  foreign key (`messu_id`) references messut(`id`) on delete cascade,
+  primary key(`id`)
+);
