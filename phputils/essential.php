@@ -156,7 +156,10 @@ function LoadComments(){
     if (array_key_exists("messuid",$_GET)){
         $messuid = $_GET["messuid"];
         $comments = $con->select("comments",Array("content","commentator","id","comment_time"),Array(Array("messu_id","=",intval($messuid))),'','ORDER BY comment_time')->fetchAll();
-        var_dump($comments);
+        foreach ($comments as $comment){
+            $thiscomment = new Comment($comment);
+            echo $thiscomment->container->Show();
+        }
     }
 }
 

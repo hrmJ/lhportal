@@ -1,5 +1,29 @@
 <?php
 
+class Comment{
+
+
+    public function __construct($commentdata){
+        $cont = new DomEl("div");
+        $cont->AddAttribute('class',"comment_container");
+
+        $commentheader = new DomEl("div",'',$cont);
+        $commentheader->AddAttribute('class',"comment_header");
+
+        $commentcontent = new DomEl("div",$commentdata["content"],$cont);
+        $commentcontent->AddAttribute('class',"comment_content");
+
+        $this->container = $cont;
+    }
+
+    public function AddHeader($pvm, $commentator=''){
+    
+    
+    }
+
+
+}
+
 class HtmlTable{
 
 

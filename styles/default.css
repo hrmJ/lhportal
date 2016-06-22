@@ -41,3 +41,8 @@ input[type=text].linestyle:focus{
     border: 1px solid red;
 }
 
+ 
+.comment_container{
+    border: 1px dashed black;
+    padding: 2em;
+}
