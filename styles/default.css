@@ -41,8 +41,20 @@ input[type=text].linestyle:focus{
     border: 1px solid red;
 }
 
+.sbutton{
+    font-size:10;
+}
  
 .comment_container{
     border: 1px dashed black;
     padding: 2em;
+}
+
+.newcomment{
+    background: lightblue;
+}
+
+.commenttext{
+    font-size:10;
+
 }

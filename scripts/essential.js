@@ -36,6 +36,21 @@ function edit (evt){
 }
 
 
+function AddComment(){
+    var form = document.getElementById('commentform');
+
+    var commentdiv = DomEl('div','ncdiv','newcomment');
+    var commentarea = DomEl('textarea','cm1','commenttext');
+    var commentsubmit = DomEl('input','cmsub','sbutton');
+    commentsubmit.type = 'submit';
+    commentsubmit.value = 'Lisää';
+    commentarea.name = 'newcomment_text';
+
+    commentdiv.appendChild(commentarea);
+    commentdiv.appendChild(commentsubmit);
+    form.appendChild(commentdiv);
+}
+
 function ClearContent(myNode){
     //Remove child nodes,
     //see also http://stackoverflow.com/questions/3955229/remove-all-child-elements-of-a-dom-node-in-javascript
@@ -43,3 +58,5 @@ function ClearContent(myNode){
         myNode.removeChild(myNode.firstChild);
     }
 }
+
+

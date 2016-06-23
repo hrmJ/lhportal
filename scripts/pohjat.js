@@ -80,4 +80,10 @@ function TextField(id, cssclass, value){
     return input;
 }
 
+function DomEl(eltype, id='',classname=''){
+    thisel = document.createElement(eltype);
+    thisel.id = id;
+    thisel.className = classname;
+    return thisel;
+}
 

@@ -59,6 +59,10 @@ if (isset($_GET))
 </form>
 
 <section id="comments">
+<form name='commentform' id='commentform' action=''>
+    <a href='#' onClick='AddComment();'>Lisää infoasia/kommentti/kysymys/yms.</a>
+</form>
+
 <?php
 LoadComments();
 ?>
