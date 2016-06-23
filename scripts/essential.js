@@ -43,6 +43,7 @@ function AddComment(){
     var commentarea = DomEl('textarea','cm1','commenttext');
     var commentsubmit = DomEl('input','cmsub','sbutton');
     commentsubmit.type = 'submit';
+    commentsubmit.name = 'cmsub';
     commentsubmit.value = 'Lisää';
     commentarea.name = 'newcomment_text';
 

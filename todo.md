@@ -1,13 +1,18 @@
 ## Critical
 
+- [ ] vastuukohtaiset kommentit?
 - [ ] Kun klikkaa vastuukohtaisessa näkymässä päivämäärää???
 
 
 ## Normal
 
+- [ ] Mahdollisuus tägätä kommentti infoasiksi tai muuksi kommentiksi
 - [ ] Valintalistasta tai jostain muusta näkyviin, mitä vastuuta selaillaan (otsikkona?)
 - [ ] Linkki takaisin pääsivulle messukohtaisesta näkymästä
 - [ ] Skrollaus alas >> Kuinka monta kerralla ruudulla?
+- [ ] Mahdollisuus henkilökohtaisiin kirjautumistunnuksiin
+    - niiden näkyminen kommenteissa
+    - lisäksi "Muokannut viimeksi: X, klo Y"
 
 
 ## Suggestions

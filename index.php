@@ -2,8 +2,9 @@
 session_start();
 require('phputils/essential.php');
 AddHeader();
-UpdateMessudata();
-
+$con = new DbCon();
+$con->Connect();
+UpdateMessudata($con);
 
 $url = SaveGetParams();
 if (!isset($_GET["messuid"]) OR !isset($_GET)){
@@ -59,7 +60,9 @@ if (isset($_GET))
 </form>
 
 <section id="comments">
-<form name='commentform' id='commentform' action=''>
+
+<form name='commentform' id='commentform' method="post" action="<?php echo $url;?>">
+<input class='hidden' value="<?php echo $_GET['messuid'];?>" name="messu_id_comments">
     <a href='#' onClick='AddComment();'>Lisää infoasia/kommentti/kysymys/yms.</a>
 </form>
 

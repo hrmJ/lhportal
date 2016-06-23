@@ -115,8 +115,6 @@ function SaveGetParams(){
 
 function UpdateMessudata($con){
     //Jos käyttäjä on päivittänyt jotain tietoja messusta tai messuista, prosessoi dataa:
-    $con = new DbCon();
-    $con->Connect();
     if(isset($_POST)){
             if (array_key_exists("messu_id",$_POST)){
                 #1. Päivitykset messukohtaisesti, kaikki roolit mahdollisia
@@ -146,8 +144,15 @@ function UpdateMessudata($con){
                     }
                 }
             }
+            elseif (array_key_exists("newcomment_text",$_POST)){
+                #3. Jos käyttäjä on lisännyt kommentin, lataa se tietokantaan
+                date_default_timezone_set('Europe/Helsinki');
+                $date = date('Y-m-d H:i:s');
+                $con->insert("comments", Array("messu_id"=>$_POST["messu_id_comments"],"comment_time"=>$date,"content"=>$_POST["newcomment_text"],"commentator"=>""));
+            }
     }
 }
+
 
 function LoadComments(){
     //TODO: Use only one open connection, pass it on as argument
@@ -155,7 +160,7 @@ function LoadComments(){
     $con->Connect();
     if (array_key_exists("messuid",$_GET)){
         $messuid = $_GET["messuid"];
-        $comments = $con->select("comments",Array("content","commentator","id","comment_time"),Array(Array("messu_id","=",intval($messuid))),'','ORDER BY comment_time')->fetchAll();
+        $comments = $con->select("comments",Array("content","commentator","id","comment_time"),Array(Array("messu_id","=",intval($messuid))),'','ORDER BY comment_time DESC')->fetchAll();
         foreach ($comments as $comment){
             $thiscomment = new Comment($comment);
             echo $thiscomment->container->Show();
