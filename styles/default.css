@@ -67,6 +67,15 @@ not(.right:hover) > input.linestyle {
 }
 */
 
+table.singlecelled{
+    width:100%;
+    /*border-collapse:collapse;*/
+}
+
+.pvm{
+    min-width:6em;
+}
+
 table{
     width:100%;
     /*border-collapse:collapse;*/
@@ -128,6 +137,7 @@ tr:hover{
 
 .messurow{
     cursor: pointer; 
+    padding-left:2em;
     cursor: hand;
 }
 
@@ -142,6 +152,15 @@ tr:hover{
     font-size:10;
 }
  
+
+#comments{
+    border-top: 1px solid grey;
+    border-left: 1px solid grey;
+    padding-left: 2em;
+    /* border-radius: 25px; */
+    padding-top: 3em;
+}
+
 .comment_container{
     /*border: 1px dashed black;*/
     padding: 2em;

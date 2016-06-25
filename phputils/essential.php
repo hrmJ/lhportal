@@ -35,27 +35,33 @@ function CreateMessulist($vastuu=''){
     $date = date('Y-m-d');
     $con = new DbCon();
     $result = $con->select("messut",Array("pvm","teema","id"),Array(Array("pvm",">=",$date),Array("pvm","<=","2017-01-01")))->fetchAll();
-    $table = new HtmlTable();
+    $section = new DomEl("section","");
+    $section->AddAttribute("id","contentlist");
+    $table = new HtmlTable($section);
     foreach($result as $row){
         if (!empty($vastuu)) {
             //Jos halutaan filtteröidä vastuun ukaan
             $vastuures = $con->select("vastuut",Array("vastuullinen"),Array(Array("messu_id","=",$row["id"]),Array("vastuu","=",$vastuu)))->fetchAll();
-            $tr = $table->AddRow(Array($row["pvm"],$vastuures[0]["vastuullinen"],""));
-            $tr->cells[0]->AddAttribute("class","left");
+            $tr = $table->AddRow(Array($row["pvm"],$vastuures[0]["vastuullinen"]));
+            $tr->cells[0]->AddAttribute("class","pvm left");
             $tr->cells[1]->AddAttribute("class","editable right");
             $tr->cells[1]->AddAttribute("name",$row["pvm"]);
-            AddHidden($tr->cells[2],"id_" . $row["pvm"], $row["id"]);
+            AddHidden($tr->cells[0],"id_" . $row["pvm"], $row["id"]);
             if (empty($vastuures[0]["vastuullinen"]))
                 $input = AttachEditable($tr->cells[1], $row["pvm"]);
         }
         else{
             //Jos katsellaan vain listaa ilman filtteriä
-            $tr = $table->AddRow(Array($row["pvm"],""));
+            if (!empty($row["teema"]))
+                $tr = $table->AddRow(Array($row["pvm"]. ": " . $row["teema"]));
+            else
+                $tr = $table->AddRow(Array($row["pvm"]. " (ei teemaa lisättynä)"));
+            $tr->cells[0]->AddAttribute("class","messurow");
         }
         $tr->cells[0]->AddAttribute('id',"messu_" . $row["id"]);
         $tr->cells[0]->AddAttribute('teema',$row["teema"]);
         $tr->cells[0]->AddAttribute('pvm',$row["pvm"]);
-        $tr->cells[0]->AddAttribute("class","messurow");
+        //$tr->cells[0]->AddAttribute("class","messurow");
     }
     AddHidden($table->element,"vastuu",$vastuu);
     return $table->element->Show();
