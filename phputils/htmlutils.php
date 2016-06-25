@@ -7,28 +7,33 @@ class Comment{
         $cont = new DomEl("div");
         $cont->AddAttribute('class',"comment_container");
 
-        $commentheader = new DomEl("div",'',$cont);
-        $commentheader->AddAttribute('class',"comment_header");
-
         $commentcontent = new DomEl("div",$commentdata["content"],$cont);
         $commentcontent->AddAttribute('class',"comment_content");
 
-        $this->container = $cont;
-    }
+        $commentheader = new DomEl("div",FormatCommentHeader($commentdata),$cont);
+        $commentheader->AddAttribute('class',"comment_header");
 
-    public function AddHeader($pvm, $commentator=''){
-    
-    
+        $this->container = $cont;
     }
 
 
 }
 
+function FormatCommentHeader($commentdata){
+    $text = "Viesti lähetetty " . $commentdata["comment_time"];
+    return $text;
+}
+
 class HtmlTable{
 
 
-    public function __construct(){
-        $this->element = new DomEl("table");
+    public function __construct($parent=Null){
+        if (isset($parent)){
+            $this->element = new DomEl("table","",$parent);
+        }
+        else{
+            $this->element = new DomEl("table");
+        }
         $this->head = new DomEl('thead','',$this->element);
         $this->tbody = new DomEl('tbody','',$this->element);
         $this->rows = Array();

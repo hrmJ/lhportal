@@ -1,16 +1,117 @@
+body{
+    font-family:Arial;
+}
+
+#maincontainer{
+    max-width:40em;
+    margin: auto;
+}
+
+#contentlist{
+    max-width:24em;
+    margin:auto;
+    padding-top: 2em;
+    padding-bottom: 2em;
+    /*
+    border-radius:2em;*/
+    /*background:rgb(171, 3, 3);*/
+    /*box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);*/
+}
+
 input[type=text].regular{
   border: none;
   border-bottom: solid 1px #c9c9c9;
   width:100%;
 }
 
+/*
+input[type=text].linestyle:focus{
+  color: rgb(171, 3, 3);
+}
+*/
+
+
+
 input[type=text].linestyle{
   border: none;
   border-bottom: solid 1px #c9c9c9;
+  border: none;
+  width:100%;
+  background:none;
+  font-size:0.995em;
+  color: white;
+  font-family:courier;
+  outline: none;
 }
 
-input[type=text].linestyle:focus{
-    outline: none;
+/*
+input[type=text].linestyle:not(:focus){
+    color:white;
+}
+*/
+
+tr:hover > td.right > input.linestyle {
+    color: rgb(171, 3, 3);
+    border-bottom:1px dashed grey;
+}
+
+
+
+tr:hover > td.left{
+    font-weight:bold;
+}
+
+/*
+not(.right:hover) > input.linestyle {
+    color: white;
+}
+*/
+
+table{
+    width:100%;
+    /*border-collapse:collapse;*/
+}
+
+tr{
+    height:2em;
+    color:white;
+    background:rgb(171, 3, 3);
+}
+
+tr:hover{
+    background:white;
+    color:rgb(171, 3, 3);
+    cursor: pointer; 
+    cursor: hand;
+}
+
+.right:hover{
+    color:rgb(171, 3, 3);
+}
+
+.right:first-child{
+    /*border: 4px solid yellow;*/
+}
+
+.left{
+    padding-left:1.2em;
+    padding-right:.8em;
+}
+
+.left, .right{
+    /*border-bottom:0.5px dashed grey;*/
+    font-size:1.2em;
+    padding-top:0.4em;
+    padding-bottom:0.4em;
+    background:none;
+}
+
+
+.right{
+    padding-left:1.4em;
+    padding-right:.4em;
+    font-family:courier;
+    /*background:lightblue;*/
 }
 
 .hidden{
@@ -30,16 +131,11 @@ input[type=text].linestyle:focus{
     cursor: hand;
 }
 
-.messurow:hover{
-    color:red;
-}
 
-
+/*
 .editable:hover{
-    cursor: pointer; 
-    cursor: hand;
-    border: 1px solid red;
 }
+*/
 
 
 .sbutton{
@@ -47,7 +143,7 @@ input[type=text].linestyle:focus{
 }
  
 .comment_container{
-    border: 1px dashed black;
+    /*border: 1px dashed black;*/
     padding: 2em;
 }
 
@@ -61,5 +157,13 @@ input[type=text].linestyle:focus{
     min-width: 40em;
     height: 15em;
     display: block;
-
 }
+
+.comment_header{
+    border-top: 1px dashed gray;
+    margin-top: 0.5em;
+    padding-top: 0.2em;
+    font-style: italic;
+    text-align: right;
+}
+

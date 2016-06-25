@@ -41,7 +41,8 @@ function CreateMessulist($vastuu=''){
             //Jos halutaan filtteröidä vastuun ukaan
             $vastuures = $con->select("vastuut",Array("vastuullinen"),Array(Array("messu_id","=",$row["id"]),Array("vastuu","=",$vastuu)))->fetchAll();
             $tr = $table->AddRow(Array($row["pvm"],$vastuures[0]["vastuullinen"],""));
-            $tr->cells[1]->AddAttribute("class","editable");
+            $tr->cells[0]->AddAttribute("class","left");
+            $tr->cells[1]->AddAttribute("class","editable right");
             $tr->cells[1]->AddAttribute("name",$row["pvm"]);
             AddHidden($tr->cells[2],"id_" . $row["pvm"], $row["id"]);
             if (empty($vastuures[0]["vastuullinen"]))
@@ -79,16 +80,20 @@ function CreateVastuuList(){
 function MessuDetails($id){
     $con = new DbCon();
     $result = $con->select("vastuut",Array("vastuu","vastuullinen","id"),Array(Array("messu_id","=",$id)))->fetchAll();
-    $table = new HtmlTable();
+    $section = new DomEl("section","");
+    $section->AddAttribute("id","contentlist");
+    $table = new HtmlTable($section);
     foreach($result as $row){
         $tr = $table->AddRow(Array($row["vastuu"],$row["vastuullinen"]));
         if (empty($row["vastuullinen"])){
             $input = AttachEditable($tr->cells[1],$row["vastuu"]);
+            $tr->cells[1]->AddAttribute("class","right");
         }
         else{
-            $tr->cells[1]->AddAttribute("class","editable");
+            $tr->cells[1]->AddAttribute("class","editable right");
             $tr->cells[1]->AddAttribute("name",$row["vastuu"]);
         }
+        $tr->cells[0]->AddAttribute("class","left");
     }
     #Tallennetaan myös messuid  (piilotetusti)
     $idfield = AddHidden($table->element,"messu_id",$id);

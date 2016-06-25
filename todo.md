@@ -7,6 +7,7 @@
 ## Normal
 
 - [ ] Mahdollisuus tägätä kommentti infoasiksi tai muuksi kommentiksi
+- [ ] Reset changes -nappula
 - [ ] Valintalistasta tai jostain muusta näkyviin, mitä vastuuta selaillaan (otsikkona?)
 - [ ] Linkki takaisin pääsivulle messukohtaisesta näkymästä
 - [ ] Skrollaus alas >> Kuinka monta kerralla ruudulla?

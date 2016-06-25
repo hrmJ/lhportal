@@ -25,74 +25,78 @@ elseif(isset($_GET["messuid"])){
 ?>
 
 <body>
-<form name='updater' id='updater' method="post" action="<?php echo $url;?>">
-<?php
-if (sizeof($_GET)>0){
-    //Jos muu kuin alkunäkymä
-?>
-<a href="index.php">Alkuun</a>
-<?php
-}
-if (!isset($_GET["messuid"]) OR !isset($_GET)){
-?>
-<div>
 
-<span>Tarkastele vastuun perusteella:</span>
-<?php echo $vastuulist; ?>
+<article id='maincontainer'>
 
-</div>
-<?php
-}
-?>
+    <form name='updater' id='updater' method="post" action="<?php echo $url;?>">
+        <?php
+        if (sizeof($_GET)>0){
+            //Jos muu kuin alkunäkymä
+        ?>
+        <a href="index.php">Alkuun</a>
+        <?php
+        }
+        if (!isset($_GET["messuid"]) OR !isset($_GET)){
+        ?>
+        <div>
 
-<?php
+        <span>Tarkastele vastuun perusteella:</span>
+        <?php echo $vastuulist; ?>
 
-if(isset($h2)){
-    echo $h2->Show();
-    echo $h3->Show();
-}
+        </div>
+        <?php
+        }
+        ?>
 
-echo $messulist; 
+        <?php
 
-if (isset($_GET))
-    echo '<input type="submit" name="updated" value="Tallenna">';
-?>
-</form>
+        if(isset($h2)){
+            echo $h2->Show();
+            echo $h3->Show();
+        }
 
-<section id="comments">
+        echo $messulist; 
 
-<form name='commentform' id='commentform' method="post" action="<?php echo $url;?>">
-<input class='hidden' value="<?php echo $_GET['messuid'];?>" name="messu_id_comments">
-    <a href='#' onClick='AddComment();'>Lisää infoasia/kommentti/kysymys/yms.</a>
-</form>
+        if (isset($_GET))
+            echo '<input type="submit" name="updated" value="Tallenna">';
+        ?>
+    </form>
 
-<?php
-LoadComments();
-?>
-</section>
+    <section id="comments">
+        <form name='commentform' id='commentform' method="post" action="<?php echo $url;?>">
+        <input class='hidden' value="<?php echo $_GET['messuid'];?>" name="messu_id_comments">
+            <a href='#' onClick='AddComment();'>Lisää infoasia/kommentti/kysymys/yms.</a>
+        </form>
+
+        <?php
+        LoadComments();
+        ?>
+    </section>
+</article>
 
 </body>
 
 <script src="scripts/pohjat.js"></script>
 <script src="scripts/essential.js"></script>
 <script>
-//Add listeners
-var messurows = document.getElementsByClassName('messurow');
-for(var row_idx = 0; row_idx < messurows.length;row_idx++){
-    var messurow = messurows[row_idx];
-    messurow.addEventListener('click',SelectMessu,false);
-}
+    //Add listeners
+    var messurows = document.getElementsByClassName('messurow');
+    for(var row_idx = 0; row_idx < messurows.length;row_idx++){
+        var messurow = messurows[row_idx];
+        messurow.addEventListener('click',SelectMessu,false);
+    }
 
-var editables = document.getElementsByClassName('editable');
-for(var row_idx = 0; row_idx < editables.length;row_idx++){
-    var editable = editables[row_idx];
-    editable.addEventListener('click',edit,false);
-}
+    var editables = document.getElementsByClassName('editable');
+    for(var row_idx = 0; row_idx < editables.length;row_idx++){
+        var editable = editables[row_idx];
+        var e_row = editable.parentElement.parentElement;
+        e_row.addEventListener('click',edit,false);
+    }
 
-var vastuulist = document.getElementById('vastuulist');
-if (vastuulist){
-    vastuulist.addEventListener('change',SelectVastuu,false);
-}
+    var vastuulist = document.getElementById('vastuulist');
+    if (vastuulist){
+        vastuulist.addEventListener('change',SelectVastuu,false);
+    }
 
 </script>
 </html>
