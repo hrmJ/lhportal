@@ -67,13 +67,14 @@ not(.right:hover) > input.linestyle {
 }
 */
 
-table.singlecelled{
-    width:100%;
-    /*border-collapse:collapse;*/
-}
 
 .pvm{
     min-width:6em;
+}
+
+.month, .month:hover{
+    background:white;
+    color:rgb(171, 3, 3);
 }
 
 table{

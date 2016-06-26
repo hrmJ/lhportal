@@ -34,15 +34,25 @@ function AddHidden($parent, $name, $value){
 function CreateMessulist($vastuu=''){
     $date = date('Y-m-d');
     $con = new DbCon();
-    $result = $con->select("messut",Array("pvm","teema","id"),Array(Array("pvm",">=",$date),Array("pvm","<=","2017-01-01")))->fetchAll();
+    $result = $con->select("messut",Array("pvm","teema","id"),Array(Array("pvm",">=",$date),Array("pvm","<=","2017-01-01")),"","ORDER BY pvm")->fetchAll();
     $section = new DomEl("section","");
     $section->AddAttribute("id","contentlist");
     $table = new HtmlTable($section);
+    $months = Array();
+    $years = Array();
     foreach($result as $row){
+        $pvm_list = ParseMonth($row["pvm"]);
+        #Erottele kuukaudet taulukossa
+        if (!in_array($pvm_list["kk"],$months)) {
+            $months[] = $pvm_list["kk"];
+            $tr = $table->AddRow(Array(MonthName($pvm_list["kk"])));
+            $tr->cells[0]->AddAttribute("class","month");
+        }
+
         if (!empty($vastuu)) {
             //Jos halutaan filtteröidä vastuun ukaan
             $vastuures = $con->select("vastuut",Array("vastuullinen"),Array(Array("messu_id","=",$row["id"]),Array("vastuu","=",$vastuu)))->fetchAll();
-            $tr = $table->AddRow(Array($row["pvm"],$vastuures[0]["vastuullinen"]));
+            $tr = $table->AddRow(Array(implode($pvm_list, "."),$vastuures[0]["vastuullinen"]));
             $tr->cells[0]->AddAttribute("class","pvm left");
             $tr->cells[1]->AddAttribute("class","editable right");
             $tr->cells[1]->AddAttribute("name",$row["pvm"]);
@@ -53,9 +63,9 @@ function CreateMessulist($vastuu=''){
         else{
             //Jos katsellaan vain listaa ilman filtteriä
             if (!empty($row["teema"]))
-                $tr = $table->AddRow(Array($row["pvm"]. ": " . $row["teema"]));
+                $tr = $table->AddRow(Array(implode($pvm_list, ".") . ": " . $row["teema"]));
             else
-                $tr = $table->AddRow(Array($row["pvm"]. " (ei teemaa lisättynä)"));
+                $tr = $table->AddRow(Array(implode($pvm_list, "."). ": (ei teemaa lisättynä)"));
             $tr->cells[0]->AddAttribute("class","messurow");
         }
         $tr->cells[0]->AddAttribute('id',"messu_" . $row["id"]);
@@ -164,10 +174,63 @@ function UpdateMessudata($con){
     }
 }
 
+function ParseMonth($pvm){
+    $kk = substr($pvm, 5,2);
+    $v = substr($pvm, 0,4);
+    $p = substr($pvm, 8,2);
+    return(Array("p"=>RemoveZero($p), "kk"=>RemoveZero($kk), "v"=>$v));
+}
 
-function LoadComments(){
-    //TODO: Use only one open connection, pass it on as argument
-    $con = new DbCon();
+function RemoveZero($input){
+    if(substr($input,0,1)=="0")
+        $input  = substr($input,1,1);
+    return $input;
+}
+
+function MonthName($month_number){
+    switch($month_number){
+    case "1":
+        return "Tammikuu";
+        break;
+    case "2":
+        return "Helmikuu";
+        break;
+    case "3":
+        return "Maaliskuu";
+        break;
+    case "4":
+        return "Huhtikuu";
+        break;
+    case "5":
+        return "Toukokuu";
+        break;
+    case "6":
+        return "Kesäkuu";
+        break;
+    case "7":
+        return "Heinäkuu";
+        break;
+    case "8":
+        return "Elokuu";
+        break;
+    case "9":
+        return "Syyskuu";
+        break;
+    case "10":
+        return "Lokakuu";
+        break;
+    case "11":
+        return "Marraskuu";
+        break;
+    case "12":
+        return "Joulukuu";
+        break;
+    }
+    return "no match";
+
+}
+
+function LoadComments($con){ //TODO: Use only one open connection, pass it on as argument $con = new DbCon();
     $con->Connect();
     if (array_key_exists("messuid",$_GET)){
         $messuid = $_GET["messuid"];

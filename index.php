@@ -69,7 +69,7 @@ elseif(isset($_GET["messuid"])){
         </form>
 
         <?php
-        LoadComments();
+        LoadComments($con);
         ?>
     </section>
 </article>
