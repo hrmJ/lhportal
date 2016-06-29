@@ -26,7 +26,6 @@ function FormatCommentHeader($commentdata){
 
 class HtmlTable{
 
-
     public function __construct($parent=Null){
         if (isset($parent)){
             $this->element = new DomEl("table","",$parent);

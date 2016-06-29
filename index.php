@@ -9,10 +9,10 @@ UpdateMessudata($con);
 $url = SaveGetParams();
 if (!isset($_GET["messuid"]) OR !isset($_GET)){
     if(isset($_GET["vastuu"])){
-        $messulist =  CreateMessulist($_GET["vastuu"]);
+        $messulist =  CreateMessulist($_GET["vastuu"],$url);
     }
     else{
-        $messulist =  CreateMessulist();
+        $messulist =  CreateMessulist('',$url);
     }
     $vastuulist =  CreateVastuuList();
 }
@@ -28,25 +28,17 @@ elseif(isset($_GET["messuid"])){
 
 <article id='maincontainer'>
 
-    <form name='updater' id='updater' method="post" action="<?php echo $url;?>">
         <?php
         if (sizeof($_GET)>0){
-            //Jos muu kuin alkunäkymä
-        ?>
-        <a href="index.php">Alkuun</a>
-        <?php
+            # Alkunäkymä
+            require('nav.php');
         }
         if (!isset($_GET["messuid"]) OR !isset($_GET)){
-        ?>
-        <div>
-
-        <span>Tarkastele vastuun perusteella:</span>
-        <?php echo $vastuulist; ?>
-
-        </div>
-        <?php
+            # Muu kuin alkunäkymä
+            require('alkunav.php');
         }
         ?>
+
 
         <?php
 
@@ -57,21 +49,19 @@ elseif(isset($_GET["messuid"])){
 
         echo $messulist; 
 
-        if (isset($_GET))
-            echo '<input type="submit" name="updated" value="Tallenna">';
+        if (isset($_GET["pvm"])){
         ?>
-    </form>
-
-    <section id="comments">
-        <form name='commentform' id='commentform' method="post" action="<?php echo $url;?>">
-        <input class='hidden' value="<?php echo $_GET['messuid'];?>" name="messu_id_comments">
-            <a href='#' onClick='AddComment();'>Lisää infoasia/kommentti/kysymys/yms.</a>
-        </form>
-
+        <section id="comments">
+            <form name='commentform' id='commentform' method="post" action="<?php echo $url;?>">
+            <input class='hidden' value="<?php echo $_GET['messuid'];?>" name="messu_id_comments">
+                <a href='#' onClick='AddComment();'>Lisää infoasia/kommentti/kysymys/yms.</a>
+            </form>
         <?php
-        LoadComments($con);
+            LoadComments($con);
+            echo "</section>";
+        }
         ?>
-    </section>
+
 </article>
 
 </body>

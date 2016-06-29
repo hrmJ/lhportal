@@ -2,9 +2,28 @@ body{
     font-family:Arial;
 }
 
+h2{
+    color: rgb(171, 3, 3);
+}
+
+h3{
+    color: #86884B;
+    font-style: italic;
+}
+
 #maincontainer{
-    max-width:40em;
+    max-width:45em;
     margin: auto;
+}
+
+#leftbanner{
+    /*
+    max-width:25em;
+    margin-right:1em;
+    */
+}
+
+.rightcontent{
 }
 
 #contentlist{
@@ -73,8 +92,10 @@ not(.right:hover) > input.linestyle {
 }
 
 .month, .month:hover{
-    background:white;
-    color:rgb(171, 3, 3);
+    background: #86884B;
+    color: white;
+    cursor: default;
+    padding-left:0.3em;
 }
 
 table{
@@ -139,6 +160,7 @@ tr:hover{
 .messurow{
     cursor: pointer; 
     padding-left:2em;
+    padding-right:1em;
     cursor: hand;
 }
 
@@ -155,16 +177,23 @@ tr:hover{
  
 
 #comments{
+    /*
     border-top: 1px solid grey;
-    border-left: 1px solid grey;
+    border-left: 1px solid grey;*/
     padding-left: 2em;
     /* border-radius: 25px; */
     padding-top: 3em;
 }
 
 .comment_container{
-    /*border: 1px dashed black;*/
-    padding: 2em;
+    padding-top: 1em;
+    padding-left: 2em;
+    padding-bottom: 0.2em;
+    padding-right: 0.2em;
+    background: #86884B;
+    color: white;
+    margin: 2em;
+    border-radius: 3px;
 }
 
 .newcomment{
@@ -180,10 +209,11 @@ tr:hover{
 }
 
 .comment_header{
-    border-top: 1px dashed gray;
-    margin-top: 0.5em;
+    border-top: 1px dashed white;
+    margin-top: 1.5em;
     padding-top: 0.2em;
     font-style: italic;
+    font-size: 80%;
     text-align: right;
 }
 

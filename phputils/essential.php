@@ -31,13 +31,40 @@ function AddHidden($parent, $name, $value){
     return $input;
 }
 
+function AddSection($submit=False, $sectionclass=''){
+    $section = new DomEl("section","");
+    $section->AddAttribute("id","contentlist");
+    $section->AddAttribute("class",$sectionclass);
+
+    $form = new DomEl("form","",$section);
+    $form->AddAttribute("id","updater");
+    $form->AddAttribute("name","contentlist");
+    $form->AddAttribute("method","post");
+    $form->AddAttribute("action",$url);
+
+    $table = new HtmlTable($form);
+
+    if($submit==True){
+        $submit = new DomEl("input","",$form);
+        $submit->AddAttribute("type","submit");
+        $submit->AddAttribute("name","updated");
+        $submit->AddAttribute("value","Tallenna");
+    }
+
+    return $table;
+}
+
 function CreateMessulist($vastuu=''){
     $date = date('Y-m-d');
     $con = new DbCon();
     $result = $con->select("messut",Array("pvm","teema","id"),Array(Array("pvm",">=",$date),Array("pvm","<=","2017-01-01")),"","ORDER BY pvm")->fetchAll();
-    $section = new DomEl("section","");
-    $section->AddAttribute("id","contentlist");
-    $table = new HtmlTable($section);
+
+    $submit = False;
+    if(!empty($vastuu)){
+        $submit=True;
+    }
+    $table = AddSection($submit,"rightcontent");
+
     $months = Array();
     $years = Array();
     foreach($result as $row){
@@ -47,6 +74,7 @@ function CreateMessulist($vastuu=''){
             $months[] = $pvm_list["kk"];
             $tr = $table->AddRow(Array(MonthName($pvm_list["kk"])));
             $tr->cells[0]->AddAttribute("class","month");
+            $tr->cells[0]->AddAttribute("colspan","2");
         }
 
         if (!empty($vastuu)) {
@@ -92,13 +120,11 @@ function CreateVastuuList(){
     return $select->Show();
 }
 
-
-function MessuDetails($id){
+function MessuDetails($id, $url=''){
     $con = new DbCon();
     $result = $con->select("vastuut",Array("vastuu","vastuullinen","id"),Array(Array("messu_id","=",$id)))->fetchAll();
-    $section = new DomEl("section","");
-    $section->AddAttribute("id","contentlist");
-    $table = new HtmlTable($section);
+    $table = AddSection(True,"centercontent");
+
     foreach($result as $row){
         $tr = $table->AddRow(Array($row["vastuu"],$row["vastuullinen"]));
         if (empty($row["vastuullinen"])){
