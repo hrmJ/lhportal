@@ -1,12 +1,13 @@
 ## Critical
 
-- [ ] vastuukohtaiset kommentit?
 - [ ] Kun klikkaa vastuukohtaisessa näkymässä päivämäärää???
 
 
 ## Normal
 
 - [ ] Mahdollisuus tägätä kommentti infoasiksi tai muuksi kommentiksi
+- [ ] Mahdollisuus tulostaa mikä tahansa näkymä / lista / kooste / yms.
+- [ ] vastuukohtaiset kommentit?
 - [ ] Reset changes -nappula
 - [ ] Valintalistasta tai jostain muusta näkyviin, mitä vastuuta selaillaan (otsikkona?)
 - [ ] Linkki takaisin pääsivulle messukohtaisesta näkymästä

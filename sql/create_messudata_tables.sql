@@ -2,6 +2,7 @@ create table `kaudet` (
   `id` int unsigned not null auto_increment,
   `alkupvm` date not null,
   `loppupvm` date not null,
+  `nimi` varchar(100),
   `tyyppi` varchar(100),
   `teema` varchar(100),
   `kommentit` TEXT,

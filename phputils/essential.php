@@ -268,4 +268,19 @@ function LoadComments($con){ //TODO: Use only one open connection, pass it on as
     }
 }
 
+function GetSeason($con){
+    date_default_timezone_set('Europe/Helsinki');
+    $date = date('Y-m-d');
+    var_dump($date);
+    #1. Osuuko tämä päivä jonkin alun ja lopun väliin?
+    $result = $con->select("kaudet", Array("nimi","alkupvm","loppupvm"), Array(Array("alkupvm",">=",$date),Array("loppupvm"," BETWEEN ","2017-01-01")),"","ORDER BY pvm")->fetchAll();
+    #2. Hae tulevaisuudesta lähin kausi
+    #3. Hae menneisyydestä lähin päivä
+
+}
+
+$con = new DbCon();
+$con->Connect();
+GetSeason($con);
+
 ?>
