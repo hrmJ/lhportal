@@ -14,13 +14,80 @@ h3{
 #maincontainer{
     max-width:45em;
     margin: auto;
+    /* position: absolute; */
+    padding-top: 4em;
+    /* background: url(../majakka_logo.png); */
 }
 
-#leftbanner{
-    /*
-    max-width:25em;
-    margin-right:1em;
-    */
+#leftbanner {
+    position: fixed;
+    background: black;
+    left: 0;
+    display: inline-block;
+    top: 0;
+    width: 100%;
+    height: 2em;
+    overflow: visible;
+    /* padding-left: 1px; */
+    padding-left: 0.4em;
+    padding-top: 0.6em;
+}
+
+#leftbanner li {
+    display: inline;
+    margin-right:0.6em;
+}
+
+#leftbanner a, #leftbanner a:visited, #leftbanner a:active{
+    text-decoration:none;
+    color:white;
+}
+
+#leftbanner a:hover{
+    color:rgb(171, 3, 3);
+    font-weight:bold;
+}
+
+.menuleft li{
+    color:yellow;
+}
+
+.menuright li{
+    color:white;
+}
+
+.menuright img{
+}
+
+.menuright{
+    display: inline-block;
+    padding-right: 0.4em;
+    /* float:right; */
+    color: yellow;
+    /*background:url(../majakka_logo.png);*/
+}
+
+.menuleft li{
+    color:right;
+}
+
+.menuleft{
+    display: inline-block;
+    /* float:left; */
+    color: yellow;
+}
+
+#leftbanner ul {
+    /* color: red; */
+    margin-left: 0px;
+    list-style-type: none;
+    /* display: inline; */
+    margin: 0;
+    padding: 0;
+}
+
+select{
+    background:white;
 }
 
 .rightcontent{

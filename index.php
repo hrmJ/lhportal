@@ -1,19 +1,23 @@
 <?php
 session_start();
+#session_unset();
 require('phputils/essential.php');
 AddHeader();
 $con = new DbCon();
-$con->Connect();
+#Jos käyttäjä on päivittänyt jotain tietoja messusta tai messuista, prosessoi dataa:
 UpdateMessudata($con);
-
+#Hae url-parametrit talteen
 $url = SaveGetParams();
+
 if (!isset($_GET["messuid"]) OR !isset($_GET)){
+    $vastuu = '';
     if(isset($_GET["vastuu"])){
-        $messulist =  CreateMessulist($_GET["vastuu"],$url);
+        $vastuu = $_GET["vastuu"];
+        if(in_array($_GET["vastuu"],Array("Yleisnäkymä","----"))){
+            $vastuu = "";
+        }
     }
-    else{
-        $messulist =  CreateMessulist('',$url);
-    }
+    $messulist =  CreateMessulist($vastuu, $url);
     $vastuulist =  CreateVastuuList();
 }
 elseif(isset($_GET["messuid"])){
@@ -26,19 +30,19 @@ elseif(isset($_GET["messuid"])){
 
 <body>
 
-<article id='maincontainer'>
 
         <?php
         if (sizeof($_GET)>0){
-            # Alkunäkymä
+            # Muu kuin alkunäkymä
             require('nav.php');
         }
         if (!isset($_GET["messuid"]) OR !isset($_GET)){
-            # Muu kuin alkunäkymä
+            # Alkunäkymä
             require('alkunav.php');
         }
         ?>
 
+<article id='maincontainer'>
 
         <?php
 
@@ -86,6 +90,13 @@ elseif(isset($_GET["messuid"])){
     var vastuulist = document.getElementById('vastuulist');
     if (vastuulist){
         vastuulist.addEventListener('change',SelectVastuu,false);
+        var vastuu = getURLParameter('vastuu');
+        if(vastuu != null){
+            vastuulist.value=vastuu;
+        }
+        else{
+            vastuulist.value='Yleisnäkymä';
+        }
     }
 
 </script>

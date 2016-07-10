@@ -54,10 +54,54 @@ function AddSection($submit=False, $sectionclass=''){
     return $table;
 }
 
+
+function SeasonWarning($sname,$change){
+    if ($change=='previous'){
+        $text = " (ei aikaisempia kausia)";
+    }
+    else if ($change=='next'){
+        $text = " (ei myöhempiä kausia)";
+    }
+
+    if(strpos($sname,"kausia)") !== FALSE)
+        return $sname;
+    else
+        return $sname . $text;
+}
+
 function CreateMessulist($vastuu=''){
     $date = date('Y-m-d');
     $con = new DbCon();
-    $result = $con->select("messut",Array("pvm","teema","id"),Array(Array("pvm",">=",$date),Array("pvm","<=","2017-01-01")),"","ORDER BY pvm")->fetchAll();
+
+    #1. KAUDEN valinta
+    if(!isset($_SESSION["kausi"])){
+        $kausi =  GetSeason($con, $date);
+        $_SESSION["kausi"] = $kausi;
+    }
+    else{
+        $kausi = $_SESSION["kausi"];
+        if(isset($_GET['kausi'])){
+            #Jos halutaan siirtyä tarkastelemaan seuraavaa tai edellistä messukautta
+            $change = $_GET['kausi'];
+            if($change == 'previous')
+                $date = $_SESSION["kausi"]["alkupvm"];
+            else if($change == 'next')
+                $date = $_SESSION["kausi"]["loppupvm"];
+            $newseason =  GetSeason($con, $date, $change);
+            #Tarkista, onko edellistä / seuraavaa kautta
+            if(isset($newseason))
+                $kausi = $newseason;
+            else{
+                $_SESSION["kausi"]["nimi"] = SeasonWarning($_SESSION["kausi"]["nimi"],$change);
+                $kausi = $_SESSION["kausi"];
+            }
+            $_SESSION["kausi"] = $kausi;
+        }
+    }
+
+    #2. MESSULISTA
+    
+    $result = $con->select("messut",Array("pvm","teema","id"),Array(Array("pvm",">=",$kausi["alkupvm"]),Array("pvm","<=",$kausi["loppupvm"])),"","ORDER BY pvm")->fetchAll();
 
     $submit = False;
     if(!empty($vastuu)){
@@ -101,6 +145,7 @@ function CreateMessulist($vastuu=''){
         $tr->cells[0]->AddAttribute('pvm',$row["pvm"]);
         //$tr->cells[0]->AddAttribute("class","messurow");
     }
+
     AddHidden($table->element,"vastuu",$vastuu);
     return $table->element->Show();
 }
@@ -112,6 +157,7 @@ function CreateVastuuList(){
 
     $select = new DomEl("select");
     $select->AddAttribute('id',"vastuulist");
+    $option = new DomEl('option','Yleisnäkymä',$select);
     $option = new DomEl('option','----',$select);
     foreach($result as $row){
         $litext = $row["vastuu"];
@@ -257,7 +303,6 @@ function MonthName($month_number){
 }
 
 function LoadComments($con){ //TODO: Use only one open connection, pass it on as argument $con = new DbCon();
-    $con->Connect();
     if (array_key_exists("messuid",$_GET)){
         $messuid = $_GET["messuid"];
         $comments = $con->select("comments",Array("content","commentator","id","comment_time"),Array(Array("messu_id","=",intval($messuid))),'','ORDER BY comment_time DESC')->fetchAll();
@@ -268,19 +313,25 @@ function LoadComments($con){ //TODO: Use only one open connection, pass it on as
     }
 }
 
-function GetSeason($con){
-    date_default_timezone_set('Europe/Helsinki');
-    $date = date('Y-m-d');
-    var_dump($date);
-    #1. Osuuko tämä päivä jonkin alun ja lopun väliin?
-    $result = $con->select("kaudet", Array("nimi","alkupvm","loppupvm"), Array(Array("alkupvm",">=",$date),Array("loppupvm"," BETWEEN ","2017-01-01")),"","ORDER BY pvm")->fetchAll();
-    #2. Hae tulevaisuudesta lähin kausi
-    #3. Hae menneisyydestä lähin päivä
+function GetSeason($con, $date, $change='None'){
+    if($change == 'None'){
+        #1. Osuuko tämä päivä jonkin alun ja lopun väliin?
+        $result = $con->select("kaudet", Array("id", "nimi","alkupvm","loppupvm"), Array(Array("alkupvm","<=",$date),Array("loppupvm",">=",$date)),"","ORDER BY alkupvm")->fetchAll();
+    }
+    if (empty($result) && $change != "previous"){
+        #2. Hae tulevaisuudesta lähin kausi
+        $result = $con->select("kaudet", Array("id", "nimi","alkupvm","loppupvm"), Array(Array("alkupvm",">=",$date)),"","ORDER BY alkupvm")->fetchAll();
+    }
+    if (empty($result) && $change != "next"){
+        #3. Hae menneisyydestä lähin päivä
+        $result = $con->select("kaudet", Array("id", "nimi","alkupvm","loppupvm"), Array(Array("loppupvm","<=",$date)),"","ORDER BY loppupvm DESC")->fetchAll();
+    }
+
+
+    #Palauta lähimmin osunut kausi (=0)
+    return $result[0];
+    #$recordDate = date("y-m-d", $datetime);
 
 }
-
-$con = new DbCon();
-$con->Connect();
-GetSeason($con);
 
 ?>

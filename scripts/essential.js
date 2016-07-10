@@ -12,12 +12,12 @@ function SelectMessu (evt){
         }
         paramlist += param_name + "=" + params[param_name];
     }
-    window.location.search += paramlist;
+    window.location.search = paramlist;
 }
 
 function SelectVastuu (evt){
     var vastuulist = evt.target;
-    var vastuu = vastuulist[vastuulist.selectedIndex].text
+    var vastuu = vastuulist[vastuulist.selectedIndex].text;
     window.location.search = "vastuu=" + vastuu;
 }
 
@@ -46,6 +46,16 @@ function edit (evt){
     }
 }
 
+function SwitchSeason(direction){
+    if(direction == 'seuraava'){
+        var kausi = "next";
+    }
+    else{
+        var kausi = "previous";
+    }
+    document.getElementById('kausi_input').value = kausi;
+    document.getElementById('seasonsubmit').click();
+}
 
 function AddComment(){
     var form = document.getElementById('commentform');
@@ -72,3 +82,9 @@ function ClearContent(myNode){
 }
 
 
+function getURLParameter(name) {
+    //Credits to:
+    //http://stackoverflow.com/questions/11582512/how-to-get-url-parameters-with-javascript
+    //
+  return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(/\+/g, '%20')) || null;
+}
