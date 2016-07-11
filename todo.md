@@ -1,10 +1,10 @@
 ## Critical
 
-- [ ] Kun klikkaa vastuukohtaisessa näkymässä päivämäärää???
 
 
 ## Normal
 
+- [ ] Kausien editointi
 - [ ] Mahdollisuus tägätä kommentti infoasiksi tai muuksi kommentiksi
 - [ ] Mahdollisuus tulostaa mikä tahansa näkymä / lista / kooste / yms.
 - [ ] vastuukohtaiset kommentit?
@@ -15,6 +15,7 @@
 - [ ] Mahdollisuus henkilökohtaisiin kirjautumistunnuksiin
     - niiden näkyminen kommenteissa
     - lisäksi "Muokannut viimeksi: X, klo Y"
+- [ ] vastuukohtaisessa näkymässä yksittäisen messun yksityiskohtiin?
 
 
 ## Suggestions

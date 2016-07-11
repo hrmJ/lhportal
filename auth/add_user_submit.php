@@ -1,6 +1,6 @@
 <?php
 session_start();
-require('phputils/dbutils.php');
+require('../phputils/dbutils.php');
 
 if(!isset($_POST['username'], $_POST['password'], $_POST['form_token']))
 {

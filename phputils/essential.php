@@ -2,6 +2,16 @@
 require('htmlutils.php');
 require('dbutils.php');
 
+function validate_login(){
+    //check that pw and usrname are set, are of valid lengths, contain only alphanumeric chars
+    $valid = true;
+    foreach(func_get_args() as $input){
+        if (!isset($input) || strlen($input)>20 || strlen($input)<4 || !ctype_alnum($input) )
+            $valid = false;
+    }
+    return $valid;
+}
+
 function AddHeader(){
 
 echo '<html lang="fi">

@@ -1,6 +1,4 @@
 <?php
-
-require('../sql/dbutils.php');
 session_start();
 
 function validate_login(){
@@ -26,7 +24,6 @@ elseif ($valid){
     $password = filter_var($_POST['password'], FILTER_SANITIZE_STRING);
 
     $con = new DbCon();
-    $con->Connect();
     $usr_id = $con->SelectUser($username, $password);
 
     if($usr_id){
@@ -39,12 +36,3 @@ elseif ($valid){
 
 ?>
 
-<html lang="fi">
-<meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
-<head>
-<title>Login</title>
-</head>
-<body>
-<p><?php echo $msg; ?></p>
-</body>
-</html>

@@ -19,6 +19,25 @@ h3{
     /* background: url(../majakka_logo.png); */
 }
 
+a#help:hover{
+    background:white;
+    color:black;
+    cursor:pointer;
+}
+
+
+a#help{
+    background: black;
+    border-radius: 50%;
+    padding-left: 0.3em;
+    padding-right: 0.3em;
+    padding-top: 0.1em;
+    padding-bottom: 0.1em;
+    color: white;
+    font-weight: bolder;
+    border: 1px solid white;
+}
+
 #leftbanner {
     position: fixed;
     background: black;
@@ -62,16 +81,14 @@ h3{
 .menuright{
     display: inline-block;
     padding-right: 0.4em;
-    /* float:right; */
     color: yellow;
-    /*background:url(../majakka_logo.png);*/
 }
 
 .menuleft li{
     color:right;
 }
 
-.menuleft{
+.menuleft, .righter{
     display: inline-block;
     /* float:left; */
     color: yellow;
@@ -238,6 +255,16 @@ tr:hover{
 */
 
 
+#maincontainer a, #maincontainer a:visited, #maincontainer a:active{
+    text-decoration:none;
+    color:black;
+}
+
+#maincontainer a:hover{
+    color: rgb(171, 3, 3);
+
+}
+
 .sbutton{
     font-size:10;
 }
@@ -264,7 +291,7 @@ tr:hover{
 }
 
 .newcomment{
-    background: lightblue;
+    /*background: lightblue;*/
 }
 
 .commenttext{
@@ -273,6 +300,8 @@ tr:hover{
     min-width: 40em;
     height: 15em;
     display: block;
+    margin-top: 2em;
+    margin-left: 3em;
 }
 
 .comment_header{
@@ -284,3 +313,19 @@ tr:hover{
     text-align: right;
 }
 
+#cmsub{
+    margin-top:1.5em;
+    margin-left: 3em;
+}
+
+#homeli:hover{
+    cursor:pointer;
+    color:white;
+}
+
+
+label {
+    display: inline-block;
+    width: 100px;
+    text-align:left;
+}
