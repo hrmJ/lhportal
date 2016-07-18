@@ -47,7 +47,7 @@ if (!isset($_GET["messuid"]) OR !isset($_GET)){
     $vastuulist =  CreateVastuuList();
 }
 elseif(isset($_GET["messuid"])){
-    $h2 = new DomEl("h2","Majakkamessu " . $_GET["pvm"]);
+    $h2 = new DomEl("h2","Majakkamessu " . FormatPvm($_GET["pvm"]));
     $h3 = new DomEl("h3", $_GET["teema"]);
     $messulist =  MessuDetails($_GET["messuid"]);
     }

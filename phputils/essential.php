@@ -344,4 +344,12 @@ function GetSeason($con, $date, $change='None'){
 
 }
 
+
+function FormatPvm($pvm){
+    $pvm_arr = ParseMonth($pvm);
+    return ($pvm_arr["p"] . "." . $pvm_arr["kk"] . "." . $pvm_arr["v"]);
+
+
+}
+
 ?>
