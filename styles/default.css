@@ -68,7 +68,7 @@ a#help{
 }
 
 .menuleft li{
-    color:yellow;
+    color:white;
 }
 
 .menuright li{
@@ -84,15 +84,19 @@ a#help{
     color: yellow;
 }
 
-.menuleft li{
-    color:right;
-}
 
 .menuleft, .righter{
     display: inline-block;
     /* float:left; */
-    color: yellow;
+    color: white;
 }
+
+
+#settings:hover{
+    color:yellow;
+    cursor:pointer;
+}
+
 
 #leftbanner ul {
     /* color: red; */
@@ -318,6 +322,10 @@ tr:hover{
     margin-left: 3em;
 }
 
+#homeli{
+    color:yellow;
+}
+
 #homeli:hover{
     cursor:pointer;
     color:white;
@@ -329,3 +337,25 @@ label {
     width: 100px;
     text-align:left;
 }
+
+#menu{
+
+    position:absolute;
+    padding-top:2px;
+    padding-bottom:0.7em;
+    background:black;
+    color:white;
+    display:none;
+    left:-2em;
+    padding-left:2.3em;
+    padding-right:0.9em;
+
+}
+
+#menu ul{
+    margin-left: 0px;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+

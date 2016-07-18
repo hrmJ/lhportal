@@ -18,9 +18,12 @@ echo '<html lang="fi">
      <head>
      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
      <link rel="stylesheet" href="styles/default.css">
+     <link rel="stylesheet" href="font-awesome-4.6.3/css/font-awesome.min.css">
      <title>Majakkaportaali 0.1</title>
      </head>';
 
+     #<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+     #<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
 }
 
 function AttachEditable($parent, $name){

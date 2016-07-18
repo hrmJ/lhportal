@@ -32,6 +32,7 @@
     <form action="<?php echo $url;?>" method="GET">
         <span class='menuleft'>
             <ul>
+                <li><i id='settings' class="fa fa-cog" aria-hidden="true"></i> </li>
                 <li id='homeli' title='Takaisin alkunäkymään'>Majakkaportaali</li>
                 <li><a id='help' title="Lue ohjeet!">?</a></li>
             </ul>
@@ -54,7 +55,6 @@
         </span>
         <input name='kausi' id='kausi_input' class='hidden'>
         <input type='submit' name='seasonsubmit' class='hidden' id='seasonsubmit'>
-        <span class="righter">&#x2295;</span>
     </form>
 
 </section>

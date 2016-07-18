@@ -106,6 +106,13 @@ elseif(isset($_GET["messuid"])){
 
 </article>
 
+<div id='menu'>
+    <ul>
+        <li>Kirjaudu ulos</li>
+        <li>Syötä uusia messuja</li>
+    </ul>
+</div>
+
 </body>
 
 <script src="scripts/pohjat.js"></script>
@@ -113,6 +120,7 @@ elseif(isset($_GET["messuid"])){
 <script>
     //Add listeners
     document.getElementById('homeli').addEventListener('click',function(){window.location='index.php';});
+    document.getElementById('settings').addEventListener('click',ShowSettings);
     var messurows = document.getElementsByClassName('messurow');
     for(var row_idx = 0; row_idx < messurows.length;row_idx++){
         var messurow = messurows[row_idx];
