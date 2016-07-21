@@ -344,9 +344,22 @@ function GetSeason($con, $date, $change='None'){
     #Palauta lähimmin osunut kausi (=0)
     return $result[0];
     #$recordDate = date("y-m-d", $datetime);
-
 }
 
+function ListSeasons(){
+    $con = new DbCon();
+    $result = $con->select("kaudet", Array("id", "nimi","alkupvm","loppupvm"), Array(),"","ORDER BY loppupvm DESC")->fetchAll();
+    $select = new DomEl("select");
+    $select->AddAttribute('id',"seasonlist");
+    $option = new DomEl('option','Valitse kausi, johon syötetään',$select);
+    $option = new DomEl('option','----',$select);
+    foreach($result as $row){
+        $litext = $row["nimi"];
+        $option = new DomEl('option',$litext,$select);
+        }
+    $option = new DomEl('option','Lisää uusi kausi',$select);
+    echo $select->Show();
+}
 
 function FormatPvm($pvm){
     $pvm_arr = ParseMonth($pvm);

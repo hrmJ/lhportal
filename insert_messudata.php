@@ -1,3 +1,11 @@
+<?php
+
+session_start();
+require('phputils/essential.php');
+
+
+?>
+
 <html lang="fi">
 <head>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
@@ -17,16 +25,19 @@
 
 <body>
 
-<h2>Syötä kauden messut tyhjäksi pohjaksi</h2>
+<section id='leftbanner'>
+    <ul>
+        <li><i id='settings' class="fa fa-cog" aria-hidden="true"></i> </li>
+        <li id='homeli' title='Takaisin alkunäkymään'>Majakkaportaali</li>
+        <li style='margin-right:0px;'><a id='help' title="Lue ohjeet!">?</a></li>
+    </ul>
+</section>
+
+<h2 id='syotto_ots'>Uusien messujen / kausien syöttö</h2>
+
 
 <div class='withsomemargin'>
-<label for="first">Kausi</label>
-<select name ='kausi'>
-    <option>Syksy</option>
-    <option>Kevät</option>
-    <option>Kesä</option>
-</select>
-<input type="text" id="vuosi" name="vuosi" value="" maxlength="20" />
+    <?php ListSeasons(); ?>
 </div>
 
 <div>
