@@ -25,36 +25,46 @@ require('phputils/essential.php');
 
 <body>
 
-<section id='leftbanner'>
-    <ul>
-        <li><i id='settings' class="fa fa-cog" aria-hidden="true"></i> </li>
-        <li id='homeli' title='Takaisin alkunäkymään'>Majakkaportaali</li>
-        <li style='margin-right:0px;'><a id='help' title="Lue ohjeet!">?</a></li>
-    </ul>
-</section>
+    <section id='leftbanner'>
+        <ul>
+            <li><i id='settings' class="fa fa-cog" aria-hidden="true"></i> </li>
+            <li id='homeli' title='Takaisin alkunäkymään'>Majakkaportaali</li>
+            <li style='margin-right:0px;'><a id='help' title="Lue ohjeet!">?</a></li>
+        </ul>
+    </section>
 
-<h2 id='syotto_ots'>Uusien messujen / kausien syöttö</h2>
+    <h2 id='syotto_ots'>Uusien messujen / kausien syöttö</h2>
 
 
-<div class='withsomemargin'>
-    <?php ListSeasons(); ?>
-</div>
+    <form id='messusyotto' action="index.php" method="post" >
 
-<div>
-<label for="first">Ensimmäinen su</label>
-<input type="text" id="first" name="first" value="" maxlength="20" />
-<label for="last">Viimeinen su</label>
-<input type="text" id="last" name="last" value="" maxlength="20" />
-<input type = "button" onClick='CreateInputs();' value = "Luo pohjat" />
+        <div id='slistcont' class='withsomemargin'>
+            <?php ListSeasons(); ?>
+        </div>
 
-<form id='messusyotto' action="inserter.php" method="post" >
-<input value='Tallenna' class='hidden' type='submit' name='s1' id='s1'>
-</form>
-</div>
+        <div id='syottodiv'>
+            <label for="first">Ensimmäinen su</label>
+            <input type="text" id="first" name="first" value="" maxlength="20" />
 
+            <label for="last">Viimeinen su</label>
+            <input type="text" id="last" name="last" value="" maxlength="20" />
+
+            <input type = "button" onClick='CreateInputs();' value = "Luo pohjat" />
+
+                <input value='Tallenna' class='hidden' type='submit' name='newservices' id='s1'>
+        </div>
+
+    </form>
 
 
 </body>
+
 <script src="scripts/pohjat.js"></script>
+<script>
+document.getElementById('homeli').addEventListener('click',function(){window.location='index.php';});
+document.getElementById('seasonlist').addEventListener('change',NewSeason,false);
+
+</script>
+
 </html>
 

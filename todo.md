@@ -1,5 +1,9 @@
 ## Critical
 
+-  [x] uusi messukausi
+-  [ ] kun luo messuja ja valitsee vanhan kauden, niin pvm näkyviin
+-  [ ] estä useat messut samalle päivämäärälle
+-  [ ] teeman muokkaus
 
 
 ## Normal

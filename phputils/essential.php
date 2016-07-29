@@ -368,4 +368,40 @@ function FormatPvm($pvm){
 
 }
 
+function InsertServices($con){
+    $data = Array();
+    foreach($_POST as $fieldname => $value){
+        $pos = strpos($fieldname,'_');
+        $number = substr($fieldname,$pos+1);
+        $dbfield = substr($fieldname,0,$pos);
+        if (!isset($data[$number]) AND $pos){
+           $data[$number]  = Array($dbfield=>$value);
+        }
+        elseif($pos){ end($data);
+            $data[$number][$dbfield] = $value;
+        }
+    }
+
+    $vastuufields = Array("Saarnateksti","Liturgi","Saarna","Juonto","Bändi","Sanailija","Pyhis","Klubi");
+    
+
+    foreach($data as $row){
+        //Syötä tiedot itse messusta:
+        $con->insert("messut", Array("pvm"=>$row["pvm"],"teema"=>$row["teema"]));
+        //Syötä mahdolliset jo tiedossa olevat vastuut + saarnateksti
+        $max = $con->maxval("messut","id");
+        $vastuudata=Array();
+        foreach($vastuufields as $vastuufield){
+            $con->insert("vastuut", Array("messu_id"=>$max,"vastuu" => $vastuufield, "vastuullinen" =>$row[$vastuufield]));
+        }
+        
+    }
+
+    //Syötä tiedot uudesta kaudesta, jos sellainen asetettu:
+    if(isset($_POST["newsname"])){
+        $con->insert("kaudet", Array("alkupvm"=>$data[0]["pvm"],"loppupvm"=>$row["pvm"],"nimi"=>$_POST["newsname"]));
+    }
+
+}
+
 ?>

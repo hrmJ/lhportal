@@ -1,5 +1,9 @@
 <?php
 session_start();
+if (isset($_GET["logout"])){
+    session_unset();
+    session_destroy();
+}
 require('phputils/essential.php');
 #session_unset();
 if (!isset( $_SESSION['user_id'] )){
@@ -28,29 +32,36 @@ if (!isset( $_SESSION['user_id'] )){
 }
 if (isset($_SESSION['user_id'])){
 #JOS kirjauduttu onnistuneesti
-AddHeader();
 $con = new DbCon();
-#Jos käyttäjä on päivittänyt jotain tietoja messusta tai messuista, prosessoi dataa:
-UpdateMessudata($con);
-#Hae url-parametrit talteen
-$url = SaveGetParams();
 
-if (!isset($_GET["messuid"]) OR !isset($_GET)){
-    $vastuu = '';
-    if(isset($_GET["vastuu"])){
-        $vastuu = $_GET["vastuu"];
-        if(in_array($_GET["vastuu"],Array("Yleisnäkymä","----"))){
-            $vastuu = "";
+    if(isset($_POST["newservices"])){
+        #Jos äsken syötetty uusia messuja:
+        InsertServices($con);
+        echo "<script>window.alert('Uudet messut syötetty onnistuneesti');</script>";
+    }
+
+    AddHeader();
+    #Jos käyttäjä on päivittänyt jotain tietoja messusta tai messuista, prosessoi dataa:
+    UpdateMessudata($con);
+    #Hae url-parametrit talteen
+    $url = SaveGetParams();
+
+    if (!isset($_GET["messuid"]) OR !isset($_GET)){
+        $vastuu = '';
+        if(isset($_GET["vastuu"])){
+            $vastuu = $_GET["vastuu"];
+            if(in_array($_GET["vastuu"],Array("Yleisnäkymä","----"))){
+                $vastuu = "";
+            }
         }
+        $messulist =  CreateMessulist($vastuu, $url);
+        $vastuulist =  CreateVastuuList();
     }
-    $messulist =  CreateMessulist($vastuu, $url);
-    $vastuulist =  CreateVastuuList();
-}
-elseif(isset($_GET["messuid"])){
-    $h2 = new DomEl("h2","Majakkamessu " . FormatPvm($_GET["pvm"]));
-    $h3 = new DomEl("h3", $_GET["teema"]);
-    $messulist =  MessuDetails($_GET["messuid"]);
-    }
+    elseif(isset($_GET["messuid"])){
+        $h2 = new DomEl("h2","Majakkamessu " . FormatPvm($_GET["pvm"]));
+        $h3 = new DomEl("h3", $_GET["teema"]);
+        $messulist =  MessuDetails($_GET["messuid"]);
+        }
 
 ?>
 
@@ -108,8 +119,8 @@ elseif(isset($_GET["messuid"])){
 
 <div id='menu'>
     <ul>
-        <li>Kirjaudu ulos</li>
-        <li>Syötä uusia messuja</li>
+        <li><a href='index.php?logout=Yes'>Kirjaudu ulos</a></li>
+        <li><a href='insert_messudata.php'>Syötä uusia messuja</a></li>
     </ul>
 </div>
 
@@ -120,7 +131,9 @@ elseif(isset($_GET["messuid"])){
 <script>
     //Add listeners
     document.getElementById('homeli').addEventListener('click',function(){window.location='index.php';});
+    document.getElementById('settings').addEventListener('mouseover',ShowSettings);
     document.getElementById('settings').addEventListener('click',ShowSettings);
+    document.getElementById('menu').addEventListener('mouseout',ShowSettings);
     var messurows = document.getElementsByClassName('messurow');
     for(var row_idx = 0; row_idx < messurows.length;row_idx++){
         var messurow = messurows[row_idx];

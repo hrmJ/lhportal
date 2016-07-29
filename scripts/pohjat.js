@@ -1,4 +1,24 @@
 var i = 0;
+
+function NewSeason(){
+    slist = document.getElementById('seasonlist');
+    cont = document.getElementById('slistcont');
+    if (slist.value == 'Lisää uusi kausi' & document.getElementById('snamelab')==null) { 
+        lab = new DomEl('span','snamelab','');
+        lab.textContent = "Anna nimi uudelle kaudelle: ";
+        cont.appendChild(lab);
+        lab2 = new DomEl('span','sname','');
+        lab2.appendChild(TextField('newsname', 'regular', ''));
+        cont.appendChild(lab2);
+    }
+    else{
+        if (document.getElementById("snamelab") != null){
+                document.getElementById("snamelab").outerHTML='';
+                document.getElementById("sname").outerHTML='';
+            }
+    }
+}
+
 function LaskeMessut(){
     first = new Date(document.getElementById('first').value);
     last = new Date(document.getElementById('last').value);
@@ -14,7 +34,7 @@ function LaskeMessut(){
 }
 
 function CreateInputs(){
-    var form = document.getElementById('messusyotto');
+    var form = document.getElementById('syottodiv');
     var this_input = document.createElement('input');
     var sundays = LaskeMessut();
     this_input.type = 'text';

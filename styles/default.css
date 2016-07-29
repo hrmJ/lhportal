@@ -25,6 +25,15 @@ a#help:hover{
     cursor:pointer;
 }
 
+#menu a,#menu a:visited, #menu a:active{
+    color:white;
+    text-decoration:none;
+}
+
+#menu a:hover{
+    color:yellow;
+}
+
 
 a#help{
     background: black;
@@ -185,6 +194,28 @@ not(.right:hover) > input.linestyle {
     cursor: default;
     padding-left:0.3em;
 }
+
+#syottodiv tr, #ui-datepicker-div tr{
+    background:white;
+    color:black;
+    border-collapse:collapse;
+}
+
+#syottodiv:
+{
+    max-width:60em;
+    margin:auto;
+}
+
+
+#slistcont{
+    max-width:38em;
+}
+
+#slistcont input{
+    max-width: 8em;
+};
+
 
 table{
     width:100%;
