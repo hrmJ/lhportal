@@ -44,6 +44,11 @@ function edit (evt){
         //Viereisen solun sisällä oleva tekstikenttä fokusoidaan:
         element.parentElement.children[1].children[0].focus()
     }
+    else if (element.tagName == 'H3'){
+        var text = element.textContent;
+        ClearContent(element);
+        element.appendChild(TextField('messutheme', 'linestyle', text));
+    }
 }
 
 function SwitchSeason(direction){

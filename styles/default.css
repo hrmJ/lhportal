@@ -284,10 +284,10 @@ tr:hover{
 }
 
 
-/*
-.editable:hover{
+input#messutheme{
+    border-bottom: dashed 1px black;
+    color: #86884B;
 }
-*/
 
 
 #maincontainer a, #maincontainer a:visited, #maincontainer a:active{

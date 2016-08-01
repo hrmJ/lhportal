@@ -60,6 +60,8 @@ $con = new DbCon();
     elseif(isset($_GET["messuid"])){
         $h2 = new DomEl("h2","Majakkamessu " . FormatPvm($_GET["pvm"]));
         $h3 = new DomEl("h3", $_GET["teema"]);
+        $h3->AddAttribute('id',"themeheader");
+        $h3->AddAttribute('class',"editable");
         $messulist =  MessuDetails($_GET["messuid"]);
         }
 
@@ -82,6 +84,7 @@ $con = new DbCon();
             echo "<section id='leftbanner'>";
             echo"<span class='menuleft'>
             <ul>
+                <li><i id='settings' class='fa fa-cog' aria-hidden='true'></i> </li>
                 <li id='homeli' title='Takaisin alkunäkymään'>Majakkaportaali</li>
                 <li><a id='help' title='Lue ohjeet!'>?</a></li>
                 <li><a href='$index' title='Lue ohjeet!'>&#x25c1; Palaa alkuun</a></li>
