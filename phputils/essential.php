@@ -219,12 +219,22 @@ function SaveGetParams(){
     return $url;
 }
 
+function ListJobs($con){
+    $vastuut = $con->select('vastuut',Array('vastuu'),Array(),"distinct")->fetchAll();
+    #kerää lista kkäytetyistä vastuista
+    $updatables = Array();
+    foreach($vastuut as $vastuu){
+        $updatables[] = $vastuu["vastuu"];
+    }
+    return $updatables;
+}
+
 function UpdateMessudata($con){
     //Jos käyttäjä on päivittänyt jotain tietoja messusta tai messuista, prosessoi dataa:
     if(isset($_POST)){
             if (array_key_exists("messu_id",$_POST)){
                 #1. Päivitykset messukohtaisesti, kaikki roolit mahdollisia
-                    $updatables = Array("Saarna","Pyhis","Klubi","Saarnateksti","Liturgi","Juonto","Bändi","Sanailija");
+                    $updatables = ListJobs($con);
                     foreach ($updatables as $vastuu){
                         if(array_key_exists($vastuu,$_POST)){
                             if (!empty($_POST[$vastuu])){
@@ -382,7 +392,7 @@ function InsertServices($con){
         }
     }
 
-    $vastuufields = Array("Saarnateksti","Liturgi","Saarna","Juonto","Bändi","Sanailija","Pyhis","Klubi");
+    $vastuufields = ListJobs($con);
     
 
     foreach($data as $row){

@@ -49,13 +49,14 @@ else
     $mysql_hostname = 'localhost';
 
     /*** mysql username ***/
-    $mysql_username = 'testuser';
+    $mysql_username = '786688';
 
     /*** mysql password ***/
-    $mysql_password = 'testpw';
+    $mysql_password = 'Qlju16su';
 
     /*** database name ***/
-    $mysql_dbname = 'majakka_auth';
+    $mysql_dbname = '786688';
+
 
     try
     {

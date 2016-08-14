@@ -124,6 +124,7 @@ $con = new DbCon();
     <ul>
         <li><a href='index.php?logout=Yes'>Kirjaudu ulos</a></li>
         <li><a href='insert_messudata.php'>Syötä uusia messuja</a></li>
+        <li><a href='uusivastuu.php'>Syötä uusia vastuutyyppejä</a></li>
     </ul>
 </div>
 

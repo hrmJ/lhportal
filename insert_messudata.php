@@ -1,7 +1,35 @@
+
 <?php
 
 session_start();
 require('phputils/essential.php');
+
+#login:
+if (!isset( $_SESSION['user_id'] )){
+    if (isset($_POST["username"],$_POST["password"])){
+        $valid = validate_login($_POST["username"],$_POST["password"]);
+        $loginfail = True;
+        if ($valid){
+            //if the login info passed validation and no active session, try to login
+            $username = filter_var($_POST['username'], FILTER_SANITIZE_STRING);
+            $password = filter_var($_POST['password'], FILTER_SANITIZE_STRING);
+
+            $con = new DbCon();
+            $usr_id = $con->SelectUser($username, $password);
+
+            if($usr_id){
+                $_SESSION['user_id'] = $usr_id;
+                $loginfail = False;
+            }
+
+        }
+    }
+    if($loginfail or !$valid or !isset($_POST["username"],$_POST["password"])){
+        #Kun saavutaan sivulle 1. kertaa tai kirjautuminen ei onnistunut
+        require('login.php');
+    }
+}
+if (isset($_SESSION['user_id'])){
 
 
 ?>
@@ -68,3 +96,7 @@ document.getElementById('seasonlist').addEventListener('change',NewSeason,false)
 
 </html>
 
+<?php
+
+} #Login
+?>

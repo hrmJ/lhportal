@@ -40,7 +40,7 @@ function CreateInputs(){
     this_input.type = 'text';
     var table = new Table();
     var messufields = ["Sunnuntai","Aihe"];
-    var vastuufields = ["Saarnateksti","Liturgi","Saarna","Juonto","Bändi","Sanailija","Pyhis","Klubi"];
+    var vastuufields = ["Saarnateksti","Liturgi","Saarna","Juonto","Bändi","Sanailija","Pyhis","Klubi","Ehtoollisavustaja","Diat","Miksaus"];
     table.AddRow(messufields.concat(vastuufields),true);
     for (var s_idx in sundays){
         var thisday = sundays[s_idx];

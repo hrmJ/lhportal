@@ -73,7 +73,7 @@ a#help{
 
 #leftbanner a:hover{
     color:rgb(171, 3, 3);
-    font-weight:bold;
+    /*font-weight:bold;*/
 }
 
 .menuleft li{
@@ -174,7 +174,7 @@ tr:hover > td.right > input.linestyle {
 
 
 tr:hover > td.left{
-    font-weight:bold;
+    /*font-weight:bold;*/
 }
 
 /*
