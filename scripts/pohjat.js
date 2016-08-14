@@ -44,8 +44,15 @@ function CreateInputs(){
     table.AddRow(messufields.concat(vastuufields),true);
     for (var s_idx in sundays){
         var thisday = sundays[s_idx];
+
+        var month = thisday.getMonth() + 1; //months from 1-12
+        var day = thisday.getDate();
+        var year = thisday.getFullYear();
+        var formatted_date = year + "-" + month + "-" + day;
+
         //erikseen messukentät
-        var hidden_date = TextField('pvm_' + s_idx, 'hidden', thisday.toISOString().slice(0,10));
+        var hidden_date = TextField('pvm_' + s_idx, 'hidden', formatteddate);
+        window.alert(formatted_date);
         //teemalla on erityinen kentän nimi, siksi se erikseen taulukon ensimmäiseksi
         var inputs = [TextField('teema_' + s_idx, 'regular', '')];
         //ja kaikki tarvittavat vastuukentät
