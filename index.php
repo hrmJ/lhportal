@@ -84,10 +84,9 @@ $con = new DbCon();
             echo "<section id='leftbanner'>";
             echo"<span class='menuleft'>
             <ul>
-                <li><i id='settings' class='fa fa-cog' aria-hidden='true'></i> </li>
+                <li><i class='fa fa-bars' id='settings' aria-hidden='true'></i></li>
                 <li id='homeli' title='Takaisin alkunäkymään'>Majakkaportaali</li>
-                <li><a id='help' title='Lue ohjeet!'>?</a></li>
-                <li><a href='$index' title='Lue ohjeet!'>&#x25c1; Palaa alkuun</a></li>
+                <li><a href='$index'>&#x25c1; Palaa alkuun</a></li>
             </ul>
             </span>";
             echo "</section>";
@@ -121,22 +120,36 @@ $con = new DbCon();
 </article>
 
 <div id='menu'>
+
+    <?php
+    $seasonname = $_SESSION["kausi"]["nimi"];
+    $nextseason = $url . "&kausi=next&";
+    $prevseason = $url . "&kausi=previous&";
+    ?>
     <ul>
-        <li><a href='index.php?logout=Yes'>Kirjaudu ulos</a></li>
-        <li><a href='insert_messudata.php'>Syötä uusia messuja</a></li>
-        <li><a href='uusivastuu.php'>Syötä uusia vastuutyyppejä</a></li>
+        <li class='menuli'><a href='#'>Lue ohjeet</a></li>
+        <li class='' title='Vaihda edelliseen tai seuraavaan kauteen'> 
+            <a href="javascript:void(0);" onClick='SwitchSeason("edellinen");'>
+                <i class="fa fa-backward" title="Vaihda edelliseen kauteen" aria-hidden="true"></i>
+            </a> 
+
+            <em><?php echo $seasonname; ?></em> 
+
+            <a href="javascript:void(0);" title="Vaihda seuraavaan kauteen" onClick='SwitchSeason("seuraava");'>
+                <i class="fa fa-forward" aria-hidden="true"></i>
+            </a> 
+        </li>
+        <li class='menuli'><a href='index.php?logout=Yes'>Kirjaudu ulos</a></li>
+        <li class='menuli'><a href='insert_messudata.php'>Syötä uusia messuja</a></li>
+        <li class='menuli'><a href='uusivastuu.php'>Syötä uusia vastuutyyppejä</a></li>
     </ul>
 </div>
-
-</body>
 
 <script src="scripts/essential.js"></script>
 <script>
     //Add listeners
     document.getElementById('homeli').addEventListener('click',function(){window.location='index.php';});
-    document.getElementById('settings').addEventListener('mouseover',ShowSettings);
     document.getElementById('settings').addEventListener('click',ShowSettings);
-    document.getElementById('menu').addEventListener('mouseout',ShowSettings);
     var messurows = document.getElementsByClassName('messurow');
     for(var row_idx = 0; row_idx < messurows.length;row_idx++){
         var messurow = messurows[row_idx];
@@ -162,7 +175,16 @@ $con = new DbCon();
         }
     }
 
+    var menu_li_items = document.getElementsByClassName('menuli');
+    for(var row_idx = 0; row_idx < menu_li_items.length;row_idx++){
+        var row = menu_li_items[row_idx];
+        row.addEventListener('click',MenuClick,false);
+    }
+
 </script>
+
+</body>
+
 </html>
 <?php
 

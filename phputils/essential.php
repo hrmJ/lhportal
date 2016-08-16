@@ -17,6 +17,7 @@ function AddHeader(){
 echo '<html lang="fi">
      <head>
      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1">
      <link rel="stylesheet" href="styles/default.css">
      <link rel="stylesheet" href="font-awesome-4.6.3/css/font-awesome.min.css">
      <title>Majakkaportaali 0.1</title>

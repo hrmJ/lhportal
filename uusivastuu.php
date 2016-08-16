@@ -72,14 +72,15 @@ if(isset($_POST["uusivastuu"])){
     <input type="submit" value="Tallenna">
 </form>
 
-</body>
-
 <script src="scripts/essential.js"></script>
 <script>
 document.getElementById('homeli').addEventListener('click',function(){window.location='index.php';});
 document.getElementById('seasonlist').addEventListener('change',NewSeason,false);
 
 </script>
+
+</body>
+
 
 </html>
 

@@ -223,3 +223,10 @@ function DomEl(eltype, id='',classname=''){
     return thisel;
 }
 
+
+function MenuClick(event){
+    var child = event.target.children[0];
+    if (child.tagName == 'A'){
+        child.click();
+    }
+}

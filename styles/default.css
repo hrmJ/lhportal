@@ -15,7 +15,7 @@ h3{
     max-width:45em;
     margin: auto;
     /* position: absolute; */
-    padding-top: 4em;
+    padding-top: 2em;
     /* background: url(../majakka_logo.png); */
 }
 
@@ -370,17 +370,32 @@ label {
 }
 
 #menu{
-
-    position:absolute;
+    background: #5d5353;
+    position:fixed;
     padding-top:2px;
     padding-bottom:0.7em;
-    background:black;
     color:white;
     display:none;
-    left:-2em;
-    padding-left:2.3em;
-    padding-right:0.9em;
+    left:0em;
+    padding-left:0em
+    padding-right:0em;
 
+}
+
+
+
+#menu li:hover{
+    background: #948f56;
+    cursor: pointer;
+}
+
+#menu li{
+    margin-top: 0em;
+    border-bottom:1px solid white;
+    padding-left:0.5em;
+    padding-right:0.5em;
+    padding-top:1.5em;
+    padding-bottom:1.5em;
 }
 
 #menu ul{
@@ -393,3 +408,23 @@ label {
 #syotto_ots{
     margin-top:3em;
 }
+
+input[type = submit]{
+    margin-top:2em;
+    font-size:110%;
+    padding:0.2em;
+}
+
+@media only screen and (max-device-width: 481px) {
+
+    table{
+        width:100%;
+    }
+
+    tbody {
+        font-size: 100%;
+    }
+
+
+}
+
