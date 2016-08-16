@@ -87,7 +87,7 @@ if (isset($_SESSION['user_id'])){
 
 </body>
 
-<script src="scripts/pohjat.js"></script>
+<script src="scripts/essential.js"></script>
 <script>
 document.getElementById('homeli').addEventListener('click',function(){window.location='index.php';});
 document.getElementById('seasonlist').addEventListener('change',NewSeason,false);

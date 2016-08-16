@@ -130,7 +130,6 @@ $con = new DbCon();
 
 </body>
 
-<script src="scripts/pohjat.js"></script>
 <script src="scripts/essential.js"></script>
 <script>
     //Add listeners
