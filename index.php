@@ -145,7 +145,6 @@ $con = new DbCon();
     </ul>
 </div>
 
-<script src="scripts/essential.js"></script>
 <script>
     //Add listeners
     document.getElementById('homeli').addEventListener('click',function(){window.location='index.php';});
