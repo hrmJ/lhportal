@@ -84,7 +84,7 @@ $con = new DbCon();
             echo "<section id='leftbanner'>";
             echo"<span class='menuleft'>
             <ul>
-                <li><i class='fa fa-bars' id='settings' aria-hidden='true'></i></li>
+                <li><i class='fa fa-bars' id='settings' onClick='ShowSettings();' karia-hidden='true'></i></li>
                 <li id='homeli' title='Takaisin alkunäkymään'>Majakkaportaali</li>
                 <li><a href='$index'>&#x25c1; Palaa alkuun</a></li>
             </ul>
@@ -149,7 +149,7 @@ $con = new DbCon();
 <script>
     //Add listeners
     document.getElementById('homeli').addEventListener('click',function(){window.location='index.php';});
-    document.getElementById('settings').addEventListener('click',ShowSettings);
+    document.getElementById('settings').addEventListener('click',ShowSettings,false);
     var messurows = document.getElementsByClassName('messurow');
     for(var row_idx = 0; row_idx < messurows.length;row_idx++){
         var messurow = messurows[row_idx];

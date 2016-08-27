@@ -216,7 +216,13 @@ function TextField(id, cssclass, value){
     return input;
 }
 
-function DomEl(eltype, id='',classname=''){
+function DomEl(eltype, id, classname){
+    if (typeof id == undefined){
+        id='';
+    }
+    if (typeof classname == undefined){
+        classname='';
+    }
     thisel = document.createElement(eltype);
     thisel.id = id;
     thisel.className = classname;
