@@ -58,10 +58,27 @@ $con = new DbCon();
         $vastuulist =  CreateVastuuList();
     }
     elseif(isset($_GET["messuid"])){
+        #Yksittäinen messunäkymä
         $h2 = new DomEl("h2","Majakkamessu " . FormatPvm($_GET["pvm"]));
-        $h3 = new DomEl("h3", $_GET["teema"]);
+
+        #Teeman muuttaisen mahdollisuus:
+        if (array_key_exists("messutheme",$_POST)){
+            $_GET["teema"] = $_POST["messutheme"];
+        }
+        $themeform = new DomEl("form","");
+        $themeform->AddAttribute("id","themeupdater");
+        $themeform->AddAttribute("name","themeform");
+        $themeform->AddAttribute("method","post");
+        $themeform->AddAttribute("action",$url);
+
+        #Is this safe from injections?
+        $idfield = AddHidden($themeform,"theme_messu_id",$_GET["messuid"]);
+
+        $h3 = new DomEl("h3", $_GET["teema"],$themeform);
         $h3->AddAttribute('id',"themeheader");
         $h3->AddAttribute('class',"editable");
+        $h3->AddAttribute('onClick',"AddSaveButton();");
+
         $messulist =  MessuDetails($_GET["messuid"]);
         }
 
@@ -99,7 +116,7 @@ $con = new DbCon();
 
         if(isset($h2)){
             echo $h2->Show();
-            echo $h3->Show();
+            echo $themeform->Show();
         }
 
         echo $messulist; 

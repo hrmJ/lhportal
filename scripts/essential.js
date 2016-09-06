@@ -236,3 +236,14 @@ function MenuClick(event){
         child.click();
     }
 }
+
+function AddSaveButton(){
+    var form = document.getElementById('themeupdater');
+    if (document.getElementById("themesub") == null){
+        var submit = DomEl('input','themesub','smallsub');
+        submit.type = 'submit';
+        submit.name = 'themesubmit';
+        submit.value = 'Vaihda teema';
+        form.appendChild(submit);
+    }
+}

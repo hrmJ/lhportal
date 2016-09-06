@@ -268,6 +268,11 @@ function UpdateMessudata($con){
                 $date = date('Y-m-d H:i:s');
                 $con->insert("comments", Array("messu_id"=>$_POST["messu_id_comments"],"comment_time"=>$date,"content"=>$_POST["newcomment_text"],"commentator"=>""));
             }
+            elseif (array_key_exists("themesubmit",$_POST)){
+                $con->update("messut",
+                    Array("teema" =>$_POST["messutheme"]),
+                    Array(Array("id","=",intval($_POST["theme_messu_id"]))));
+            }
     }
 }
 

@@ -410,6 +410,12 @@ label {
     margin-top:3em;
 }
 
+input[type = submit].smallsub{
+    margin-top:0.1em;
+    font-size:99%;
+    padding:0.1em;
+}
+
 input[type = submit]{
     margin-top:2em;
     font-size:110%;
