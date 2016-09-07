@@ -172,6 +172,13 @@ tr:hover > td.right > input.linestyle {
 }
 
 
+td>span:first-child {
+    color: green;
+    padding-left: 0.2em;
+    width:2em;
+    margin-right: 1em;
+}
+
 
 tr:hover > td.left{
     /*font-weight:bold;*/
@@ -278,7 +285,7 @@ tr:hover{
 
 .messurow{
     cursor: pointer; 
-    padding-left:2em;
+    /*padding-left:2em;*/
     padding-right:1em;
     cursor: hand;
 }

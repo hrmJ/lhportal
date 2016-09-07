@@ -149,10 +149,15 @@ function CreateMessulist($vastuu=''){
         }
         else{
             //Jos katsellaan vain listaa ilman filtteriä
+            $tr = $table->AddRow(Array(""));
+            $icon_span = new DomEl("span","testi",$tr->cells[0]);
+            #$icon_span->AddArkkjjkk
             if (!empty($row["teema"]))
-                $tr = $table->AddRow(Array(implode($pvm_list, ".") . ": " . $row["teema"]));
+                $theme = implode($pvm_list, ".") . ": " . $row["teema"];
             else
-                $tr = $table->AddRow(Array(implode($pvm_list, "."). ": (ei teemaa lisättynä)"));
+                $theme = implode($pvm_list, ".") . ": (ei teemaa lisättynä)";
+
+            $content_span = new DomEl("span", $theme, $tr->cells[0]);
             $tr->cells[0]->AddAttribute("class","messurow");
         }
         $tr->cells[0]->AddAttribute('id',"messu_" . $row["id"]);
