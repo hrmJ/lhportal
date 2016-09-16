@@ -306,12 +306,21 @@ input#messutheme{
 .commentlist{
     background:lightgrey;
     padding:0.5em;
-    border-left:4px solid black;
+    font-size:90%;
     top:2px;
-    position:fixed;
+    position:absolute;
+    border-radius:5px;
     overflow:auto;
-
 }
+
+/*
+.commentlist li:nth-child(even) {
+    background:green;
+}
+.commentlist li:nth-child(odd) {
+    background:white;
+}
+*/
 
 .commentlist ul{
     list-style-type: none;
