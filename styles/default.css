@@ -177,6 +177,11 @@ tr:hover > td.right > input.linestyle {
 
 .inv{
     color:rgb(171, 3, 3);
+    opacity:0;
+}
+
+td .fa {
+    font-size: 150%;
 }
 
 span{
