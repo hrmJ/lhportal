@@ -303,6 +303,28 @@ input#messutheme{
     color: #86884B;
 }
 
+.commentlist{
+    background:lightgrey;
+    padding:0.5em;
+    border-left:4px solid black;
+    top:2px;
+    position:fixed;
+    overflow:auto;
+
+}
+
+.commentlist ul{
+    list-style-type: none;
+    padding:0;
+    color:black;
+}
+
+.commentlist li{
+    margin-top:0.9em;
+    margin-bottom:0.9em;
+    padding:0.2em;
+}
+
 
 #maincontainer a, #maincontainer a:visited, #maincontainer a:active{
     text-decoration:none;

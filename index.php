@@ -199,6 +199,12 @@ $con = new DbCon();
         row.addEventListener('click',MenuClick,false);
     }
 
+    var commenticons = document.getElementsByClassName('fa-comments');
+    for(var idx = 0; idx < commenticons.length; idx++){
+        var icon = commenticons[idx];
+        icon.addEventListener('click',CommentClick,false);
+    }
+
 </script>
 
 </body>

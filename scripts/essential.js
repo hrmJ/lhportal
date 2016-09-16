@@ -36,25 +36,56 @@ function MouseFix(direction, row){
    }
 }
 
+function CommentClick(evt){
+    var previous = document.getElementById('ncdiv');
+    if (previous !== null){
+        ClearContent(previous);
+        document.body.removeChild(previous);
+    }
+    var icon = evt.target;
+    var rect = icon.getBoundingClientRect();
+    var commentdiv = DomEl('div','ncdiv','commentlist');
+    var messuid = icon.getAttribute('messuid');
+    var clist = document.getElementById('clist_' + messuid).cloneNode(true);
+    commentdiv.appendChild(clist);
+    commentdiv.style.left = rect.left + 20 + "px";
+    commentdiv.style.top = rect.top + 5 + "px";
+    commentdiv.addEventListener('click',RemoveClist,false);
+    document.body.appendChild(commentdiv);
+}
+
+function RemoveClist(evt){
+    var previous = document.getElementById('ncdiv');
+    ClearContent(previous);
+    document.body.removeChild(previous);
+}
+
+
 function FixOver(evt){
     var row = evt.target;
     MouseFix('on', row);
 }
 
 function SelectMessu (evt){
-    var thisid = evt.target.getAttribute('id');
-    var messuid = thisid.substring(thisid.indexOf('_')+1);
-    var params = {"messuid":messuid,
-                  "teema": evt.target.getAttribute('teema'),
-                  "pvm": evt.target.getAttribute('pvm')};
-    paramlist = "";
-    for (var param_name in params){
-        if (paramlist !== ""){
-            paramlist += "&";
-        }
-        paramlist += param_name + "=" + params[param_name];
+    if (evt.target.tagName=='I'){
+        //Jos klikattu kommentti-ikonia
+        return 0;
     }
-    window.location.search = paramlist;
+    if (evt.target.hasAttribute('id')){
+        var thisid = evt.target.getAttribute('id');
+        var messuid = thisid.substring(thisid.indexOf('_')+1);
+        var params = {"messuid":messuid,
+                      "teema": evt.target.getAttribute('teema'),
+                      "pvm": evt.target.getAttribute('pvm')};
+        paramlist = "";
+        for (var param_name in params){
+            if (paramlist !== ""){
+                paramlist += "&";
+            }
+            paramlist += param_name + "=" + params[param_name];
+        }
+        window.location.search = paramlist;
+    }
 }
 
 function SelectVastuu (evt){

@@ -116,6 +116,9 @@ function CreateMessulist($vastuu=''){
 
     #2. MESSULISTA
     
+    $commentlists = new DomEl("div", " ");
+    $commentlists->AddAttribute("class","hidden");
+
     $result = $con->select("messut",Array("pvm","teema","id"),Array(Array("pvm",">=",$kausi["alkupvm"]),Array("pvm","<=",$kausi["loppupvm"])),"","ORDER BY pvm")->fetchAll();
 
     $submit = False;
@@ -152,7 +155,9 @@ function CreateMessulist($vastuu=''){
             $tr = $table->AddRow(Array(""));
 
             //showing the comments
-            $tr->cells[0] = AddCommentIcon($con, $row, $tr->cells[0]);
+            $comments = $con->select("comments",Array("content","commentator","id","comment_time"),Array(Array("messu_id","=",intval($row["id"]))),'','ORDER BY comment_time DESC')->fetchAll();
+            $clist = new CommentList($commentlists, $comments, $row["id"]);
+            $tr->cells[0] = AddCommentIcon($comments, $row, $tr->cells[0]);
 
             if (!empty($row["teema"]))
                 $theme = implode($pvm_list, ".") . ": " . $row["teema"];
@@ -169,6 +174,7 @@ function CreateMessulist($vastuu=''){
     }
 
     AddHidden($table->element,"vastuu",$vastuu);
+    echo $commentlists->Show();
     return $table->element->Show();
 }
 
@@ -429,9 +435,8 @@ function InsertServices($con){
 
 }
 
-function AddCommentIcon($con, $row, $cell){
+function AddCommentIcon($comments, $row, $cell){
         //showing the comments
-        $comments = $con->select("comments",Array("content","commentator","id","comment_time"),Array(Array("messu_id","=",intval($row["id"]))),'','ORDER BY comment_time DESC')->fetchAll();
         $icon_span = new DomEl("span"," ",$cell);
         $ta = "ta";
         if (sizeof($comments)==1)
@@ -446,6 +451,8 @@ function AddCommentIcon($con, $row, $cell){
         else{
             $icon->AddAttribute("class","fa fa-comments vis");
         }
+
+        $icon->AddAttribute("messuid", $row["id"]);
 
         return $cell;
 }
