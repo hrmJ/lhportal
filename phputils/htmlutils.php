@@ -61,6 +61,12 @@ class Row{
 
 }
 
+class CommentList{
+    public function __construct ($par) {
+            $this->list =  new DomEl("div"," ",$par);
+    }
+}
+
 class DomEl{
 
     public function __construct ($tag,$text="",$parent=Null) {
@@ -100,6 +106,7 @@ function CreateList($li_items){
     $dom->appendChild($ul);
     return $dom->saveHTML();
 }
+
 
 
 ?>

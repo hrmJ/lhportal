@@ -171,9 +171,16 @@ tr:hover > td.right > input.linestyle {
     border-bottom:1px dashed grey;
 }
 
+.vis{
+    color:white;
+}
+
+.inv{
+    color:rgb(171, 3, 3);
+}
 
 td>span:first-child {
-    color: green;
+    color: white;
     padding-left: 0.2em;
     width:2em;
     margin-right: 1em;

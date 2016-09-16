@@ -150,8 +150,10 @@ function CreateMessulist($vastuu=''){
         else{
             //Jos katsellaan vain listaa ilman filtteriä
             $tr = $table->AddRow(Array(""));
-            $icon_span = new DomEl("span","testi",$tr->cells[0]);
-            #$icon_span->AddArkkjjkk
+
+            //showing the comments
+            $tr->cells[0] = AddCommentIcon($con, $row, $tr->cells[0]);
+
             if (!empty($row["teema"]))
                 $theme = implode($pvm_list, ".") . ": " . $row["teema"];
             else
@@ -169,6 +171,7 @@ function CreateMessulist($vastuu=''){
     AddHidden($table->element,"vastuu",$vastuu);
     return $table->element->Show();
 }
+
 
 function CreateVastuuList(){
     $date = date('Y-m-d');
@@ -424,6 +427,27 @@ function InsertServices($con){
         $con->insert("kaudet", Array("alkupvm"=>$data[0]["pvm"],"loppupvm"=>$row["pvm"],"nimi"=>$_POST["newsname"]));
     }
 
+}
+
+function AddCommentIcon($con, $row, $cell){
+        //showing the comments
+        $comments = $con->select("comments",Array("content","commentator","id","comment_time"),Array(Array("messu_id","=",intval($row["id"]))),'','ORDER BY comment_time DESC')->fetchAll();
+        $icon_span = new DomEl("span"," ",$cell);
+        $ta = "ta";
+        if (sizeof($comments)==1)
+            $ta = "";
+        $comtitle = sizeof($comments) . " huomio$ta tästä messusta";
+        $icon =  new DomEl("i","",$icon_span);
+        $icon->AddAttribute("title",$comtitle);
+        $icon->AddAttribute("commentcount",sizeof($comments));
+        if (sizeof($comments)==0){
+            $icon->AddAttribute("class","fa fa-comments inv");
+        }
+        else{
+            $icon->AddAttribute("class","fa fa-comments vis");
+        }
+
+        return $cell;
 }
 
 ?>

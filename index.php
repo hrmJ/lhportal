@@ -170,6 +170,8 @@ $con = new DbCon();
     for(var row_idx = 0; row_idx < messurows.length;row_idx++){
         var messurow = messurows[row_idx];
         messurow.addEventListener('click',SelectMessu,false);
+        messurow.addEventListener('mouseover',FixOver,false);
+        messurow.addEventListener('mouseout',FixOut,false);
     }
 
     var editables = document.getElementsByClassName('editable');

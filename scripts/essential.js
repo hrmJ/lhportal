@@ -1,3 +1,45 @@
+function FixOut(evt, direction){
+    var row = evt.target;
+    MouseFix('off', row);
+}
+
+function MouseFix(direction, row){
+    //Aika monimutkainen prosedyyri, jotta kommentti-ikonien väri olisi oikea hiiren ollessa päällä
+   var iconover = false;
+   if (row.tagName=='SPAN'){
+       var row = row.parentNode;
+   }
+   if (row.tagName=='I'){
+       var row = row.parentNode.parentNode;
+       iconover = true;
+   }
+   var icons = row.getElementsByClassName('fa');
+   var icon = icons[0];
+   var commentcount = icon.getAttribute('commentcount');
+   if(commentcount==0){
+       if (direction=='on'){
+           icon.style.color='white';
+       }
+       else{
+           icon.style.color='rgb(171, 3, 3)';
+       }
+   }
+   else{
+       if (direction=='on'){
+           icon.style.color='rgb(171, 3, 3)';
+           if(iconover==true){
+           }
+       }
+       else{
+           icon.style.color='white';
+       }
+   }
+}
+
+function FixOver(evt){
+    var row = evt.target;
+    MouseFix('on', row);
+}
 
 function SelectMessu (evt){
     var thisid = evt.target.getAttribute('id');
