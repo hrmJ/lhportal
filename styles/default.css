@@ -179,6 +179,10 @@ tr:hover > td.right > input.linestyle {
     color:rgb(171, 3, 3);
 }
 
+span{
+    white-space:nowrap;
+}
+
 td>span:first-child {
     color: white;
     padding-left: 0.2em;
@@ -308,7 +312,7 @@ input#messutheme{
     padding:0.5em;
     font-size:90%;
     top:2px;
-    position:absolute;
+    position:fixed;
     border-radius:5px;
     overflow:auto;
 }

@@ -71,6 +71,9 @@ function SelectMessu (evt){
         //Jos klikattu kommentti-ikonia
         return 0;
     }
+    if (evt.target.tagName=='SPAN'){
+        evt.target = evt.target.parentNode;
+    }
     if (evt.target.hasAttribute('id')){
         var thisid = evt.target.getAttribute('id');
         var messuid = thisid.substring(thisid.indexOf('_')+1);
