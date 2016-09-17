@@ -67,19 +67,20 @@ function FixOver(evt){
 }
 
 function SelectMessu (evt){
-    if (evt.target.tagName=='I'){
+    var td = evt.target;
+    if (td.tagName=='I'){
         //Jos klikattu kommentti-ikonia
         return 0;
     }
-    if (evt.target.tagName=='SPAN'){
-        evt.target = evt.target.parentNode;
+    if (td.tagName=='SPAN'){
+        td = evt.target.parentNode;
     }
-    if (evt.target.hasAttribute('id')){
-        var thisid = evt.target.getAttribute('id');
+    if (td.hasAttribute('id')){
+        var thisid = td.getAttribute('id');
         var messuid = thisid.substring(thisid.indexOf('_')+1);
         var params = {"messuid":messuid,
-                      "teema": evt.target.getAttribute('teema'),
-                      "pvm": evt.target.getAttribute('pvm')};
+                      "teema": td.getAttribute('teema'),
+                      "pvm": td.getAttribute('pvm')};
         paramlist = "";
         for (var param_name in params){
             if (paramlist !== ""){
