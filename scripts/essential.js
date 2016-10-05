@@ -161,7 +161,6 @@ function CreateInputs(){
 
         //erikseen messukentät
         var hidden_date = TextField('pvm_' + s_idx, 'hidden', formatteddate);
-        window.alert(formatted_date);
         //teemalla on erityinen kentän nimi, siksi se erikseen taulukon ensimmäiseksi
         var inputs = [TextField('teema_' + s_idx, 'regular', '')];
         //ja kaikki tarvittavat vastuukentät
