@@ -171,6 +171,29 @@ tr:hover > td.right > input.linestyle {
     border-bottom:1px dashed grey;
 }
 
+.vis{
+    color:white;
+}
+
+.inv{
+    color:rgb(171, 3, 3);
+    opacity:0;
+}
+
+td .fa {
+    font-size: 150%;
+}
+
+span{
+    white-space:nowrap;
+}
+
+td>span:first-child {
+    color: white;
+    padding-left: 0.2em;
+    width:2em;
+    margin-right: 1em;
+}
 
 
 tr:hover > td.left{
@@ -278,7 +301,7 @@ tr:hover{
 
 .messurow{
     cursor: pointer; 
-    padding-left:2em;
+    /*padding-left:2em;*/
     padding-right:1em;
     cursor: hand;
 }
@@ -287,6 +310,37 @@ tr:hover{
 input#messutheme{
     border-bottom: dashed 1px black;
     color: #86884B;
+}
+
+.commentlist{
+    background:lightgrey;
+    padding:0.5em;
+    font-size:90%;
+    top:2px;
+    position:fixed;
+    border-radius:5px;
+    overflow:auto;
+}
+
+/*
+.commentlist li:nth-child(even) {
+    background:green;
+}
+.commentlist li:nth-child(odd) {
+    background:white;
+}
+*/
+
+.commentlist ul{
+    list-style-type: none;
+    padding:0;
+    color:black;
+}
+
+.commentlist li{
+    margin-top:0.9em;
+    margin-bottom:0.9em;
+    padding:0.2em;
 }
 
 
@@ -408,6 +462,12 @@ label {
 
 #syotto_ots{
     margin-top:3em;
+}
+
+input[type = submit].smallsub{
+    margin-top:0.1em;
+    font-size:99%;
+    padding:0.1em;
 }
 
 input[type = submit]{

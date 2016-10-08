@@ -116,6 +116,9 @@ function CreateMessulist($vastuu=''){
 
     #2. MESSULISTA
     
+    $commentlists = new DomEl("div", " ");
+    $commentlists->AddAttribute("class","hidden");
+
     $result = $con->select("messut",Array("pvm","teema","id"),Array(Array("pvm",">=",$kausi["alkupvm"]),Array("pvm","<=",$kausi["loppupvm"])),"","ORDER BY pvm")->fetchAll();
 
     $submit = False;
@@ -149,10 +152,19 @@ function CreateMessulist($vastuu=''){
         }
         else{
             //Jos katsellaan vain listaa ilman filtteriä
+            $tr = $table->AddRow(Array(""));
+
+            //showing the comments
+            $comments = $con->select("comments",Array("content","commentator","id","comment_time"),Array(Array("messu_id","=",intval($row["id"]))),'','ORDER BY comment_time DESC')->fetchAll();
+            $clist = new CommentList($commentlists, $comments, $row["id"]);
+            $tr->cells[0] = AddCommentIcon($comments, $row, $tr->cells[0]);
+
             if (!empty($row["teema"]))
-                $tr = $table->AddRow(Array(implode($pvm_list, ".") . ": " . $row["teema"]));
+                $theme = implode($pvm_list, ".") . ": " . $row["teema"];
             else
-                $tr = $table->AddRow(Array(implode($pvm_list, "."). ": (ei teemaa lisättynä)"));
+                $theme = implode($pvm_list, ".") . ": (ei teemaa lisättynä)";
+
+            $content_span = new DomEl("span", $theme, $tr->cells[0]);
             $tr->cells[0]->AddAttribute("class","messurow");
         }
         $tr->cells[0]->AddAttribute('id',"messu_" . $row["id"]);
@@ -162,8 +174,10 @@ function CreateMessulist($vastuu=''){
     }
 
     AddHidden($table->element,"vastuu",$vastuu);
+    echo $commentlists->Show();
     return $table->element->Show();
 }
+
 
 function CreateVastuuList(){
     $date = date('Y-m-d');
@@ -267,6 +281,11 @@ function UpdateMessudata($con){
                 date_default_timezone_set('Europe/Helsinki');
                 $date = date('Y-m-d H:i:s');
                 $con->insert("comments", Array("messu_id"=>$_POST["messu_id_comments"],"comment_time"=>$date,"content"=>$_POST["newcomment_text"],"commentator"=>""));
+            }
+            elseif (array_key_exists("themesubmit",$_POST)){
+                $con->update("messut",
+                    Array("teema" =>$_POST["messutheme"]),
+                    Array(Array("id","=",intval($_POST["theme_messu_id"]))));
             }
     }
 }
@@ -414,6 +433,28 @@ function InsertServices($con){
         $con->insert("kaudet", Array("alkupvm"=>$data[0]["pvm"],"loppupvm"=>$row["pvm"],"nimi"=>$_POST["newsname"]));
     }
 
+}
+
+function AddCommentIcon($comments, $row, $cell){
+        //showing the comments
+        $icon_span = new DomEl("span"," ",$cell);
+        $ta = "ta";
+        if (sizeof($comments)==1)
+            $ta = "";
+        $comtitle = sizeof($comments) . " huomio$ta tästä messusta";
+        $icon =  new DomEl("i","",$icon_span);
+        $icon->AddAttribute("title",$comtitle);
+        $icon->AddAttribute("commentcount",sizeof($comments));
+        if (sizeof($comments)==0){
+            $icon->AddAttribute("class","fa fa-comments inv");
+        }
+        else{
+            $icon->AddAttribute("class","fa fa-comments vis");
+        }
+
+        $icon->AddAttribute("messuid", $row["id"]);
+
+        return $cell;
 }
 
 ?>

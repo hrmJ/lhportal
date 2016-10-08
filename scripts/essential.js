@@ -1,18 +1,95 @@
+function FixOut(evt, direction){
+    var row = evt.target;
+    MouseFix('off', row);
+}
+
+function MouseFix(direction, row){
+    //Aika monimutkainen prosedyyri, jotta kommentti-ikonien väri olisi oikea hiiren ollessa päällä
+   var iconover = false;
+   if (row.tagName=='SPAN'){
+       var row = row.parentNode;
+   }
+   if (row.tagName=='I'){
+       var row = row.parentNode.parentNode;
+       iconover = true;
+   }
+   var icons = row.getElementsByClassName('fa');
+   var icon = icons[0];
+   var commentcount = icon.getAttribute('commentcount');
+   if(commentcount==0){
+       if (direction=='on'){
+           icon.style.color='white';
+       }
+       else{
+           icon.style.color='rgb(171, 3, 3)';
+       }
+   }
+   else{
+       if (direction=='on'){
+           icon.style.color='rgb(171, 3, 3)';
+           if(iconover==true){
+           }
+       }
+       else{
+           icon.style.color='white';
+       }
+   }
+}
+
+function CommentClick(evt){
+    var previous = document.getElementById('ncdiv');
+    if (previous !== null){
+        ClearContent(previous);
+        document.body.removeChild(previous);
+    }
+    var icon = evt.target;
+    var rect = icon.getBoundingClientRect();
+    var commentdiv = DomEl('div','ncdiv','commentlist');
+    var messuid = icon.getAttribute('messuid');
+    var clist = document.getElementById('clist_' + messuid).cloneNode(true);
+    commentdiv.appendChild(clist);
+    commentdiv.style.left = rect.left + 20 + "px";
+    commentdiv.style.top = rect.top + 5 + "px";
+    commentdiv.addEventListener('click',RemoveClist,false);
+    document.body.appendChild(commentdiv);
+}
+
+function RemoveClist(evt){
+    var previous = document.getElementById('ncdiv');
+    ClearContent(previous);
+    document.body.removeChild(previous);
+}
+
+
+function FixOver(evt){
+    var row = evt.target;
+    MouseFix('on', row);
+}
 
 function SelectMessu (evt){
-    var thisid = evt.target.getAttribute('id');
-    var messuid = thisid.substring(thisid.indexOf('_')+1);
-    var params = {"messuid":messuid,
-                  "teema": evt.target.getAttribute('teema'),
-                  "pvm": evt.target.getAttribute('pvm')};
-    paramlist = "";
-    for (var param_name in params){
-        if (paramlist !== ""){
-            paramlist += "&";
-        }
-        paramlist += param_name + "=" + params[param_name];
+    var td = evt.target;
+    if (td.tagName=='I'){
+        //Jos klikattu kommentti-ikonia
+        return 0;
     }
-    window.location.search = paramlist;
+    if (td.tagName=='SPAN'){
+        td = evt.target.parentNode;
+    }
+    if (td.hasAttribute('id')){
+        var thisid = td.getAttribute('id');
+        var messuid = thisid.substring(thisid.indexOf('_')+1);
+        var params = {"messuid":messuid,
+                      "teema": td.getAttribute('teema'),
+                      "pvm": td.getAttribute('pvm')};
+        paramlist = "";
+        for (var param_name in params){
+            if (paramlist !== ""){
+                paramlist += "&";
+            }
+            paramlist += param_name + "=" + params[param_name];
+        }
+        window.location.search = paramlist;
+    }
 }
 
 function SelectVastuu (evt){
@@ -233,5 +310,16 @@ function MenuClick(event){
     var child = event.target.children[0];
     if (child.tagName == 'A'){
         child.click();
+    }
+}
+
+function AddSaveButton(){
+    var form = document.getElementById('themeupdater');
+    if (document.getElementById("themesub") == null){
+        var submit = DomEl('input','themesub','smallsub');
+        submit.type = 'submit';
+        submit.name = 'themesubmit';
+        submit.value = 'Vaihda teema';
+        form.appendChild(submit);
     }
 }

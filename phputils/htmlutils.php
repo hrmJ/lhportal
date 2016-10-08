@@ -61,6 +61,16 @@ class Row{
 
 }
 
+class CommentList{
+    public function __construct ($par, $comments, $messuid) {
+            $this->list = new DomEl("ul"," ",$par);
+            $this->list->AddAttribute("id","clist_" . $messuid);
+            foreach($comments as $comment){
+                $li = new DomEl("li",$comment['content'],$this->list);
+            }
+    }
+}
+
 class DomEl{
 
     public function __construct ($tag,$text="",$parent=Null) {
@@ -100,6 +110,7 @@ function CreateList($li_items){
     $dom->appendChild($ul);
     return $dom->saveHTML();
 }
+
 
 
 ?>
