@@ -217,6 +217,24 @@ function MessuDetails($id, $url=''){
     return $table->element->Show();
 }
 
+function SongList($con, $id){
+    $result = $con->select("laulut",Array("tyyppi","nimi"),Array(Array("messu_id","=",$id)),'','ORDER by id')->fetchAll();
+    if (sizeof($result)==0){
+        return False;
+    }
+    else{
+        $div = new DomEl("div");
+        $div->AddAttribute("id","songdiv");
+        $table = new HtmlTable($div);
+        $table->element->AddAttribute("class","songtable");
+        foreach($result as $row){
+            $tr = $table->AddRow(Array($row["tyyppi"],$row["nimi"]));
+            $tr->element->AddAttribute("class","songtr");
+        }
+        return $table->element->Show();
+    }
+}
+
 function SaveGetParams(){
     $urlparams .= "?";
 

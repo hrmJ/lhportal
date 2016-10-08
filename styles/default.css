@@ -123,7 +123,7 @@ select{
 .rightcontent{
 }
 
-#contentlist{
+#contentlist, #songs{
     max-width:24em;
     margin:auto;
     padding-top: 2em;
@@ -256,6 +256,37 @@ tr:hover{
     color:rgb(171, 3, 3);
     cursor: pointer; 
     cursor: hand;
+}
+
+.songtr:hover{
+    cursor: auto;
+    background:auto;
+}
+.songtr{
+    color: rgb(138, 1, 1);;
+    background:white;
+    /*background:#ead9d9*/
+}
+
+#songdiv{
+    display:none;
+}
+
+#songs{
+    border-top: 2px solid white;
+    padding:1em;
+    background: darkgray;
+}
+
+
+.songtr td:first-child{
+    padding-left:1.2em;
+    padding-right:.8em;
+}
+
+.songtr td:nth-child(2){
+    padding-left:1.4em;
+    padding-right:.4em;
 }
 
 .right:hover{

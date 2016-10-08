@@ -173,6 +173,19 @@ function getURLParameter(name) {
   return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(/\+/g, '%20')) || null;
 }
 
+function ShowSongList(){
+    var element = document.getElementById('songdiv');
+    var songswitch = document.getElementById('songswitch');
+    if(element.style.display=="block"){
+        element.style.display = "none";
+        songswitch.innerText = "Näytä messun laulut" ;
+    }
+    else{
+        element.style.display = "block";
+        songswitch.innerText = "Piilota laulut" ;
+    }
+}
+
 function ShowSettings(){
     var element = document.getElementById('menu');
     var bannerheight = document.getElementById('leftbanner').offsetHeight;

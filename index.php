@@ -122,16 +122,23 @@ $con = new DbCon();
         echo $messulist; 
 
         if (isset($_GET["pvm"])){
-        ?>
-        <section id="comments">
-            <form name='commentform' id='commentform' method="post" action="<?php echo $url;?>">
-            <input class='hidden' value="<?php echo $_GET['messuid'];?>" name="messu_id_comments">
-                <a href='javascript:void(0);' onClick='AddComment();'>&#x25b7; Lisää infoasia/kommentti/kysymys/yms.</a>
-            </form>
-        <?php
-            LoadComments($con);
-            echo "</section>";
-        }
+            $songlist =  SongList($con, $_GET["messuid"]); 
+            if ($songlist !== False){ 
+                echo "<section id='songs'>";
+                    echo "<p class='centerp'><a href='javascript:void(0);' id='songswitch' title='Näytä messussa soitettavat laulut' onClick='ShowSongList();'>Näytä messun laulut</a></p>\n";
+                    echo $songlist;
+                echo "</section>";
+            }
+            ?>
+            <section id="comments">
+                <form name='commentform' id='commentform' method="post" action="<?php echo $url;?>">
+                <input class='hidden' value="<?php echo $_GET['messuid'];?>" name="messu_id_comments">
+                    <a href='javascript:void(0);' onClick='AddComment();'>&#x25b7; Lisää infoasia/kommentti/kysymys/yms.</a>
+                </form>
+            <?php
+                LoadComments($con);
+                echo "</section>";
+            }
         ?>
 
 </article>
