@@ -84,38 +84,10 @@ function SeasonWarning($sname,$change){
         return $sname . $text;
 }
 
-function CreateMessulist($vastuu=''){
-    $date = date('Y-m-d');
-    $con = new DbCon();
+function CreateMessulist($con, $vastuu=''){
+    $kausi = SetSeason($con);
 
-    #1. KAUDEN valinta
-    if(!isset($_SESSION["kausi"])){
-        $kausi =  GetSeason($con, $date);
-        $_SESSION["kausi"] = $kausi;
-    }
-    else{
-        $kausi = $_SESSION["kausi"];
-        if(isset($_GET['kausi'])){
-            #Jos halutaan siirtyä tarkastelemaan seuraavaa tai edellistä messukautta
-            $change = $_GET['kausi'];
-            if($change == 'previous')
-                $date = $_SESSION["kausi"]["alkupvm"];
-            else if($change == 'next')
-                $date = $_SESSION["kausi"]["loppupvm"];
-            $newseason =  GetSeason($con, $date, $change);
-            #Tarkista, onko edellistä / seuraavaa kautta
-            if(isset($newseason))
-                $kausi = $newseason;
-            else{
-                $_SESSION["kausi"]["nimi"] = SeasonWarning($_SESSION["kausi"]["nimi"],$change);
-                $kausi = $_SESSION["kausi"];
-            }
-            $_SESSION["kausi"] = $kausi;
-        }
-    }
-
-    #2. MESSULISTA
-    
+    #MESSULISTA
     $commentlists = new DomEl("div", " ");
     $commentlists->AddAttribute("class","hidden");
 
@@ -217,22 +189,175 @@ function MessuDetails($id, $url=''){
     return $table->element->Show();
 }
 
-function SongList($con, $id){
-    $result = $con->select("laulut",Array("tyyppi","nimi"),Array(Array("messu_id","=",$id)),'','ORDER by id')->fetchAll();
-    if (sizeof($result)==0){
-        return False;
+
+function SetSeason($con){
+
+    $date = date('Y-m-d');
+
+    #1. KAUDEN valinta
+    if(!isset($_SESSION["kausi"])){
+        $kausi =  GetSeason($con, $date);
+        $_SESSION["kausi"] = $kausi;
     }
     else{
-        $div = new DomEl("div");
-        $div->AddAttribute("id","songdiv");
-        $table = new HtmlTable($div);
-        $table->element->AddAttribute("class","songtable");
-        foreach($result as $row){
-            $tr = $table->AddRow(Array($row["tyyppi"],$row["nimi"]));
-            $tr->element->AddAttribute("class","songtr");
+        $kausi = $_SESSION["kausi"];
+        if(isset($_GET['kausi'])){
+            #Jos halutaan siirtyä tarkastelemaan seuraavaa tai edellistä messukautta
+            $change = $_GET['kausi'];
+            if($change == 'previous')
+                $date = $_SESSION["kausi"]["alkupvm"];
+            else if($change == 'next')
+                $date = $_SESSION["kausi"]["loppupvm"];
+            $newseason =  GetSeason($con, $date, $change);
+            #Tarkista, onko edellistä / seuraavaa kautta
+            if(isset($newseason))
+                $kausi = $newseason;
+            else{
+                $_SESSION["kausi"]["nimi"] = SeasonWarning($_SESSION["kausi"]["nimi"],$change);
+                $kausi = $_SESSION["kausi"];
+            }
+            $_SESSION["kausi"] = $kausi;
         }
-        return $table->element->Show();
     }
+
+    return $kausi;
+}
+
+function FetchServiceList(){
+
+    #2. MESSULISTA
+    
+    $commentlists = new DomEl("div", " ");
+    $commentlists->AddAttribute("class","hidden");
+
+    $result = $con->select("messut",Array("pvm","teema","id"),Array(Array("pvm",">=",$kausi["alkupvm"]),Array("pvm","<=",$kausi["loppupvm"])),"","ORDER BY pvm")->fetchAll();
+
+}
+
+function GetDateList($con){
+    #Tehdään lista kaista tämän kauden messuista
+    $kausi = SetSeason($con);
+    $messut = $con->select("messut",Array("pvm","teema","id"),Array(Array("pvm",">=",$kausi["alkupvm"]),Array("pvm","<=",$kausi["loppupvm"])),"","ORDER BY pvm")->fetchAll();
+    if(isset($_GET["messupvm"])){
+        $dstring = date_format(date_create_from_format('d.m.Y', $_GET["messupvm"]), 'Y-m-d');
+        $idrows = $con->select("messut",Array("id"),Array(Array("pvm","=",$dstring)),"","")->fetchAll();
+        $datechange = True;
+    }
+    else{
+        $dateset = False;
+    }
+    $select = new DomEl("select");
+    $select->AddAttribute('id',"pvmlist");
+    $select->AddAttribute('name',"pvmlist");
+    $date = date('Y-m-d');
+    $pickedid = False;
+    foreach($messut as $messu){
+        $litext = FormatPvm($messu["pvm"]);
+        $option = new DomEl('option',$litext,$select);
+        if(strtotime($messu["pvm"])>=strtotime($date) and $dateset==False and $datechange==False){
+            #Jos ei muuta valittu, valitse oletuksena tätä ensimmäinen
+            #tämän päivän jälkeinen sunnuntai
+            $dateset = True;
+            $option->AddAttribute("selected","selected");
+            $pickedid = $messu["id"];
+        }
+        elseif($datechange==True){
+            if($messu["id"] == $idrows[0]["id"]){
+                $dateset = True;
+                $option->AddAttribute("selected","selected");
+                $pickedid = $messu["id"];
+            }
+        }
+        }
+    echo $select->Show();
+    return $pickedid;
+}
+
+function SongListForInsertion($pickedid, $con, $divid="songdiv"){
+    #1.Haetaan kaikki tähän messuun aikaisemmin tallennetut laulut
+    $result = $con->select("laulut",Array("tyyppi","nimi"),Array(Array("messu_id","=",$pickedid)),'','ORDER by id')->fetchAll();
+
+    #2. Luodaan taulukko 
+    $table = new HtmlTable();
+    $table->element->AddAttribute("id","songtable");
+
+    #3. Täytetään
+    $songtypes  = Array("Alkulaulu","Päivän laulu","Loppulaulu");
+    foreach($songtypes as $songtype){
+        #Säilytä järjestys ja täytä kaikki tietokannasta löytyvät
+        $tr = $table->AddRow(Array($songtype,""));
+        $songtitle = "";
+        foreach($result as $row){
+            #Käy jokaisen laulutyypin osalta läpi koko tietokantatulos ja täytä, jos löytyy
+            if($row["tyyppi"]==$songtype){
+                $songtitle = $row["nimi"];
+                break;
+            }
+        }
+        $input = AttachEditable($tr->cells[1], $songtype);
+        $input->AddAttribute("value", $songtitle);
+        $input->AddAttribute("class", "linestyle songeditinput");
+        $tr->cells[0]->AddAttribute("class","left");
+        $tr->cells[1]->AddAttribute("class","right");
+    }
+
+    return $table->element->Show();
+}
+
+function WsSongList($con, $id, $tyyppi){
+    #1. Haetaan kaikki tämän tyypin laulut
+    $result = $con->select("laulut",Array("tyyppi","nimi"),Array(Array("messu_id","=",$id),Array("tyyppi","=", $tyyppi)),'','ORDER by id')->fetchAll();
+
+    #2. Luodaan taulukko 
+    $table = new HtmlTable();
+    $table->element->AddAttribute("id", $tyyppi . "table");
+
+    #3. Täytetään
+    $tr=Null;
+    $idx = 1;
+    foreach($result as $row){
+        $tr = $table->AddRow(Array($tyyppi . " $idx",""));
+        $input = AttachEditable($tr->cells[1], $tyyppi . "_$idx");
+        $input->AddAttribute("value", $row["nimi"]);
+        $input->AddAttribute("class", "linestyle songeditinput editable" . $tyyppi);
+        $tr->cells[0]->AddAttribute("class","left");
+        $tr->cells[1]->AddAttribute("class","right");
+        $idx++;
+    }
+
+    if(!isset($tr)){
+        $tr = $table->AddRow(Array($tyyppi . " 1",""));
+        $input = AttachEditable($tr->cells[1], $tyyppi . "_1");
+        $input->AddAttribute("value", "");
+        $input->AddAttribute("class", "linestyle songeditinput editable" . $tyyppi);
+        $tr->cells[0]->AddAttribute("class","left");
+        $tr->cells[1]->AddAttribute("class","right");
+    }
+
+    return $table->element->Show();
+}
+
+
+function SongList($con, $id, $divid="songdiv"){
+    $result = $con->select("laulut",Array("tyyppi","nimi"),Array(Array("messu_id","=",$id)),'','ORDER by id')->fetchAll();
+    if (sizeof($result)==0){
+        $result = Array(Array("tyyppi"=>"Alkulaulu","nimi"=>""),
+            Array("tyyppi"=>"Päivän laulu","nimi"=>""),
+            Array("tyyppi"=>"Loppulaulu","nimi"=>"")
+        );
+    }
+    $div = new DomEl("div");
+    $div->AddAttribute("id", $divid);
+    $table = new HtmlTable($div);
+    $table->element->AddAttribute("class","songtable");
+    $table->element->AddAttribute("id","songtable");
+    foreach($result as $row){
+        $tr = $table->AddRow(Array($row["tyyppi"],$row["nimi"]));
+        $tr->cells[1]->AddAttribute("class","editable right");
+        $input = AttachEditable($tr->cells[1], $row["nimi"]);
+        $input->AddAttribute("class","songeditinput linestyle");
+    }
+    return $table->element->Show();
 }
 
 function SaveGetParams(){
@@ -473,6 +598,54 @@ function AddCommentIcon($comments, $row, $cell){
         $icon->AddAttribute("messuid", $row["id"]);
 
         return $cell;
+}
+
+function FetchSongNames($con){
+    $result = $con->select("songs",Array("filename"),Array())->fetchAll();
+    foreach($result as $row){
+        if (!empty($row["filename"])){
+            $input = new DomEl('span',$row["filename"]);
+            $input->AddAttribute('class',"hidden songtitleentry");
+            echo $input->Show();
+        }
+    }
+}
+
+function UpdateSongData($con){
+    #Syötä laulut messuun id:n perusteella
+    if(isset($_POST["pickedid"])){
+        #Luo olio (poistaa kaikki vanhat laulut tällä id:llä)
+        $inserter = new SongInserter(intval($_POST["pickedid"]), $con);
+        #
+        $inserter->InsertSong("Alkulaulu",$_POST["Alkulaulu"]);
+        $inserter->InsertSong("Päivän laulu",$_POST["Päivän_laulu"]);
+        $inserter->InsertSong("Loppulaulu",$_POST["Loppulaulu"]);
+        foreach($_POST as $entry=>$val){
+            if(strpos($entry,"Ylistyslaulu") !== false){
+                $inserter->InsertSong("Ylistyslaulu",$val);
+            }
+            if(strpos($entry,"Ehtoollislaulu") !== false){
+                $inserter->InsertSong("Ehtoollislaulu",$val);
+            }
+        }
+
+        }
+}
+
+class SongInserter{
+
+    public function __construct ($messuid, $con) {
+        $this->con = $con;
+        $this->messuid = $messuid;
+        #Poista kaikki aikaisemmat tälle päivälle merkityt laulut
+        $this->con->query = $this->con->connection->prepare("DELETE FROM laulut WHERE messu_id = :mid");
+        $this->con->query->bindParam(':mid', $this->messuid, PDO::PARAM_STR);
+        $this->con->Run();
+    }
+
+    public function InsertSong($type, $name){
+        $this->con->insert("laulut", Array("messu_id"=>$this->messuid,"tyyppi"=>$type, "nimi"=>$name));
+    }
 }
 
 ?>

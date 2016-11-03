@@ -92,6 +92,12 @@ function SelectMessu (evt){
     }
 }
 
+function ChangeSongPvm (evt){
+    var pvmlist = evt.target;
+    var pvm = pvmlist[pvmlist.selectedIndex].text;
+    window.location.search = "messupvm=" + pvm;
+}
+
 function SelectVastuu (evt){
     var vastuulist = evt.target;
     var vastuu = vastuulist[vastuulist.selectedIndex].text;
@@ -250,7 +256,7 @@ function CreateInputs(){
         var formatted_date = year + "-" + month + "-" + day;
 
         //erikseen messukentät
-        var hidden_date = TextField('pvm_' + s_idx, 'hidden', formatteddate);
+        var hidden_date = TextField('pvm_' + s_idx, 'hidden', formatted_date);
         //teemalla on erityinen kentän nimi, siksi se erikseen taulukon ensimmäiseksi
         var inputs = [TextField('teema_' + s_idx, 'regular', '')];
         //ja kaikki tarvittavat vastuukentät
@@ -335,4 +341,28 @@ function AddSaveButton(){
         submit.value = 'Vaihda teema';
         form.appendChild(submit);
     }
+}
+
+function AddWsSong(type){
+    var table = document.getElementById(type + "table");
+    var row = document.createElement('tr');
+    var left = document.createElement('td');
+    var right = document.createElement('td');
+    left.className = "left";
+    right.className = "right";
+
+    var this_input = document.createElement('input');
+    this_input.type = 'text';
+    this_input.className = 'linestyle songeditinput editable' + type;
+    var allws = document.getElementsByClassName("editable" + type);
+
+    left.innerText = type + " " + (allws.length + 1);
+    this_input.name = type + "_" + (allws.length + 1);
+    right.appendChild(this_input);
+
+    row.appendChild(left);
+    row.appendChild(right);
+    table.appendChild(row);
+    //Liitä dynaamisestikin luotuun elementtiin autocomp
+    $( ".songeditinput" ).autocomplete({ source: songnames });
 }

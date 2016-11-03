@@ -54,49 +54,80 @@ $con = new DbCon();
 </head>
 <body>
 
+<?php
+UpdateSongData($con);
+?>
+
 <div id="songnames">
 <?php
+
 FetchSongNames($con);
+$url = SaveGetParams();
 ?>
 </div>
 
 <article id='maincontainer'>
+        <h2>Majakkamessun laulut</h2>
+        <form id="sform" method="post" action="<?php echo $url; ?>">
 
-        <?php
+            <p>
+            <?php 
+                $pickedid = GetDateList($con); 
+                #Tallennetaan valittu id
+                echo "<input type='text' class='hidden' name='pickedid' value='$pickedid'>";
+            ?>
+            </p>
 
-        $songlist =  SongList($con, $_GET["messuid"], "vsongdiv"); 
-        echo $songlist;
-        echo "<p><a onClick='AddWsSong(\"Ylistyslaulu\");'>Lisää ylistyslaulu</a></p>";
-        echo "<p><a onClick='AddWsSong(\"Ehtoollislaulu\");'>Lisää ehtoollislaulu</a></p>";
-        echo "<p><a onClick='AddWsSong(\"Ylistyslaulu\");'>Jumalan karitsan versio</a></p>";
-        echo "<p><a onClick='AddWsSong(\"Ylistyslaulu\");'>Pyhä-hymnin versio</a></p>";
-        ?>
+            <h3>Yksittäiset laulut</h3>
 
+
+            <?php
+            $songlist =  SongListForInsertion($pickedid, $con, "vsongdiv"); 
+            echo $songlist;
+            ?>
+            <h3>Ylistyslaulut</h3>
+            <?php
+                $wssonglist =  WsSongList($con, $pickedid, "Ylistyslaulu"); 
+                echo $wssonglist;
+            ?>
+            <p><input type="button" onClick='AddWsSong("Ylistyslaulu");' value="+"></p>
+            <h3>Ehtoollisen aikana laulettavat</h3>
+            <?php
+                $wssonglist =  WsSongList($con, $pickedid, "Ehtoollislaulu"); 
+                echo $wssonglist;
+            ?>
+            <p><input type="button" onClick='AddWsSong("Ehtoollislaulu");' value="+"></p>
+
+            <h3>Liturgiset</h3>
+
+            <p><input type="submit" name="sbut" id="sbut" value="Tallenna tiedot"></p>
+
+
+        </form>
 </article>
 
 <script src="scripts/essential.js"></script>
 <script>
-    //Add listeners
-    var editables = document.getElementsByClassName('editable');
-    for(var row_idx = 0; row_idx < editables.length;row_idx++){
-        var editable = editables[row_idx];
-        var e_row = editable.parentElement.parentElement;
-        e_row.addEventListener('click',edit,false);
+    //A GLOBAL(!) variable for the songnames
+    var songnames = [];
+    var snamespans = document.getElementsByClassName('songtitleentry');
+    for(spidx in snamespans){
+        var thisspan = snamespans[spidx];
+        if (thisspan.innerText !== undefined){
+            songnames.push(thisspan.innerText);
+        }
     }
 
+    //Add listeners
+    var pvmlist = document.getElementById('pvmlist');
+    pvmlist.addEventListener('change',ChangeSongPvm,false);
+
   $( function() {
-      var songnames = [];
-      var snamespans = document.getElementsByClassName('songtitleentry');
-      for(spidx in snamespans){
-          var thisspan = snamespans[spidx];
-          if (thisspan.innerText !== undefined){
-              songnames.push(thisspan.innerText);
-          }
-      }
     $( ".songeditinput" ).autocomplete({
       source: songnames
     });
   } );
+
 </script>
 
 

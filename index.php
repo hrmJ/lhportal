@@ -54,7 +54,7 @@ $con = new DbCon();
                 $vastuu = "";
             }
         }
-        $messulist =  CreateMessulist($vastuu, $url);
+        $messulist =  CreateMessulist($con, $vastuu);
         $vastuulist =  CreateVastuuList();
     }
     elseif(isset($_GET["messuid"])){
