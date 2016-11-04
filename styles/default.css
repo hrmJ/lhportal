@@ -380,6 +380,14 @@ input#messutheme{
     overflow:auto;
 }
 
+#wordview{
+    max-width: 30em;
+    margin: 0 auto;
+}
+
+#editor{
+    display:none;
+}
 /*
 .commentlist li:nth-child(even) {
     background:green;
@@ -402,12 +410,12 @@ input#messutheme{
 }
 
 
-#maincontainer a, #maincontainer a:visited, #maincontainer a:active{
+ a,  a:visited,  a:active{
     text-decoration:none;
     color:black;
 }
 
-#maincontainer a:hover{
+ a:hover{
     color: rgb(171, 3, 3);
 
 }
@@ -511,6 +519,8 @@ label {
     padding-bottom:1.5em;
 }
 
+
+
 #menu ul{
     margin-left: 0px;
     list-style-type: none;
@@ -520,6 +530,21 @@ label {
 
 #syotto_ots{
     margin-top:3em;
+}
+
+
+a.lyricslink, a.lyricslink:active, a.lyricslink:visited{
+    color:white;
+}
+
+.lyricslinkcell{
+    background: #86884B;
+    padding:0.5em;
+}
+
+.lyricslinkcell:hover{
+    background: black;
+    padding:0.5em;
 }
 
 input[type = submit].smallsub{

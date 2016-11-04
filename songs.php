@@ -58,6 +58,7 @@ $con = new DbCon();
 UpdateSongData($con);
 ?>
 
+
 <div id="songnames">
 <?php
 
@@ -69,6 +70,12 @@ $url = SaveGetParams();
 <article id='maincontainer'>
         <h2>Majakkamessun laulut</h2>
         <form id="sform" method="post" action="<?php echo $url; ?>">
+
+            <div id="editor">
+                <p><textarea id="editarea" name="editedsong"></textarea></p>
+                <p><input type="submit" name="editsub" id="editsub" onClick="submitedit();" value="Tallenna tiedot"></p>
+                <input class='hidden' name="edited_song_name" value="none" id="edited_song_name">
+            </div>
 
             <p>
             <?php 
@@ -82,7 +89,7 @@ $url = SaveGetParams();
 
 
             <?php
-            $songlist =  SongListForInsertion($pickedid, $con, "vsongdiv"); 
+            $songlist =  SongListForInsertion($pickedid, $con, Array("Alkulaulu","Päivän laulu","Loppulaulu")); 
             echo $songlist;
             ?>
             <h3>Ylistyslaulut</h3>
@@ -99,6 +106,14 @@ $url = SaveGetParams();
             <p><input type="button" onClick='AddWsSong("Ehtoollislaulu");' value="+"></p>
 
             <h3>Liturgiset</h3>
+
+            <table id="songtable">
+            <thead></thead>
+            <tbody>
+                <tr><td class="left">Jumalan karitsa</td><td class="right"> <?php Liturgiset($con, "Jumalan karitsa"); ?></td></tr>
+                <tr><td class="left">Pyhä-hymni</td><td class="right"> <?php Liturgiset($con, "Pyhä-hymni"); ?></td></tr>
+            </tbody>
+            </table>
 
             <p><input type="submit" name="sbut" id="sbut" value="Tallenna tiedot"></p>
 
@@ -121,6 +136,20 @@ $url = SaveGetParams();
     //Add listeners
     var pvmlist = document.getElementById('pvmlist');
     pvmlist.addEventListener('change',ChangeSongPvm,false);
+
+    var lyricslinks = document.getElementsByClassName('lyricslink');
+    for(var idx = 0; idx < lyricslinks.length;idx++){
+        var link = lyricslinks[idx];
+        link.addEventListener('click',ShowWords,false);
+    }
+
+    //TODO lisää myös dyn.luotuihin
+    var lyricslinks = document.getElementsByClassName('right');
+    for(var idx = 0; idx < lyricslinks.length;idx++){
+        var link = lyricslinks[idx];
+        link.addEventListener('focusout',UpdateLyrics,false);
+    }
+
 
   $( function() {
     $( ".songeditinput" ).autocomplete({

@@ -60,11 +60,74 @@ function RemoveClist(evt){
     document.body.removeChild(previous);
 }
 
+function RemoveWordView(evt){
+    var previous = document.getElementById('wordview');
+    ClearContent(previous);
+    document.body.removeChild(previous);
+}
+
 
 function FixOver(evt){
     var row = evt.target;
     MouseFix('on', row);
 }
+
+function submitedit(){
+    document.getElementById("sbut").click();
+}
+
+function ShowWords(evt){
+    var previous = document.getElementById('wordview');
+    if (previous !== null){
+        //ClearContent(previous);
+        document.body.removeChild(previous);
+    }
+    var link = evt.target;
+    var songname = link.id.replace("link_","song_");
+    var rect = link.getBoundingClientRect();
+    var commentdiv = DomEl('div','wordview','commentlist');
+    //Lisää sanat
+    var addremover = false;
+    if(document.getElementById(songname)==undefined){
+        var worddiv = document.getElementById("editor").cloneNode(true);
+        var editarea = document.getElementById("editarea");
+        document.getElementById("edited_song_name").value=songname;
+        worddiv.style.display="block";
+    }
+    else{
+        var worddiv = document.getElementById(songname).cloneNode(true);
+        addremover = true;
+    }
+    commentdiv.appendChild(worddiv);
+    commentdiv.style.left = rect.left - 300 + "px";
+    commentdiv.style.top = rect.top + 5 + "px";
+    if(addremover==true){
+        commentdiv.addEventListener('click',RemoveWordView,false);
+    }
+
+
+    document.body.appendChild(commentdiv);
+}
+
+function UpdateLyrics(evt){
+    var td = evt.target;
+    if (td.tagName=="INPUT"){
+        td = td.parentElement;
+    }
+    //var tr = td.parentNode;
+    var newname = td.parentElement.children[1].children[0].value;
+    var linkid = "link_" + newname.replace(/ /g,"_");
+    var songid = "song_" + newname.replace(/ /g,"_");
+    var link = td.parentElement.children[2].children[0];
+    link.id = linkid;
+    if(document.getElementById(songid)==undefined){
+        link.innerText = "Lisää sanat";
+    }
+    else{
+        link.innerText = "Katso sanoja";
+    }
+}
+
 
 function SelectMessu (evt){
     var td = evt.target;

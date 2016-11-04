@@ -273,7 +273,7 @@ function GetDateList($con){
     return $pickedid;
 }
 
-function SongListForInsertion($pickedid, $con, $divid="songdiv"){
+function SongListForInsertion($pickedid, $con, $songtypes){
     #1.Haetaan kaikki tähän messuun aikaisemmin tallennetut laulut
     $result = $con->select("laulut",Array("tyyppi","nimi"),Array(Array("messu_id","=",$pickedid)),'','ORDER by id')->fetchAll();
 
@@ -282,10 +282,9 @@ function SongListForInsertion($pickedid, $con, $divid="songdiv"){
     $table->element->AddAttribute("id","songtable");
 
     #3. Täytetään
-    $songtypes  = Array("Alkulaulu","Päivän laulu","Loppulaulu");
     foreach($songtypes as $songtype){
         #Säilytä järjestys ja täytä kaikki tietokannasta löytyvät
-        $tr = $table->AddRow(Array($songtype,""));
+        $tr = $table->AddRow(Array($songtype,"",""));
         $songtitle = "";
         foreach($result as $row){
             #Käy jokaisen laulutyypin osalta läpi koko tietokantatulos ja täytä, jos löytyy
@@ -294,14 +293,23 @@ function SongListForInsertion($pickedid, $con, $divid="songdiv"){
                 break;
             }
         }
-        $input = AttachEditable($tr->cells[1], $songtype);
+        $input = AttachEditable($tr->cells[1], $songtype, "");
         $input->AddAttribute("value", $songtitle);
         $input->AddAttribute("class", "linestyle songeditinput");
         $tr->cells[0]->AddAttribute("class","left");
         $tr->cells[1]->AddAttribute("class","right");
+        CreateLyricsLink($tr, $row);
+
     }
 
     return $table->element->Show();
+}
+
+function CreateLyricsLink($tr, $row){
+    $tr->cells[2]->AddAttribute("class","lyricslinkcell");
+    $link = new DomEl("a", "Katso sanoja", $tr->cells[2]);
+    $link->AddAttribute("class","lyricslink");
+    $link->AddAttribute("id", "link_" . str_replace(' ', '_', $row["nimi"]));
 }
 
 function WsSongList($con, $id, $tyyppi){
@@ -316,22 +324,24 @@ function WsSongList($con, $id, $tyyppi){
     $tr=Null;
     $idx = 1;
     foreach($result as $row){
-        $tr = $table->AddRow(Array($tyyppi . " $idx",""));
+        $tr = $table->AddRow(Array($tyyppi . " $idx","",""));
         $input = AttachEditable($tr->cells[1], $tyyppi . "_$idx");
         $input->AddAttribute("value", $row["nimi"]);
         $input->AddAttribute("class", "linestyle songeditinput editable" . $tyyppi);
         $tr->cells[0]->AddAttribute("class","left");
         $tr->cells[1]->AddAttribute("class","right");
+        CreateLyricsLink($tr, $row);
         $idx++;
     }
 
     if(!isset($tr)){
-        $tr = $table->AddRow(Array($tyyppi . " 1",""));
+        $tr = $table->AddRow(Array($tyyppi . " 1","",""));
         $input = AttachEditable($tr->cells[1], $tyyppi . "_1");
         $input->AddAttribute("value", "");
         $input->AddAttribute("class", "linestyle songeditinput editable" . $tyyppi);
         $tr->cells[0]->AddAttribute("class","left");
         $tr->cells[1]->AddAttribute("class","right");
+        $tr->cells[2]->AddAttribute("class","right");
     }
 
     return $table->element->Show();
@@ -535,11 +545,27 @@ function ListSeasons(){
     echo $select->Show();
 }
 
+function Liturgiset($con, $type){
+    #$result = $con->select("kaudet", Array("id", "nimi","alkupvm","loppupvm"), Array(),"","ORDER BY loppupvm DESC")->fetchAll();
+    $select = new DomEl("select");
+    $select->AddAttribute('id', $type . "select");
+    $option = new DomEl('option','Valitse versio',$select);
+    $option = new DomEl('option','----',$select);
+    $result = Array();
+
+    $jk = Array("Versio 1 (Riemumessu)"=>"v1", "Versio 2 (Rantatalo = Oi Jumalan karitsa)"=>"v2", "Versio 3 (2. sävelmäsarja)"=>"v3");
+
+    foreach($jk as $easyname=>$value){
+        $litext = $row["nimi"];
+        $option = new DomEl('option',$litext,$select);
+        }
+    $option = new DomEl('option','Jokin muu',$select);
+    echo $select->Show();
+}
+
 function FormatPvm($pvm){
     $pvm_arr = ParseMonth($pvm);
     return ($pvm_arr["p"] . "." . $pvm_arr["kk"] . "." . $pvm_arr["v"]);
-
-
 }
 
 function InsertServices($con){
@@ -601,12 +627,29 @@ function AddCommentIcon($comments, $row, $cell){
 }
 
 function FetchSongNames($con){
-    $result = $con->select("songs",Array("filename"),Array())->fetchAll();
+    $result = $con->select("songs",Array("filename","id","title"),Array())->fetchAll();
     foreach($result as $row){
         if (!empty($row["filename"])){
-            $input = new DomEl('span',$row["filename"]);
-            $input->AddAttribute('class',"hidden songtitleentry");
-            echo $input->Show();
+            //Hae laulujen sanat
+            $verses = $con->select("verses",Array("content"),Array(Array("song_id","=",intval($row["id"]))),"","ORDER BY id")->fetchAll();
+
+            $span = new DomEl('span',$row["filename"]);
+            $span->AddAttribute('class',"hidden songtitleentry");
+            echo $span->Show();
+
+            $div = new DomEl('div',"");
+            $div->AddAttribute("id","song_" . str_replace(' ', '_', $row["filename"]));
+
+
+
+            $title = new DomEl('h3',$row["title"],$div);
+            foreach($verses as $verse){
+                $p = new DomEl('p',$verse["content"],$div);
+            }
+
+            #$p = new DomEl('p',"Sulje sanojen katselu klikkaamalla mihin tahansa laatikkoa",$div);
+
+            echo $div->Show();
         }
     }
 }
@@ -627,6 +670,12 @@ function UpdateSongData($con){
             if(strpos($entry,"Ehtoollislaulu") !== false){
                 $inserter->InsertSong("Ehtoollislaulu",$val);
             }
+        }
+
+        if($_POST["edited_song_name"]!=="none"){
+            var_dump($_POST["edited_song_name"]);
+            var_dump($_POST["editedsong"]);
+            die();
         }
 
         }
