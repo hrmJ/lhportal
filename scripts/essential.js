@@ -466,20 +466,32 @@ function AddWsSong(type){
     var row = document.createElement('tr');
     var left = document.createElement('td');
     var right = document.createElement('td');
+    var lyricslinkcell = document.createElement('td');
+    var allws = document.getElementsByClassName("editable" + type);
+
     left.className = "left";
     right.className = "right";
+    lyricslinkcell.className = "lyricslinkcell";
 
     var this_input = document.createElement('input');
     this_input.type = 'text';
     this_input.className = 'linestyle songeditinput editable' + type;
-    var allws = document.getElementsByClassName("editable" + type);
+    this_input.addEventListener('focusout',UpdateLyrics,false);
+
+    var this_link = document.createElement('a');
+    this_link.innerText = "Katso sanoja";
+    this_link.className = "lyricslink";
+    this_link.addEventListener('click',ShowWords,false);
+    
 
     left.innerText = type + " " + (allws.length + 1);
     this_input.name = type + "_" + (allws.length + 1);
     right.appendChild(this_input);
+    lyricslinkcell.appendChild(this_link);
 
     row.appendChild(left);
     row.appendChild(right);
+    row.appendChild(lyricslinkcell);
     table.appendChild(row);
     //Liitä dynaamisestikin luotuun elementtiin autocomp
     $( ".songeditinput" ).autocomplete({ source: songnames });

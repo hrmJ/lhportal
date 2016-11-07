@@ -298,18 +298,18 @@ function SongListForInsertion($pickedid, $con, $songtypes){
         $input->AddAttribute("class", "linestyle songeditinput");
         $tr->cells[0]->AddAttribute("class","left");
         $tr->cells[1]->AddAttribute("class","right");
-        CreateLyricsLink($tr, $row);
+        CreateLyricsLink($tr, $row["nimi"]);
 
     }
 
     return $table->element->Show();
 }
 
-function CreateLyricsLink($tr, $row){
+function CreateLyricsLink($tr, $name){
     $tr->cells[2]->AddAttribute("class","lyricslinkcell");
     $link = new DomEl("a", "Katso sanoja", $tr->cells[2]);
     $link->AddAttribute("class","lyricslink");
-    $link->AddAttribute("id", "link_" . str_replace(' ', '_', $row["nimi"]));
+    $link->AddAttribute("id", "link_" . str_replace(' ', '_', $name));
 }
 
 function WsSongList($con, $id, $tyyppi){
@@ -330,7 +330,8 @@ function WsSongList($con, $id, $tyyppi){
         $input->AddAttribute("class", "linestyle songeditinput editable" . $tyyppi);
         $tr->cells[0]->AddAttribute("class","left");
         $tr->cells[1]->AddAttribute("class","right");
-        CreateLyricsLink($tr, $row);
+        $tr->cells[2]->AddAttribute("class","lyricslinkcell");
+        CreateLyricsLink($tr, $row["nimi"]);
         $idx++;
     }
 
@@ -341,7 +342,8 @@ function WsSongList($con, $id, $tyyppi){
         $input->AddAttribute("class", "linestyle songeditinput editable" . $tyyppi);
         $tr->cells[0]->AddAttribute("class","left");
         $tr->cells[1]->AddAttribute("class","right");
-        $tr->cells[2]->AddAttribute("class","right");
+        $tr->cells[2]->AddAttribute("class","lyricslinkcell");
+        CreateLyricsLink($tr, "");
     }
 
     return $table->element->Show();
