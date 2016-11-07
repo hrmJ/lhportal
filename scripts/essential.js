@@ -63,7 +63,7 @@ function RemoveClist(evt){
 function RemoveWordView(evt){
     var previous = document.getElementById('wordview');
     ClearContent(previous);
-    document.body.removeChild(previous);
+    previous.style.display="none";
 }
 
 
@@ -73,44 +73,84 @@ function FixOver(evt){
 }
 
 function submitedit(){
-    document.getElementById("sbut").click();
+   //Tallenna muokattu arvo erikseen
+   document.getElementById("editedsong_hidden").value = document.getElementById("editarea").value;
+   document.getElementById("sbut").click();
 }
 
+
 function ShowWords(evt){
-    var previous = document.getElementById('wordview');
-    if (previous !== null){
-        //ClearContent(previous);
-        document.body.removeChild(previous);
-    }
+
     var link = evt.target;
-    var songname = link.id.replace("link_","song_");
+    while(link.tagName!=="A"){
+        link = link.children[0];
+    }
+
+
+    if(['jklink','pyhalink'].indexOf(link.id)>-1){
+        //Erityistapaus: jumalan karitsa ja pyhä
+        var sparent = link.parentNode;
+        while(sparent.tagName!=="TR"){
+            sparent = sparent.parentNode;
+        }
+        var select = link.parentNode.parentNode.children[1].children[0];
+        var songname = select[select.selectedIndex].id.replace("link_","song_");
+    }
+    else{
+        var songname = link.id.replace("link_","song_");
+    }
+    
     var rect = link.getBoundingClientRect();
-    var commentdiv = DomEl('div','wordview','commentlist');
-    //Lisää sanat
+    var commentdiv = document.getElementById("wordview");
+    ClearContent(commentdiv);
+
     var addremover = false;
     if(document.getElementById(songname)==undefined){
+        commentdiv.removeEventListener('click', RemoveWordView);
+        //Lisää sanat, jos laulua ei löydy
+        var title = document.getElementById("editedtitle");
+        //Laulun otsikko
+        title.innerText = songname.replace("song_","").replace(/_/g," ");
+
         var worddiv = document.getElementById("editor").cloneNode(true);
         var editarea = document.getElementById("editarea");
         document.getElementById("edited_song_name").value=songname;
         worddiv.style.display="block";
+        commentdiv.appendChild(worddiv);
+        commentdiv.style.left = rect.left - 300 + "px";
+        commentdiv.style.top = "10px";
     }
     else{
         var worddiv = document.getElementById(songname).cloneNode(true);
         addremover = true;
+        commentdiv.appendChild(worddiv);
+        commentdiv.style.left = rect.left - 300 + "px";
+        if(document.body.clientHeight/2<rect.top){
+            //commentdiv.style.top = (document.body.clientHeight/2 + 5) + "px";
+            if((document.body.clientHeight - commentdiv.clientHeight) > document.body.clientHeight/2){
+                commentdiv.style.top = document.body.clientHeight - commentdiv.clientHeight  + "px";
+            }
+            else{
+                commentdiv.style.top = document.body.clientHeight - (document.body.clientHeight - commentdiv.clientHeight - 5) + "px";
+            }
+        }
+        else{
+            commentdiv.style.top = rect.top + 5 + "px";
+        }
     }
-    commentdiv.appendChild(worddiv);
-    commentdiv.style.left = rect.left - 300 + "px";
-    commentdiv.style.top = rect.top + 5 + "px";
     if(addremover==true){
         commentdiv.addEventListener('click',RemoveWordView,false);
     }
 
-
-    document.body.appendChild(commentdiv);
+    commentdiv.style.display="block";
 }
 
 function UpdateLyrics(evt){
     var td = evt.target;
+    if(td.tagName=="SELECT"){
+        //Jos Jumalan karitsa tai Pyhä
+        return 0;
+    }
     if (td.tagName=="INPUT"){
         td = td.parentElement;
     }
@@ -128,6 +168,21 @@ function UpdateLyrics(evt){
     }
 }
 
+function UpdateLit(type){
+
+    if(type=="Jumalan karitsa"){
+        var sel = document.getElementById('Jumalan_karitsa_select');
+        var version = sel[sel.selectedIndex].id.replace(/link_/g,'');
+        document.getElementById('jumalan_karitsa').value=version;
+        console.log(document.getElementById('jumalan_karitsa').value);
+    }
+    else{
+        var sel = document.getElementById('Pyhä-hymni_select');
+        var version = sel[sel.selectedIndex].id.replace(/link_/g,'');
+        document.getElementById('pyhä-hymni').value=version;
+        console.log(document.getElementById('pyhä-hymni').value);
+    }
+}
 
 function SelectMessu (evt){
     var td = evt.target;

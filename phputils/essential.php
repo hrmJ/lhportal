@@ -348,26 +348,22 @@ function WsSongList($con, $id, $tyyppi){
 }
 
 
-function SongList($con, $id, $divid="songdiv"){
+function SongList($con, $id){
     $result = $con->select("laulut",Array("tyyppi","nimi"),Array(Array("messu_id","=",$id)),'','ORDER by id')->fetchAll();
     if (sizeof($result)==0){
-        $result = Array(Array("tyyppi"=>"Alkulaulu","nimi"=>""),
-            Array("tyyppi"=>"Päivän laulu","nimi"=>""),
-            Array("tyyppi"=>"Loppulaulu","nimi"=>"")
-        );
+        return False;
     }
-    $div = new DomEl("div");
-    $div->AddAttribute("id", $divid);
-    $table = new HtmlTable($div);
-    $table->element->AddAttribute("class","songtable");
-    $table->element->AddAttribute("id","songtable");
-    foreach($result as $row){
-        $tr = $table->AddRow(Array($row["tyyppi"],$row["nimi"]));
-        $tr->cells[1]->AddAttribute("class","editable right");
-        $input = AttachEditable($tr->cells[1], $row["nimi"]);
-        $input->AddAttribute("class","songeditinput linestyle");
+    else{
+        $div = new DomEl("div");
+        $div->AddAttribute("id","songdiv");
+        $table = new HtmlTable($div);
+        $table->element->AddAttribute("class","songtable");
+        foreach($result as $row){
+            $tr = $table->AddRow(Array($row["tyyppi"],$row["nimi"]));
+            $tr->element->AddAttribute("class","songtr");
+        }
+        return $table->element->Show();
     }
-    return $table->element->Show();
 }
 
 function SaveGetParams(){
@@ -548,16 +544,22 @@ function ListSeasons(){
 function Liturgiset($con, $type){
     #$result = $con->select("kaudet", Array("id", "nimi","alkupvm","loppupvm"), Array(),"","ORDER BY loppupvm DESC")->fetchAll();
     $select = new DomEl("select");
-    $select->AddAttribute('id', $type . "select");
+    $select->AddAttribute("OnChange","UpdateLit('$type');");
+    $select->AddAttribute('id', str_replace(' ','_', $type) . "_select");
     $option = new DomEl('option','Valitse versio',$select);
     $option = new DomEl('option','----',$select);
     $result = Array();
 
-    $jk = Array("Versio 1 (Riemumessu)"=>"v1", "Versio 2 (Rantatalo = Oi Jumalan karitsa)"=>"v2", "Versio 3 (2. sävelmäsarja)"=>"v3");
+    if($type=="Jumalan karitsa"){
+        $jk = Array("Versio 1 (Riemumessu)"=>"jk_v1", "Versio 2 (Rantatalo = Oi Jumalan karitsa)"=>"jk_v2", "Versio 3 (2. sävelmäsarja)"=>"jk_v3");
+    }
+    else{
+        $jk = Array("Versio 1 (Perus)"=>"pyh_v1", "Versio 2 (Pyhä Kuningas)"=>"pyh_v2", "Versio 3 (Olet pyhä)"=>"pyh_v6","Versio 4 (Pyhä yksi yhteinen 1)"=>"pyh_v4","Versio 5 (Pyhä yksi yhteinen 2)"=>"pyh_v5","Versio 6 (Virsi 134)"=>"pyh_v6","Versio 7 (Halleluja, kaikkivaltias hallitsee)"=>"pyh_v7");
+    }
 
     foreach($jk as $easyname=>$value){
-        $litext = $row["nimi"];
-        $option = new DomEl('option',$litext,$select);
+        $option = new DomEl('option',$easyname,$select);
+        $option->AddAttribute("id","link_$value");
         }
     $option = new DomEl('option','Jokin muu',$select);
     echo $select->Show();
@@ -663,6 +665,8 @@ function UpdateSongData($con){
         $inserter->InsertSong("Alkulaulu",$_POST["Alkulaulu"]);
         $inserter->InsertSong("Päivän laulu",$_POST["Päivän_laulu"]);
         $inserter->InsertSong("Loppulaulu",$_POST["Loppulaulu"]);
+        $inserter->InsertSong("Jumalan karitsa",$_POST["jumalan_karitsa"]);
+        $inserter->InsertSong("Pyhä-hymni",$_POST["pyhä-hymni"]);
         foreach($_POST as $entry=>$val){
             if(strpos($entry,"Ylistyslaulu") !== false){
                 $inserter->InsertSong("Ylistyslaulu",$val);
@@ -672,16 +676,62 @@ function UpdateSongData($con){
             }
         }
 
-        if($_POST["edited_song_name"]!=="none"){
-            var_dump($_POST["edited_song_name"]);
-            var_dump($_POST["editedsong"]);
-            die();
+        if($_POST["edited_song_name"]!=="none" and !isset($_SESSION['indicator'])){
+            //erota otsikko
+            $title = str_replace('song_', '', $_POST["edited_song_name"]);
+            $title = str_replace('_', ' ', $title);
+            //Sävel ja sanat (TODO)
+            $sav = "";
+            $san = "";
+            //pvm
+            $date = date('Y-m-d');
+            //Pilko säkeistöksi, jos 3 tai enemmän rivinloppua
+            $verses = preg_split("/(\\r|\\n){3,}/", $_POST['editedsong_hidden']);
+
+            //Syötä upouusi laulu suoraan tietokantaan
+            //JOS tänne päädytty sivun päivittämisen takia, älä syötä uutta!
+            $insert = True;
+            if(isset($_SESSION['insertedsongs'])){
+                if(in_array($title, $_SESSION['insertedsongs'])){
+                    $insert = False;
+                }
+            }
+
+            if($insert==True){
+                //Ensin metatiedot
+                $con->insert("songs", Array("title"=>$title,"filename"=>$title, "san"=>$san, "sav"=>$sav,"added"=>$date));
+                //Hae uuden biisin id, jos useampia tällä nimellä, ota viimeisin
+                $idrows = $con->select("songs",Array("id"),Array(Array("title","=",$title)),"","ORDER BY ID DESC")->fetchAll();
+                //Syötä säkeistöt
+                foreach($verses as $verse){
+                    $con->insert("verses", Array("content"=>$verse,"song_id"=>intval($idrows[0]["id"])));
+                }
+                if(!isset($_SESSION['insertedsongs'])){
+                    $_SESSION['insertedsongs'][] = $title;
+                }
+            }
         }
 
         }
 }
 
 class SongInserter{
+
+    public function __construct ($messuid, $con) {
+        $this->con = $con;
+        $this->messuid = $messuid;
+        #Poista kaikki aikaisemmat tälle päivälle merkityt laulut
+        $this->con->query = $this->con->connection->prepare("DELETE FROM laulut WHERE messu_id = :mid");
+        $this->con->query->bindParam(':mid', $this->messuid, PDO::PARAM_STR);
+        $this->con->Run();
+    }
+
+    public function InsertSong($type, $name){
+        $this->con->insert("laulut", Array("messu_id"=>$this->messuid,"tyyppi"=>$type, "nimi"=>$name));
+    }
+}
+
+class VerseInserter{
 
     public function __construct ($messuid, $con) {
         $this->con = $con;

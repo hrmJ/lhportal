@@ -380,14 +380,36 @@ input#messutheme{
     overflow:auto;
 }
 
+#editor p, #editor li{
+    font-size:71%;
+}
+
 #wordview{
-    max-width: 30em;
+    max-width: 25em;
+    max-height: 50em;
     margin: 0 auto;
+    padding: 2em;
+    background: rgb(230, 232, 184);
+    top:2px;
+    position:fixed;
+    border-radius:5px;
+    overflow:auto;
+    display: none;
+    /* border: 5px solid black; */
+    -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.56);
+    -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.56);
+    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.56);
+    font-family:monospace;
 }
 
 #editor{
     display:none;
 }
+
+#editor span{
+    margin-right:2em;
+}
+
 /*
 .commentlist li:nth-child(even) {
     background:green;
@@ -396,6 +418,15 @@ input#messutheme{
     background:white;
 }
 */
+
+.editor p{
+    font-size:70%;
+}
+
+#editarea{
+    width: 21em;
+    height: 30em;
+}
 
 .commentlist ul{
     list-style-type: none;

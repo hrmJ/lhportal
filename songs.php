@@ -34,13 +34,6 @@ if (isset($_SESSION['user_id'])){
 #JOS kirjauduttu onnistuneesti
 $con = new DbCon();
 
-    if(isset($_POST["newservices"])){
-        #Jos äsken syötetty uusia messuja:
-        InsertServices($con);
-        echo "<script>window.alert('Uudet messut syötetty onnistuneesti');</script>";
-    }
-
-
 ?>
 
 <html lang="fi">
@@ -54,6 +47,7 @@ $con = new DbCon();
 </head>
 <body>
 
+<form id="sform" method="post" action="<?php echo $url; ?>">
 <?php
 UpdateSongData($con);
 ?>
@@ -67,14 +61,25 @@ $url = SaveGetParams();
 ?>
 </div>
 
+<div id="wordview">
+
+</div>
+
 <article id='maincontainer'>
         <h2>Majakkamessun laulut</h2>
-        <form id="sform" method="post" action="<?php echo $url; ?>">
 
             <div id="editor">
-                <p><textarea id="editarea" name="editedsong"></textarea></p>
-                <p><input type="submit" name="editsub" id="editsub" onClick="submitedit();" value="Tallenna tiedot"></p>
-                <input class='hidden' name="edited_song_name" value="none" id="edited_song_name">
+                <h3 id="editedtitle"></h3>
+                <p>Tätä laulua ei ole vielä tietokannassa (ainakaan tämännimisenä). Lisäisitkö 
+                   ystävällisesti alla olevaan tekstilaatikkoon laulun sanat, niin että: </p>
+                <ol>
+                    <li> Älä kirjoita enää tekstikenttään laulun nimeä, vaan aloita suoraan 1. säkeistöstä
+                    <li> Erota säkeistöt, kertosäe ym. toisistaan yhdellä tyhjällä rivivälillä.
+                    <li> Paina lopuksi "Tallenna tiedot" -painiketta
+                    <li> Poistu tallentamatta painamalla "Peruuta"
+                </ol>
+                <p><textarea id="editarea">asldkjasd</textarea></p>
+                <p><span><input type="button" name="editsub" id="editsub" onClick="submitedit();" value="Tallenna tiedot"></span><span><input type="button" name="canceledit" id="canceledit" onClick="RemoveWordView();" value="Peruuta"></span></p>
             </div>
 
             <p>
@@ -110,16 +115,23 @@ $url = SaveGetParams();
             <table id="songtable">
             <thead></thead>
             <tbody>
-                <tr><td class="left">Jumalan karitsa</td><td class="right"> <?php Liturgiset($con, "Jumalan karitsa"); ?></td></tr>
-                <tr><td class="left">Pyhä-hymni</td><td class="right"> <?php Liturgiset($con, "Pyhä-hymni"); ?></td></tr>
+                <tr><td class="left">Jumalan karitsa</td><td class="right"> <?php Liturgiset($con, "Jumalan karitsa"); ?></td><td class="lyricslinkcell"><a id="jklink" class="lyricslink">Katso sanoja</a></td></tr>
+                <tr><td class="left">Pyhä-hymni</td><td class="right"> <?php Liturgiset($con, "Pyhä-hymni"); ?></td><td class="lyricslinkcell"><a id="pyhalink" class="lyricslink">Katso sanoja</a></td></tr>
             </tbody>
             </table>
 
             <p><input type="submit" name="sbut" id="sbut" value="Tallenna tiedot"></p>
 
 
-        </form>
 </article>
+
+
+<input class='hidden' name="jumalan_karitsa" value="none" id="jumalan_karitsa">
+<input class='hidden' name="pyhä-hymni" value="none" id="pyhä-hymni">
+<input class='hidden' name="edited_song_name" value="none" id="edited_song_name">
+<textarea class='hidden' name="editedsong_hidden" value="none" id="editedsong_hidden"></textarea>
+
+</form>
 
 <script src="scripts/essential.js"></script>
 <script>
@@ -141,6 +153,7 @@ $url = SaveGetParams();
     for(var idx = 0; idx < lyricslinks.length;idx++){
         var link = lyricslinks[idx];
         link.addEventListener('click',ShowWords,false);
+        link.parentNode.addEventListener('click',ShowWords,false);
     }
 
     //TODO lisää myös dyn.luotuihin
@@ -149,6 +162,7 @@ $url = SaveGetParams();
         var link = lyricslinks[idx];
         link.addEventListener('focusout',UpdateLyrics,false);
     }
+
 
 
   $( function() {
