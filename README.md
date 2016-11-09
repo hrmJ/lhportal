@@ -13,6 +13,5 @@ simppeleillä web-tekniikoilla (css, html, php, js).
 
 ## SQL-taulujen luonti
 
-mysqldump -d -h localhost -u root -p2Uad7as9 database01 > dumpfile.sql
-
+ks. sql/taulut.sql
 
