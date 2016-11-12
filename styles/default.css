@@ -27,6 +27,12 @@ a#help:hover{
     cursor:pointer;
 }
 
+.instr{
+    width:80%;
+    line-height:110%;
+    font-size:90%;
+}
+
 #menu a,#menu a:visited, #menu a:active{
     color:white;
     text-decoration:none;

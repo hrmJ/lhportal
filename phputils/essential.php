@@ -682,7 +682,7 @@ function UpdateSongData($con){
         $inserter->InsertSong("Päivän laulu",$_POST["Päivän_laulu"]);
         $inserter->InsertSong("Loppulaulu",$_POST["Loppulaulu"]);
         if (isset($_POST["new_Pyhä-hymni"])){
-            $con->insert("liturgiset", Array("songtype"=>"Pyhä-hymni","songnsme"=>$_POST["new_Pyhä-hymni"], "name"=>$_POST["new_Pyhä-hymni"]));
+            $con->insert("liturgiset", Array("songtype"=>"Pyhä-hymni","songname"=>$_POST["new_Pyhä-hymni"], "name"=>$_POST["new_Pyhä-hymni"]));
             $_POST["pyhä-hymni"] = $_POST["new_Pyhä-hymni"];
         }
         if (isset($_POST["new_Jumalan_karitsa"])){

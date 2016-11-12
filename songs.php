@@ -68,6 +68,37 @@ $url = SaveGetParams();
 <article id='maincontainer'>
         <h2>Majakkamessun laulut</h2>
 
+            <?php if(!isset($_POST["sbut"])){ ?>
+            <div class="instr">Moi! Niin kuin huomaat, messulaulujen ilmoittaminen on vähän muuttunut, mutta älä pelästy. Luulen ihan
+               oikeasti, että helpompaan suuntaan. Pari oleellista pointtia tähän liittyen:
+
+                <ol>
+                    <li> Vasemmalla ei aluksi näy listaa lauluista, mutta
+                        <em>kun alat kirjoittaa jotakin laulun nimeä esimerkiksi kohdan "Alkulaulu"
+                        viereiseen kenttään, ruudulle ilmestyy lista kaikista olemassaolevista
+                        lauluista, joissa näpyttelemäsi kirjaimet / sana esiintyy.</em>
+                    <li> Jos etsimäsi laulu on listassa, klikkaa sitä.
+                    <li> Voit katsella valitsemasi laulun sanoja klikkaamalla laulun viereistä "Katso sanoja" -linkkejä
+                    <li> Jos kyseisestä laulusta ei ole sanoja, linkissä lukee "lisää sanat"
+                    <li> Klikkaa siinä tapauksessa Lisää sanat -linkkiä, jolloin näyttöön ilmestyy uusi ikkuna
+                    <li> Kirjoita puuttuvat sanat suoraan ilmestyvään tekstikenttään ja paina "Tallenna"
+                    <li> Tiedot eivät enää lähde sähköpostitse eteenpäin, vaan tallentuvat Majakkaportaalin tietokantaan.
+                    <li> Kysy heti kun askarruttaa (vaikka juho.harme*at*gmail.com)!
+                </ol>
+
+             </div>
+
+            <?php } 
+            else{
+            ?>
+
+            <div class="instr">Hienoa! Tallensit uusia tietoja. Tällä hetkellä
+                    tämän messun lauluista on tallennettuna seuraavanlaiset faktat. Voit edelleen muokata
+                    lauluja, jos haluat. Muista tallentaa tiedot alhaalla olevalla painikkeella.
+
+             </div>
+            <?php }?>
+
             <div id="editor">
                 <h3 id="editedtitle"></h3>
                 <p>Tätä laulua ei ole vielä tietokannassa (ainakaan tämännimisenä). Lisäisitkö 
