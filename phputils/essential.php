@@ -552,22 +552,16 @@ function Liturgiset($con, $type, $pickedid){
     $option = new DomEl('option','Valitse versio',$select);
     $option = new DomEl('option','----',$select);
 
-    if($type=="Jumalan karitsa"){
-        $jk = Array("Versio 1 (Riemumessu)"=>"jk_v1", "Versio 2 (Rantatalo = Oi Jumalan karitsa)"=>"jk_v2", "Versio 3 (2. sävelmäsarja)"=>"jk_v3");
-    }
-    else{
-        $jk = Array("Versio 1 (Perus)"=>"pyh_v1", "Versio 2 (Pyhä Kuningas)"=>"pyh_v2", "Versio 3 (Olet pyhä)"=>"pyh_v6","Versio 4 (Pyhä yksi yhteinen 1)"=>"pyh_v4","Versio 5 (Pyhä yksi yhteinen 2)"=>"pyh_v5","Versio 6 (Virsi 134)"=>"pyh_v6","Versio 7 (Halleluja, kaikkivaltias hallitsee)"=>"pyh_v7");
-    }
-
+    $versions = $con->select("liturgiset", Array("name","songname"), Array(Array("songtype","=",$type)),'','ORDER by id')->fetchAll();
     $selected = "";
-    foreach($jk as $easyname=>$value){
-        $option = new DomEl('option',$easyname,$select);
-        $option->AddAttribute("id","link_$value");
+    foreach($versions as $version){
+        $option = new DomEl('option',$version["name"],$select);
+        $option->AddAttribute("id","link_" . $version["songname"]);
         if(isset($result)){
             #Valtse valmiiksi jumalan karisa/pyhä, jos jo asetettu
-            if($value==$result[0]["nimi"]){
+            if($version["songname"]==$result[0]["nimi"]){
                 $option->AddAttribute("selected","selected");
-                $selected = $value;
+                $selected = $version["songname"];
             }
         }
         }
@@ -687,6 +681,14 @@ function UpdateSongData($con){
         $inserter->InsertSong("Alkulaulu",$_POST["Alkulaulu"]);
         $inserter->InsertSong("Päivän laulu",$_POST["Päivän_laulu"]);
         $inserter->InsertSong("Loppulaulu",$_POST["Loppulaulu"]);
+        if (isset($_POST["new_Pyhä-hymni"])){
+            $con->insert("liturgiset", Array("songtype"=>"Pyhä-hymni","songnsme"=>$_POST["new_Pyhä-hymni"], "name"=>$_POST["new_Pyhä-hymni"]));
+            $_POST["pyhä-hymni"] = $_POST["new_Pyhä-hymni"];
+        }
+        if (isset($_POST["new_Jumalan_karitsa"])){
+            $con->insert("liturgiset", Array("songtype"=>"Jumalan karitsa","songname"=>$_POST["new_Jumalan_karitsa"], "name"=>$_POST["new_Jumalan_karitsa"]));
+            $_POST["jumalan_karitsa"] = $_POST["new_Jumalan_karitsa"];
+        }
         $inserter->InsertSong("Jumalan karitsa",$_POST["jumalan_karitsa"]);
         $inserter->InsertSong("Pyhä-hymni",$_POST["pyhä-hymni"]);
         #Tiedot tekniikalle

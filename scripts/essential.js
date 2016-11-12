@@ -3,6 +3,7 @@ function FixOut(evt, direction){
     MouseFix('off', row);
 }
 
+
 function MouseFix(direction, row){
     //Aika monimutkainen prosedyyri, jotta kommentti-ikonien väri olisi oikea hiiren ollessa päällä
    var iconover = false;
@@ -181,6 +182,24 @@ function UpdateLit(type){
         var version = sel[sel.selectedIndex].id.replace(/link_/g,'');
         document.getElementById('pyhä-hymni').value=version;
         console.log(document.getElementById('pyhä-hymni').value);
+    }
+
+    if(sel[sel.selectedIndex].innerText == "Jokin muu"){
+        console.log("...");
+        var this_input = document.createElement('input');
+        this_input.className = "liteditinput";
+        this_input.name = "new_" + type.replace(/ /g,'_');
+        sel.parentNode.appendChild(this_input);
+        $( ".liteditinput" ).autocomplete({ source: songnames });
+    }
+    else{
+        for(var idx=0;idx<sel.parentNode.children.length;idx++){
+            var thischild = sel.parentNode.children[idx];
+            if(thischild.tagName=="INPUT")
+            {
+                sel.parentNode.removeChild(thischild);
+            }
+        }
     }
 }
 

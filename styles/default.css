@@ -1,5 +1,7 @@
 body{
     font-family:Arial;
+    background:white;
+    /*background: -webkit-radial-gradient(-200% 40%, closest-corner, #FFF002, #969E98)*/
 }
 
 h2{

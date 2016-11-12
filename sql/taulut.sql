@@ -113,6 +113,29 @@ CREATE TABLE laulut (
 );
 
 
+CREATE TABLE liturgiset (
+  id int(10) unsigned NOT NULL AUTO_INCREMENT,
+  songtype varchar(100) DEFAULT NULL,
+  songname varchar(400) DEFAULT NULL,
+  name varchar(400) DEFAULT NULL,
+  PRIMARY KEY (id)
+);
+
+CREATE UNIQUE INDEX idx_liturgiset ON liturgiset(name);
+
+INSERT INTO `liturgiset` (`songtype`, `songname`, `name`) VALUES ('Jumalan karitsa', 'jk_v1', 'Versio 1 (Riemumessusta)') ON DUPLICATE KEY UPDATE name=name;
+INSERT INTO `liturgiset` (`songtype`, `songname`, `name`) VALUES ('Jumalan karitsa', 'jk_v2', 'Versio 2 (Rantatalo = Oi Jumalan karitsa)') ON DUPLICATE KEY UPDATE name=name;
+INSERT INTO `liturgiset` (`songtype`, `songname`, `name`) VALUES ('Jumalan karitsa', 'jk_v3', 'Versio 3 (2. sävelmäsarja)') ON DUPLICATE KEY UPDATE name=name;
+
+
+INSERT INTO `liturgiset` (`songtype`, `songname`, `name`) VALUES ('Pyhä-hymni', 'pyh_v1', 'Versio 1 (Perus)') ON DUPLICATE KEY UPDATE name=name;
+INSERT INTO `liturgiset` (`songtype`, `songname`, `name`) VALUES ('Pyhä-hymni', 'pyh_v2', 'Versio 2 (Pyhä Kuningas)') ON DUPLICATE KEY UPDATE name=name;
+INSERT INTO `liturgiset` (`songtype`, `songname`, `name`) VALUES ('Pyhä-hymni', 'pyh_v3', 'Versio 3 (Olet pyhä)') ON DUPLICATE KEY UPDATE name=name;
+INSERT INTO `liturgiset` (`songtype`, `songname`, `name`) VALUES ('Pyhä-hymni', 'pyh_v4', 'Versio 4 (Pyhä yksi yhteinen 1)') ON DUPLICATE KEY UPDATE name=name;
+INSERT INTO `liturgiset` (`songtype`, `songname`, `name`) VALUES ('Pyhä-hymni', 'pyh_v5', 'Versio 4 (Pyhä yksi yhteinen 2)') ON DUPLICATE KEY UPDATE name=name;
+INSERT INTO `liturgiset` (`songtype`, `songname`, `name`) VALUES ('Pyhä-hymni', 'pyh_v6', 'Versio 6 (Virsi 134)') ON DUPLICATE KEY UPDATE name=name;
+INSERT INTO `liturgiset` (`songtype`, `songname`, `name`) VALUES ('Pyhä-hymni', 'pyh_v7', 'Versio 7 (Halleluja, kaikkivaltias hallitsee)') ON DUPLICATE KEY UPDATE name=name;
+
 /*
 
  SONGS-taulussa on data itse laulujen sisällöstä.
