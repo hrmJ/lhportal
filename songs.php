@@ -121,9 +121,10 @@ $url = SaveGetParams();
             </table>
 
 
-            <h3>Muuta/h3>
+            <h3>Tiedot tekniikalle</h3>
             <p>
-            <textarea class='' name="editedsong_hidden" value="none" id="editedsong_hidden"></textarea>
+            <?php $techinfo=FetchTechInfo($pickedid, $con);?>
+            <textarea class='area' name="techinfo" value="<?php echo $techinfo;?>" id="techinfobox"><?php echo $techinfo;?></textarea>
             </p>
 
             <p><input type="submit" name="sbut" id="sbut" value="Tallenna tiedot"></p>

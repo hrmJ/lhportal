@@ -667,6 +667,17 @@ function FetchSongNames($con){
     }
 }
 
+function FetchTechInfo($pickedid, $con){
+    $result = $con->select("messut",Array("info"),Array(Array("id","=",intval($pickedid))),"","")->fetchAll();
+    $infostring = "Lisää tähän miksaajalle tiedoksi, mitä soitimia teillä on ja keitä soittajia.  Esimerkiksi: kitara (Ville V.), cajon (Hessu H.). Samoin, jos on jotain toiveita äänitekniikan suhteen, niin voit ilmoittaa niistä tässä. Tai mitä vain muuta viestiä :)";
+    if(!empty($result[0]["info"])){
+        return $result[0]["info"];
+    }
+    else{
+        return $infostring;
+    }
+}
+
 function UpdateSongData($con){
     #Syötä laulut messuun id:n perusteella
     if(isset($_POST["pickedid"])){
@@ -678,6 +689,10 @@ function UpdateSongData($con){
         $inserter->InsertSong("Loppulaulu",$_POST["Loppulaulu"]);
         $inserter->InsertSong("Jumalan karitsa",$_POST["jumalan_karitsa"]);
         $inserter->InsertSong("Pyhä-hymni",$_POST["pyhä-hymni"]);
+        #Tiedot tekniikalle
+        #TODO: jos info-kenttään jotain mutakin...
+        $con->update("messut", Array("info"=>$_POST["techinfo"]),Array(Array("id","=",intval($_POST["pickedid"]))));
+
         foreach($_POST as $entry=>$val){
             if(strpos($entry,"Ylistyslaulu") !== false){
                 $inserter->InsertSong("Ylistyslaulu",$val);

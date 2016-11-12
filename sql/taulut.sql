@@ -33,6 +33,7 @@ CREATE TABLE messut (
   id int(10) unsigned NOT NULL AUTO_INCREMENT,
   pvm date NOT NULL,
   teema varchar(100) NOT NULL,
+  info varchar(9999),
   PRIMARY KEY (id)
 );
 
