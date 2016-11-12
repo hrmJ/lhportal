@@ -543,14 +543,14 @@ function ListSeasons(){
     echo $select->Show();
 }
 
-function Liturgiset($con, $type){
-    #$result = $con->select("kaudet", Array("id", "nimi","alkupvm","loppupvm"), Array(),"","ORDER BY loppupvm DESC")->fetchAll();
+function Liturgiset($con, $type, $pickedid){
+    $result = $con->select("laulut",Array("tyyppi","nimi"),Array(Array("messu_id","=",$pickedid),Array("tyyppi","=",$type)),'','ORDER by id')->fetchAll();
+
     $select = new DomEl("select");
     $select->AddAttribute("OnChange","UpdateLit('$type');");
     $select->AddAttribute('id', str_replace(' ','_', $type) . "_select");
     $option = new DomEl('option','Valitse versio',$select);
     $option = new DomEl('option','----',$select);
-    $result = Array();
 
     if($type=="Jumalan karitsa"){
         $jk = Array("Versio 1 (Riemumessu)"=>"jk_v1", "Versio 2 (Rantatalo = Oi Jumalan karitsa)"=>"jk_v2", "Versio 3 (2. sävelmäsarja)"=>"jk_v3");
@@ -559,12 +559,21 @@ function Liturgiset($con, $type){
         $jk = Array("Versio 1 (Perus)"=>"pyh_v1", "Versio 2 (Pyhä Kuningas)"=>"pyh_v2", "Versio 3 (Olet pyhä)"=>"pyh_v6","Versio 4 (Pyhä yksi yhteinen 1)"=>"pyh_v4","Versio 5 (Pyhä yksi yhteinen 2)"=>"pyh_v5","Versio 6 (Virsi 134)"=>"pyh_v6","Versio 7 (Halleluja, kaikkivaltias hallitsee)"=>"pyh_v7");
     }
 
+    $selected = "";
     foreach($jk as $easyname=>$value){
         $option = new DomEl('option',$easyname,$select);
         $option->AddAttribute("id","link_$value");
+        if(isset($result)){
+            #Valtse valmiiksi jumalan karisa/pyhä, jos jo asetettu
+            if($value==$result[0]["nimi"]){
+                $option->AddAttribute("selected","selected");
+                $selected = $value;
+            }
+        }
         }
     $option = new DomEl('option','Jokin muu',$select);
     echo $select->Show();
+    return $selected;
 }
 
 function FormatPvm($pvm){

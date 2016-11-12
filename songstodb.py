@@ -13,7 +13,7 @@ from sqlalchemy.orm import sessionmaker
 import natsort
 
 #engine = create_engine('sqlite:////home/juho/Dropbox/srk/laulut.db', echo=False)
-engine = create_engine('mysql://testuser:testpw@localhost:3306/majakka_auth?charset=utf8', echo=False)
+engine = create_engine('mysql://root:4udo4ka@localhost:3306/majakka_auth?charset=utf8', echo=False)
 Base = declarative_base()
 
 #awk 'NR==1{sub(/^\xef\xbb\xbf/,"")}1' virsi\ 328\ nyt\ kiitos\ jumalan.txt > virsi\ 328\ nyt\ kiitos\ jumalan.txt

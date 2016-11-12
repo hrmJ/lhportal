@@ -115,10 +115,16 @@ $url = SaveGetParams();
             <table id="songtable">
             <thead></thead>
             <tbody>
-                <tr><td class="left">Jumalan karitsa</td><td class="right"> <?php Liturgiset($con, "Jumalan karitsa"); ?></td><td class="lyricslinkcell"><a id="jklink" class="lyricslink">Katso sanoja</a></td></tr>
-                <tr><td class="left">Pyhä-hymni</td><td class="right"> <?php Liturgiset($con, "Pyhä-hymni"); ?></td><td class="lyricslinkcell"><a id="pyhalink" class="lyricslink">Katso sanoja</a></td></tr>
+                <tr><td class="left">Jumalan karitsa</td><td class="right"> <?php $jkval = Liturgiset($con, "Jumalan karitsa", $pickedid); ?></td><td class="lyricslinkcell"><a id="jklink" class="lyricslink">Katso sanoja</a></td></tr>
+                <tr><td class="left">Pyhä-hymni</td><td class="right"> <?php $pyhval = Liturgiset($con, "Pyhä-hymni", $pickedid); ?></td><td class="lyricslinkcell"><a id="pyhalink" class="lyricslink">Katso sanoja</a></td></tr>
             </tbody>
             </table>
+
+
+            <h3>Muuta/h3>
+            <p>
+            <textarea class='' name="editedsong_hidden" value="none" id="editedsong_hidden"></textarea>
+            </p>
 
             <p><input type="submit" name="sbut" id="sbut" value="Tallenna tiedot"></p>
 
@@ -126,8 +132,8 @@ $url = SaveGetParams();
 </article>
 
 
-<input class='hidden' name="jumalan_karitsa" value="none" id="jumalan_karitsa">
-<input class='hidden' name="pyhä-hymni" value="none" id="pyhä-hymni">
+<input class='hidden' name="jumalan_karitsa" value="<?php echo $jkval;?>" id="jumalan_karitsa">
+<input class='hidden' name="pyhä-hymni" value="<?php echo $pyhval;?>" id="pyhä-hymni">
 <input class='hidden' name="edited_song_name" value="none" id="edited_song_name">
 <textarea class='hidden' name="editedsong_hidden" value="none" id="editedsong_hidden"></textarea>
 
