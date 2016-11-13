@@ -41,11 +41,17 @@ $con = new DbCon();
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
   <link rel="stylesheet" href="styles/default.css">
   <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <link rel="stylesheet" href="font-awesome-4.6.3/css/font-awesome.min.css">
   <script src="//code.jquery.com/jquery-1.10.2.js"></script>
   <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <title>Messujen syöttö järjestelmään</title>
 </head>
 <body>
+
+<?php
+CreateNavi(False, $url);
+require('menu.php');
+?>
 
 <form id="sform" method="post" action="<?php echo $url; ?>">
 <?php
@@ -184,6 +190,7 @@ $url = SaveGetParams();
     }
 
     //Add listeners
+    document.getElementById('homeli').addEventListener('click',function(){window.location='index.php';});
     var pvmlist = document.getElementById('pvmlist');
     pvmlist.addEventListener('change',ChangeSongPvm,false);
 

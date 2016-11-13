@@ -28,6 +28,55 @@ echo '<html lang="fi">
      #<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
 }
 
+function CreateNavi($vastuulist, $url){
+
+    $section = new DomEl('section','');
+    $section->AddAttribute('id','leftbanner');
+
+    $form = new DomEl('form','',$section);
+    $form->AddAttribute('action',$url);
+    $form->AddAttribute('method','GET');
+
+    $span = new DomEl('span','',$form);
+    $span->AddAttribute('class','menuleft');
+
+    $ul = new DomEl('ul','',$span);
+    $li = new DomEl('li','',$ul);
+    $icon = new DomEl('i','',$li);
+    $icon->AddAttribute('class','fa fa-bars');
+    $icon->AddAttribute('id','settings');
+    $icon->AddAttribute('karia-hidden','true');
+    $icon->AddAttribute('onClick','ShowSettings();');
+    $icon->AddAttribute('onClick','ShowSettings();');
+    $li = new DomEl('li','Majakkaportaali',$ul);
+    $li->AddAttribute('id','homeli');
+    $li->AddAttribute('title','Takaisin alkunäkymään');
+
+    if($vastuulist == True){
+        $span = new DomEl('span','',$form);
+        $span->AddAttribute('class','menuright');
+        $ul = new DomEl('ul','',$span);
+        $li = new DomEl('li','',$ul);
+        CreateVastuuList($li);
+
+        #Tallenna vielä tieto kausista
+        $input1 = new DomEl('input','',$form);
+        $input1->AddAttribute('name','kausi');
+        $input1->AddAttribute('class','hidden');
+        $input1->AddAttribute('id','kausi_input');
+
+        #Ja tee niiden vaihto mahdolliseksi
+        $input1 = new DomEl('input','',$form);
+        $input1->AddAttribute('name','seasonsubmit');
+        $input1->AddAttribute('class','hidden');
+        $input1->AddAttribute('id','seasonsubmit');
+        $input1->AddAttribute('type','submit');
+    }
+
+    echo $section->Show();
+}
+
+
 function AttachEditable($parent, $name){
     $input = new DomEl('input','',$parent);
     $input->AddAttribute('type',"text");
@@ -151,12 +200,12 @@ function CreateMessulist($con, $vastuu=''){
 }
 
 
-function CreateVastuuList(){
+function CreateVastuuList($parent){
     $date = date('Y-m-d');
     $con = new DbCon();
     $result = $con->select("vastuut",Array("vastuu"),Array(),"DISTINCT")->fetchAll();
 
-    $select = new DomEl("select");
+    $select = new DomEl("select",'',$parent);
     $select->AddAttribute('id',"vastuulist");
     $option = new DomEl('option','Yleisnäkymä',$select);
     $option = new DomEl('option','----',$select);
@@ -164,7 +213,7 @@ function CreateVastuuList(){
         $litext = $row["vastuu"];
         $option = new DomEl('option',$litext,$select);
         }
-    return $select->Show();
+    return $select;
 }
 
 function MessuDetails($id, $url=''){

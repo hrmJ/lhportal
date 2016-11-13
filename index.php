@@ -45,6 +45,8 @@ $con = new DbCon();
     UpdateMessudata($con);
     #Hae url-parametrit talteen
     $url = SaveGetParams();
+    #Aseta vastuulista tyhjäksi ja muuta tätä, jos messulistanäkymässä
+    $vastuulist = False;
 
     if (!isset($_GET["messuid"]) OR !isset($_GET)){
         $vastuu = '';
@@ -55,7 +57,7 @@ $con = new DbCon();
             }
         }
         $messulist =  CreateMessulist($con, $vastuu);
-        $vastuulist =  CreateVastuuList();
+        $vastuulist =  True;
     }
     elseif(isset($_GET["messuid"])){
         #Yksittäinen messunäkymä
@@ -87,28 +89,9 @@ $con = new DbCon();
 <body>
 
 
-        <?php
-        if (sizeof($_GET)>0){
-            # Muu kuin alkunäkymä
-            require('nav.php');
-        }
-        if (!isset($_GET["messuid"]) OR !isset($_GET)){
-            # Alkunäkymä
-            require('alkunav.php');
-        }
-        if(isset($h2)){
-            $index = $_SERVER['PHP_SELF'];
-            echo "<section id='leftbanner'>";
-            echo"<span class='menuleft'>
-            <ul>
-                <li><i class='fa fa-bars' id='settings' onClick='ShowSettings();' karia-hidden='true'></i></li>
-                <li id='homeli' title='Takaisin alkunäkymään'>Majakkaportaali</li>
-                <li><a href='$index'>&#x25c1; Palaa alkuun</a></li>
-            </ul>
-            </span>";
-            echo "</section>";
-        }
-        ?>
+<?php
+CreateNavi($vastuulist, $url);
+?>
 
 <article id='maincontainer'>
 
@@ -143,36 +126,11 @@ $con = new DbCon();
 
 </article>
 
-<div id='menu'>
-
-    <?php
-    $seasonname = $_SESSION["kausi"]["nimi"];
-    $nextseason = $url . "&kausi=next&";
-    $prevseason = $url . "&kausi=previous&";
-    ?>
-    <ul>
-        <li class='menuli'><a href='#'>Lue ohjeet</a></li>
-        <li class='' title='Vaihda edelliseen tai seuraavaan kauteen'> 
-            <a href="javascript:void(0);" onClick='SwitchSeason("edellinen");'>
-                <i class="fa fa-backward" title="Vaihda edelliseen kauteen" aria-hidden="true"></i>
-            </a> 
-
-            <em><?php echo $seasonname; ?></em> 
-
-            <a href="javascript:void(0);" title="Vaihda seuraavaan kauteen" onClick='SwitchSeason("seuraava");'>
-                <i class="fa fa-forward" aria-hidden="true"></i>
-            </a> 
-        </li>
-        <li class='menuli'><a href='index.php?logout=Yes'>Kirjaudu ulos</a></li>
-        <li class='menuli'><a href='insert_messudata.php'>Syötä uusia messuja</a></li>
-        <li class='menuli'><a href='uusivastuu.php'>Syötä uusia vastuutyyppejä</a></li>
-    </ul>
-</div>
+<?php require('menu.php');?>
 
 <script>
     //Add listeners
     document.getElementById('homeli').addEventListener('click',function(){window.location='index.php';});
-    document.getElementById('settings').addEventListener('click',ShowSettings,false);
     var messurows = document.getElementsByClassName('messurow');
     for(var row_idx = 0; row_idx < messurows.length;row_idx++){
         var messurow = messurows[row_idx];
