@@ -515,3 +515,7 @@ function AddWsSong(type){
     //Liitä dynaamisestikin luotuun elementtiin autocomp
     $( ".songeditinput" ).autocomplete({ source: songnames });
 }
+
+function CreateSlides(messu_id){
+    window.open('diat.php?id=' + messu_id);
+}

@@ -78,7 +78,7 @@ $url = SaveGetParams();
             <div class="instr">Moi! Niin kuin huomaat, messulaulujen ilmoittaminen on vähän muuttunut, mutta älä pelästy. Luulen ihan
                oikeasti, että helpompaan suuntaan. Pari oleellista pointtia tähän liittyen:
 
-                <ol>
+                <ul>
                     <li> Vasemmalla ei aluksi näy listaa lauluista, mutta
                         <em>kun alat kirjoittaa jotakin laulun nimeä esimerkiksi kohdan "Alkulaulu"
                         viereiseen kenttään, ruudulle ilmestyy lista kaikista olemassaolevista
@@ -89,8 +89,8 @@ $url = SaveGetParams();
                     <li> Klikkaa siinä tapauksessa Lisää sanat -linkkiä, jolloin näyttöön ilmestyy uusi ikkuna
                     <li> Kirjoita puuttuvat sanat suoraan ilmestyvään tekstikenttään ja paina "Tallenna"
                     <li> Tiedot eivät enää lähde sähköpostitse eteenpäin, vaan tallentuvat Majakkaportaalin tietokantaan.
-                    <li> Kysy heti kun askarruttaa (vaikka juho.harme*at*gmail.com)!
-                </ol>
+                    <li> Kysy heti jos askarruttaa (vaikka juho.harme*at*gmail.com tai katso puhelinnumero Majakan vastuunkantajan abc:sta)!
+                </ul>
 
              </div>
 
@@ -166,6 +166,7 @@ $url = SaveGetParams();
 
             <p><input type="submit" name="sbut" id="sbut" value="Tallenna tiedot"></p>
 
+            <p><a href='javascript:void(0);' onClick='CreateSlides(<?php echo $pickedid; ?>);'>Luo diat</a></p>
 
 </article>
 
