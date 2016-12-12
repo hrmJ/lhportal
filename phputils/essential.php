@@ -16,6 +16,7 @@ function AddHeader(){
 
 echo '<html lang="fi">
      <head>
+      <link href="https://fonts.googleapis.com/css?family=Nothing+You+Could+Do|Quicksand" rel="stylesheet"> 
      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
      <meta name="viewport" content="width=device-width, initial-scale=1">
      <link rel="stylesheet" href="styles/default.css">
@@ -822,6 +823,38 @@ class VerseInserter{
     public function InsertSong($type, $name){
         $this->con->insert("laulut", Array("messu_id"=>$this->messuid,"tyyppi"=>$type, "nimi"=>$name));
     }
+}
+
+class MessuPresentation{
+
+    public function __construct ($messuid, $con) {
+            $this->singlesongs = Array();
+            $this->id = $messuid;
+            $yksittaiset = Array("Alkulaulu","Päivän laulu","Loppulaulu");
+            foreach($yksittaiset as $tyyppi){
+                $this->singlesongs[$tyyppi] = $con->select("laulut",Array("nimi"),Array(Array("messu_id","=",$messuid),Array("tyyppi","=",$tyyppi)),'','')->fetchColumn(0);
+            }
+            $this->wssongs  = $this->GetMultiSongs($con,"Ylistyslaulu");
+            $this->comsongs  = $this->GetMultiSongs($con,"Ehtoollislaulu");
+            $this->pyha = $con->select("laulut",Array("nimi"),Array(Array("messu_id","=",$messuid),Array("tyyppi","=","Pyhä-hymni")),'','')->fetchColumn(0);
+            $this->jk = $con->select("laulut",Array("nimi"),Array(Array("messu_id","=",$messuid),Array("tyyppi","=","Jumalan karitsa")),'','')->fetchColumn(0);
+
+            var_dump($this->jk);
+    }
+
+    public function GetMultiSongs($con, $tyyppi){
+        $res = $con->select("laulut",Array("nimi"),Array(Array("messu_id","=",$this->id),Array("tyyppi","=",$tyyppi)),'','ORDER by id')->fetchAll();
+        $ar = Array();
+        foreach($res as $song){
+            $ar[] = $song["nimi"];
+        }
+        return $ar;
+    }
+
+    public function PrintSongInfo(){
+    
+    }
+
 }
 
 ?>

@@ -50,11 +50,7 @@ $con = new DbCon();
 
 <?php
 
-
-$pickedid = $_GET["id"];
-$result = $con->select("laulut",Array("tyyppi","nimi"),Array(Array("messu_id","=",$pickedid)),'','ORDER by id')->fetchAll();
-var_dump($result);
-
+$messu = new MessuPresentation($_GET["id"], $con);
 
 } #Login
 ?>

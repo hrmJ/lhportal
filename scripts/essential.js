@@ -106,6 +106,9 @@ function ShowWords(evt){
     ClearContent(commentdiv);
 
     var addremover = false;
+    var contrect = document.getElementById('maincontainer').getBoundingClientRect();
+    commentdiv.style.left = contrect.left + 20  + "px" ;
+
     if(document.getElementById(songname)==undefined){
         commentdiv.removeEventListener('click', RemoveWordView);
         //Lisää sanat, jos laulua ei löydy
@@ -118,32 +121,32 @@ function ShowWords(evt){
         document.getElementById("edited_song_name").value=songname;
         worddiv.style.display="block";
         commentdiv.appendChild(worddiv);
-        commentdiv.style.left = rect.left - 300 + "px";
-        commentdiv.style.top = "10px";
+
+        commentdiv.style.top = "5em";
     }
     else{
         var worddiv = document.getElementById(songname).cloneNode(true);
         addremover = true;
         commentdiv.appendChild(worddiv);
-        commentdiv.style.left = rect.left - 300 + "px";
-        if(document.body.clientHeight/2<rect.top){
-            //commentdiv.style.top = (document.body.clientHeight/2 + 5) + "px";
-            if((document.body.clientHeight - commentdiv.clientHeight) > document.body.clientHeight/2){
-                commentdiv.style.top = document.body.clientHeight - commentdiv.clientHeight  + "px";
-            }
-            else{
-                commentdiv.style.top = document.body.clientHeight - (document.body.clientHeight - commentdiv.clientHeight - 5) + "px";
-            }
-        }
-        else{
-            commentdiv.style.top = rect.top + 5 + "px";
-        }
+        commentdiv.style.top = rect.top + 5 + "px";
     }
     if(addremover==true){
         commentdiv.addEventListener('click',RemoveWordView,false);
     }
 
     commentdiv.style.display="block";
+    if (rect.top>=document.body.clientHeight/3*2){
+        //jos 2/3 ylhäältä
+        commentdiv.style.top = rect.top - commentdiv.offsetHeight/4*3;
+    }
+    else if (rect.top>=document.body.clientHeight/2){
+        //jos alle puolenvälin
+        commentdiv.style.top = rect.top - commentdiv.offsetHeight/2;
+    }
+    else{
+        var fhrect = document.getElementById('firstheader').getBoundingClientRect();
+        commentdiv.style.top = fhrect.top + 20 + "px";
+    }
 }
 
 function UpdateLyrics(evt){
@@ -518,4 +521,19 @@ function AddWsSong(type){
 
 function CreateSlides(messu_id){
     window.open('diat.php?id=' + messu_id);
+}
+
+function MoreSongInfo(){
+    var div = document.getElementById('help');
+    var link = document.getElementById('infolink');
+    if (div.style.height == 'auto'){
+        div.style.opacity = '0';
+        div.style.height = '0';
+        link.textContent = 'Lue pikaohjeet';
+    }
+    else{
+        div.style.opacity = '1';
+        div.style.height = 'auto';
+        link.textContent = '';
+    }
 }

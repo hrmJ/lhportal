@@ -38,7 +38,8 @@ $con = new DbCon();
 
 <html lang="fi">
 <head>
-    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+  <link href="https://fonts.googleapis.com/css?family=Nothing+You+Could+Do|Quicksand" rel="stylesheet"> 
   <link rel="stylesheet" href="styles/default.css">
   <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
   <link rel="stylesheet" href="font-awesome-4.6.3/css/font-awesome.min.css">
@@ -71,27 +72,29 @@ $url = SaveGetParams();
 
 </div>
 
-<article id='maincontainer'>
+<article class='widetables' id='maincontainer'>
         <h2>Majakkamessun laulut</h2>
 
             <?php if(!isset($_POST["sbut"])){ ?>
             <div class="instr">Moi! Niin kuin huomaat, messulaulujen ilmoittaminen on vähän muuttunut, mutta älä pelästy. Luulen ihan
-               oikeasti, että helpompaan suuntaan. Pari oleellista pointtia tähän liittyen:
+               oikeasti, että helpompaan suuntaan. <a id='infolink' href='javascript:void(0);' onClick='MoreSongInfo();' >Lue pikaohjeet</a>
 
-                <ul>
-                    <li> Vasemmalla ei aluksi näy listaa lauluista, mutta
-                        <em>kun alat kirjoittaa jotakin laulun nimeä esimerkiksi kohdan "Alkulaulu"
-                        viereiseen kenttään, ruudulle ilmestyy lista kaikista olemassaolevista
-                        lauluista, joissa näpyttelemäsi kirjaimet / sana esiintyy.</em>
-                    <li> Jos etsimäsi laulu on listassa, klikkaa sitä.
-                    <li> Voit katsella valitsemasi laulun sanoja klikkaamalla laulun viereistä "Katso sanoja" -linkkejä
-                    <li> Jos kyseisestä laulusta ei ole sanoja, linkissä lukee "lisää sanat"
-                    <li> Klikkaa siinä tapauksessa Lisää sanat -linkkiä, jolloin näyttöön ilmestyy uusi ikkuna
-                    <li> Kirjoita puuttuvat sanat suoraan ilmestyvään tekstikenttään ja paina "Tallenna"
-                    <li> Tiedot eivät enää lähde sähköpostitse eteenpäin, vaan tallentuvat Majakkaportaalin tietokantaan.
-                    <li> Kysy heti jos askarruttaa (vaikka juho.harme*at*gmail.com tai katso puhelinnumero Majakan vastuunkantajan abc:sta)!
-                </ul>
-
+                <div class='instr' id='help'>
+                    <ul>
+                        <li> Vasemmalla ei aluksi näy listaa lauluista, mutta
+                            <em>kun alat kirjoittaa jotakin laulun nimeä esimerkiksi kohdan "Alkulaulu"
+                            viereiseen kenttään, ruudulle ilmestyy lista kaikista olemassaolevista
+                            lauluista, joissa näpyttelemäsi kirjaimet / sana esiintyy.</em>
+                        <li> Jos etsimäsi laulu on listassa, klikkaa sitä.
+                        <li> Voit katsella valitsemasi laulun sanoja klikkaamalla laulun viereistä "Katso sanoja" -linkkejä
+                        <li> Jos kyseisestä laulusta ei ole sanoja, linkissä lukee "lisää sanat"
+                        <li> Klikkaa siinä tapauksessa Lisää sanat -linkkiä, jolloin näyttöön ilmestyy uusi ikkuna
+                        <li> Kirjoita puuttuvat sanat suoraan ilmestyvään tekstikenttään ja paina "Tallenna"
+                        <li> Tiedot eivät enää lähde sähköpostitse eteenpäin, vaan tallentuvat Majakkaportaalin tietokantaan.
+                        <li> Kysy heti jos askarruttaa (vaikka juho.harme*at*gmail.com tai katso puhelinnumero Majakan vastuunkantajan abc:sta)!
+                    </ul>
+                    <p><a  href='javascript:void(0);' onClick='MoreSongInfo();' >Piilota ohjeet</a></p>
+                </div>
              </div>
 
             <?php } 
@@ -115,7 +118,7 @@ $url = SaveGetParams();
                     <li> Paina lopuksi "Tallenna tiedot" -painiketta
                     <li> Poistu tallentamatta painamalla "Peruuta"
                 </ol>
-                <p><textarea id="editarea">asldkjasd</textarea></p>
+                <p><textarea id="editarea"></textarea></p>
                 <p><span><input type="button" name="editsub" id="editsub" onClick="submitedit();" value="Tallenna tiedot"></span><span><input type="button" name="canceledit" id="canceledit" onClick="RemoveWordView();" value="Peruuta"></span></p>
             </div>
 
@@ -127,7 +130,7 @@ $url = SaveGetParams();
             ?>
             </p>
 
-            <h3>Yksittäiset laulut</h3>
+            <h3 id='firstheader'>Yksittäiset laulut</h3>
 
 
             <?php

@@ -1,16 +1,21 @@
 body{
-    font-family:Arial;
+    font-family:'Quicksand',cursive;
     background:white;
-    /*background: -webkit-radial-gradient(-200% 40%, closest-corner, #FFF002, #969E98)*/
+    background: -webkit-radial-gradient(-200% 40%, closest-corner, #FFF002, rgb(218, 218, 218));
 }
 
 h2{
-    color: rgb(171, 3, 3);
+    color: rgb(123, 0, 0);
+    font-family: 'Nothing You Could Do';
 }
 
 h3{
-    color: #86884B;
+    color: #7b0000;
     font-style: italic;
+}
+
+.widetables table{
+    width:100%;
 }
 
 #maincontainer{
@@ -28,9 +33,9 @@ a#help:hover{
 }
 
 .instr{
-    width:80%;
+    /* width:80%; */
     line-height:120%;
-    font-size:90%;
+    /* font-size:90%; */
 }
 
 .instr li{
@@ -62,7 +67,7 @@ a#help{
 
 #leftbanner {
     position: fixed;
-    background: black;
+    background: rgba(41, 34, 34, 0.87);
     left: 0;
     display: inline-block;
     top: 0;
@@ -394,15 +399,15 @@ input#messutheme{
 }
 
 #editor p, #editor li{
-    font-size:71%;
+    font-size: 86%;
 }
 
 #wordview{
-    max-width: 25em;
-    max-height: 50em;
+    max-width: 30em;
+    max-height: 60em;
     margin: 0 auto;
     padding: 2em;
-    background: rgb(230, 232, 184);
+    background: rgba(255, 250, 247, 0.88);
     top:2px;
     position:fixed;
     border-radius:5px;
@@ -412,7 +417,7 @@ input#messutheme{
     -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.56);
     -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.56);
     box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.56);
-    font-family:monospace;
+    /* font-family:monospace; */
 }
 
 #editor{
@@ -437,8 +442,10 @@ input#messutheme{
 }
 
 #editarea{
-    width: 21em;
+    width: 29em;
     height: 30em;
+    font-family: 'Quicksand',cursive;
+    /* margin: auto; */
 }
 
 .commentlist ul{
@@ -544,7 +551,9 @@ label {
     top:2.6em;
     padding-left:0em
     padding-right:0em;
-
+    -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.56);
+    -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.56);
+    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.56);
 }
 
 
@@ -608,6 +617,14 @@ input[type = submit]{
     height:10em;
 }
 
+#help{
+    height:0;
+    transition: opacity 1s ease-out;
+    opacity: 0;
+    overflow: hidden;
+}
+
+
 @media only screen and (max-device-width: 481px) {
 
     table{
@@ -616,6 +633,15 @@ input[type = submit]{
 
     tbody {
         font-size: 100%;
+        font-size:150%;
+    }
+    #editor{
+        font-size:140%;
+        /* width: 40em; */
+    }
+    #wordview{
+        width:90%;
+        left: 3;
     }
 
 
