@@ -520,7 +520,7 @@ function AddWsSong(type){
 }
 
 function CreateSlides(messu_id){
-    window.open('diat.php?id=' + messu_id);
+    window.open('pres/diat.php?id=' + messu_id);
 }
 
 function MoreSongInfo(){

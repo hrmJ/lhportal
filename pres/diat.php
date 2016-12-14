@@ -4,7 +4,9 @@ if (isset($_GET["logout"])){
     session_unset();
     session_destroy();
 }
-require('phputils/essential.php');
+require('../phputils/essential.php');
+$embed=True;
+require('biblecrawl.php');
 #session_unset();
 if (!isset( $_SESSION['user_id'] )){
     if (isset($_POST["username"],$_POST["password"])){
@@ -27,7 +29,7 @@ if (!isset( $_SESSION['user_id'] )){
     }
     if($loginfail or !$valid or !isset($_POST["username"],$_POST["password"])){
         #Kun saavutaan sivulle 1. kertaa tai kirjautuminen ei onnistunut
-        require('login.php');
+        require('../login.php');
     }
 }
 if (isset($_SESSION['user_id'])){
@@ -38,22 +40,26 @@ $con = new DbCon();
 
 <html lang="fi">
 <head>
-    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
-  <link rel="stylesheet" href="styles/default.css">
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-  <link rel="stylesheet" href="font-awesome-4.6.3/css/font-awesome.min.css">
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+  <link rel="stylesheet" href="tyylit.css">
   <script src="//code.jquery.com/jquery-1.10.2.js"></script>
   <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-<title>Messujen syöttö järjestelmään</title>
+<title>Majakkamessu</title>
 </head>
+
 <body>
 
 <?php
 
 $messu = new MessuPresentation($_GET["id"], $con);
+$messu->CreateHtml();
 
 } #Login
 ?>
+<div id='songs'>
+<?php FetchSongsForSlides($con); ?>
+</div>
 
+<script src='presenter.js'></script>
 </body>
 </html>

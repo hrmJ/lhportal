@@ -832,29 +832,107 @@ class MessuPresentation{
             $this->id = $messuid;
             $yksittaiset = Array("Alkulaulu","Päivän laulu","Loppulaulu");
             foreach($yksittaiset as $tyyppi){
-                $this->singlesongs[$tyyppi] = $con->select("laulut",Array("nimi"),Array(Array("messu_id","=",$messuid),Array("tyyppi","=",$tyyppi)),'','')->fetchColumn(0);
+                $this->singlesongs[$tyyppi] = new SongDom($tyyppi, $con->select("laulut",Array("nimi"),Array(Array("messu_id","=",$messuid),Array("tyyppi","=",$tyyppi)),'','')->fetchColumn(0));
             }
             $this->wssongs  = $this->GetMultiSongs($con,"Ylistyslaulu");
             $this->comsongs  = $this->GetMultiSongs($con,"Ehtoollislaulu");
-            $this->pyha = $con->select("laulut",Array("nimi"),Array(Array("messu_id","=",$messuid),Array("tyyppi","=","Pyhä-hymni")),'','')->fetchColumn(0);
-            $this->jk = $con->select("laulut",Array("nimi"),Array(Array("messu_id","=",$messuid),Array("tyyppi","=","Jumalan karitsa")),'','')->fetchColumn(0);
-
-            var_dump($this->jk);
+            $this->pyha = new SongDom("Pyhä-hymni", $con->select("laulut",Array("nimi"),Array(Array("messu_id","=",$messuid),Array("tyyppi","=","Pyhä-hymni")),'','')->fetchColumn(0));
+            $this->jk = new SongDom("Jumalan karitsa", $con->select("laulut",Array("nimi"),Array(Array("messu_id","=",$messuid),Array("tyyppi","=","Jumalan karitsa")),'','')->fetchColumn(0));
     }
 
     public function GetMultiSongs($con, $tyyppi){
         $res = $con->select("laulut",Array("nimi"),Array(Array("messu_id","=",$this->id),Array("tyyppi","=",$tyyppi)),'','ORDER by id')->fetchAll();
+        #Nimeämiseroja js:n ja php:n välillä, TODO poista tämä. -->
+        if($tyyppi=='Ylistyslaulu')
+            $tyyppi='Ylistys- ja rukouslauluja';
+        #<--
+
         $ar = Array();
         foreach($res as $song){
-            $ar[] = $song["nimi"];
+            $ar[] = new SongDom($tyyppi, $song["nimi"]);
         }
         return $ar;
     }
 
-    public function PrintSongInfo(){
-    
+    public function PrintSongInfo($name, $role){
+        $el = new DomEl('span',$name);
+        $el->AddAttribute('role',$role);
+        return $el;
     }
 
+    public function CreateHtml(){
+        $struct_div = new DomEl('div','');
+        $struct_div->AddAttribute('id','structure');
+        $struct_div->AddChild($this->singlesongs["Alkulaulu"]);
+        $struct_div->AddChild($this->singlesongs["Päivän laulu"]);
+        foreach($this->wssongs as $song){
+            $struct_div->AddChild($song);
+        }
+        $struct_div->AddChild($this->pyha);
+        $struct_div->AddChild($this->jk);
+        foreach($this->comsongs as $song){
+            $struct_div->AddChild($song);
+        }
+        $struct_div->AddChild($this->singlesongs["Loppulaulu"]);
+
+
+        $struct_div->AddChild($this->singlesongs["Loppulaulu"]);
+
+        echo $struct_div->Show();
+
+        #evankeliumi evl:n sivuilta:
+        $gospelverses = FetchBibleContent("Luuk.2", "1-10");
+
+        if (sizeof($gospelverses)>1)
+            $gospeltext =  implode($gospelverses, "¤");
+        else
+            $gospeltext =  ($gospelverses);
+
+        $gospel = new DomEl('p',$gospeltext);
+        $gospel->AddAttribute('id','evankeliumi');
+        $gospel->AddAttribute('address','Luuk.2:1-10');
+        $gospel->AddAttribute('role','evankeliumi');
+        echo $gospel->Show();
+    }
+
+}
+
+class SongDom extends DomEl{
+
+    public function __construct ($role, $name) {
+        parent::__construct('song',$name);
+        $this->AddAttribute('role', $role);
+    }
+
+}
+
+function FetchSongsForSlides($con){
+    $result = $con->select("songs",Array("filename","id","title"),Array())->fetchAll();
+    foreach($result as $row){
+        if (!empty($row["filename"])){
+            //Hae laulujen sanat
+            $verses = $con->select("verses",Array("content"),Array(Array("song_id","=",intval($row["id"]))),"","ORDER BY id")->fetchAll();
+
+
+            $div = new DomEl('div',"");
+            $div->AddAttribute("id", $row["filename"]);
+            $div->AddAttribute("class","songdata");
+
+            $span = new DomEl('span',$row["title"],$div);
+            $span->AddAttribute('class',"songtitle");
+
+            $songtext = "";
+            foreach($verses as $verse){
+                $songtext .= $verse["content"] . "\n\n";
+            }
+            $p = new DomEl('p',trim($songtext),$div);
+            $p->AddAttribute("class","songdatacontent");
+
+            #$p = new DomEl('p',"Sulje sanojen katselu klikkaamalla mihin tahansa laatikkoa",$div);
+
+            echo $div->Show();
+        }
+    }
 }
 
 ?>

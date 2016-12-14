@@ -98,6 +98,14 @@ class DomEl{
          return $this->dom->saveHTML();
     }
 
+    public function AddChild($el){
+        #ini_set('display_errors', 1);
+        #ini_set('display_startup_errors', 1);
+        #error_reporting(E_ALL);
+        $el->el = $this->dom->importNode($el->el, true);
+        $this->el->appendChild($el->el);
+    }
+
 }
 
 function CreateList($li_items){
