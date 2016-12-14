@@ -15,3 +15,8 @@ simppeleillä web-tekniikoilla (css, html, php, js).
 
 ks. sql/taulut.sql
 
+# HUOM!
+
+Tällä hetkellä diojen luonti palvelimella on siirtymävaiheessa, niin että 
+esitystekniikka on toteutettu symlinkkeinä htmlslides-Projektin kansiosta 
+(ks. pres-kansio tässä projektissa).
