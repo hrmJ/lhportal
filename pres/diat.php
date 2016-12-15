@@ -40,10 +40,8 @@ $con = new DbCon();
 
 <html lang="fi">
 <head>
-  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
-  <link rel="stylesheet" href="tyylit.css">
-  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+<link rel="stylesheet" href="tyylit.css">
 <title>Majakkamessu</title>
 </head>
 
