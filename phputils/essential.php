@@ -838,6 +838,8 @@ class MessuPresentation{
             $this->comsongs  = $this->GetMultiSongs($con,"Ehtoollislaulu");
             $this->pyha = new SongDom("Pyhä-hymni", $con->select("laulut",Array("nimi"),Array(Array("messu_id","=",$messuid),Array("tyyppi","=","Pyhä-hymni")),'','')->fetchColumn(0));
             $this->jk = new SongDom("Jumalan karitsa", $con->select("laulut",Array("nimi"),Array(Array("messu_id","=",$messuid),Array("tyyppi","=","Jumalan karitsa")),'','')->fetchColumn(0));
+
+            $this->vastuut = $con->select("vastuut",Array('vastuu','vastuullinen'), Array(Array("messu_id","=",$messuid)),"","")->fetchAll();
     }
 
     public function GetMultiSongs($con, $tyyppi){
@@ -845,6 +847,8 @@ class MessuPresentation{
         #Nimeämiseroja js:n ja php:n välillä, TODO poista tämä. -->
         if($tyyppi=='Ylistyslaulu')
             $tyyppi='Ylistys- ja rukouslauluja';
+        if($tyyppi=='Ehtoollislaulu')
+            $tyyppi='Ehtoollislauluja';
         #<--
 
         $ar = Array();
@@ -880,8 +884,26 @@ class MessuPresentation{
 
         echo $struct_div->Show();
 
+        #Normivastuut
+        $resp_div = new DomEl('div','');
+        $resp_div->AddAttribute('id','vastuut');
+
+        $address="";
+        foreach($this->vastuut as $vastuu){
+            if($vastuu["vastuu"]=='Saarnateksti')
+                $address = $vastuu["vastuullinen"];
+
+            $el = new DomEl('span', $vastuu["vastuullinen"]);
+            $el-> AddAttribute("id",$vastuu["vastuu"]);
+            $el-> AddAttribute("class","vastuudata");
+            $resp_div->AddChild($el);
+        }
+        echo $resp_div->Show();
+
         #evankeliumi evl:n sivuilta:
-        $gospelverses = FetchBibleContent("Luuk.2", "1-10");
+        $address = ParseBibleAddress($address);
+        
+        $gospelverses = FetchBibleContent($address["book"] . "." . $address["chapter"], $address["verses"]);
 
         if (sizeof($gospelverses)>1)
             $gospeltext =  implode($gospelverses, "¤");
@@ -890,11 +912,28 @@ class MessuPresentation{
 
         $gospel = new DomEl('p',$gospeltext);
         $gospel->AddAttribute('id','evankeliumi');
-        $gospel->AddAttribute('address','Luuk.2:1-10');
+        $gospel->AddAttribute('address', $address["book"] . "." . $address["chapter"] . ": " . $address["verses"]);
         $gospel->AddAttribute('role','evankeliumi');
         echo $gospel->Show();
     }
 
+}
+
+
+function ParseBibleAddress($addr){
+        #1. erottele luku
+        preg_match("/(\\w+)[^\\d]*(\\d+) *: *(.+)/", $addr, $groups);
+
+        #jos luku ja jakeet annettu
+        if(!empty($groups))
+            return Array("book"=> $groups[1], "chapter"=>$groups[2], "verses"=>$groups[3]);
+
+        #jos pelkkä luku
+        preg_match("/(\\w+)[^\\d]*(\\d+)[^\\d]*$/", $addr, $groups);
+        if(!empty($groups))
+            return Array("book"=> $groups[1], "chapter"=>$groups[2], "verses"=>"");
+
+        return Array("book"=> "", "chapter"=>"","verses"=>"");
 }
 
 class SongDom extends DomEl{
