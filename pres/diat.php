@@ -40,6 +40,7 @@ $con = new DbCon();
 
 <html lang="fi">
 <head>
+<link href="https://fonts.googleapis.com/css?family=Nothing+You+Could+Do|Quicksand" rel="stylesheet">
 <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
 <link rel="stylesheet" href="tyylit.css">
 <title>Majakkamessu</title>

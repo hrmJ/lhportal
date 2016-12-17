@@ -840,6 +840,7 @@ class MessuPresentation{
             $this->jk = new SongDom("Jumalan karitsa", $con->select("laulut",Array("nimi"),Array(Array("messu_id","=",$messuid),Array("tyyppi","=","Jumalan karitsa")),'','')->fetchColumn(0));
 
             $this->vastuut = $con->select("vastuut",Array('vastuu','vastuullinen'), Array(Array("messu_id","=",$messuid)),"","")->fetchAll();
+            $this->messutitle = $con->select("messut",Array('teema'), Array(Array("id","=",$messuid)),'','')->fetchColumn(0);
     }
 
     public function GetMultiSongs($con, $tyyppi){
@@ -914,7 +915,11 @@ class MessuPresentation{
         $gospel->AddAttribute('id','evankeliumi');
         $gospel->AddAttribute('address', $address["book"] . "." . $address["chapter"] . ": " . $address["verses"]);
         $gospel->AddAttribute('role','evankeliumi');
+
+        $title = new DomEl('p',$this->messutitle);
+        $title->AddAttribute('id','messutitle');
         echo $gospel->Show();
+        echo $title->Show();
     }
 
 }
@@ -973,5 +978,11 @@ function FetchSongsForSlides($con){
         }
     }
 }
+
+function GetMessuParams($con, $id){
+    $res = $con->select("messut",Array("pvm","teema"),Array(Array("id","=",$id)),"","")->FetchAll();
+    return "messuid=$id&pvm=" . $res[0]["pvm"] . "&teema=" . $res[0]["teema"];
+}
+
 
 ?>

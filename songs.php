@@ -45,7 +45,7 @@ $con = new DbCon();
   <link rel="stylesheet" href="font-awesome-4.6.3/css/font-awesome.min.css">
   <script src="//code.jquery.com/jquery-1.10.2.js"></script>
   <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-<title>Messujen syöttö järjestelmään</title>
+<title>Laulujen syöttö</title>
 </head>
 <body>
 
@@ -72,7 +72,7 @@ $url = SaveGetParams();
 
 </div>
 
-<article class='widetables' id='maincontainer'>
+<article class='widetables brightlink' id='maincontainer'>
         <h2>Majakkamessun laulut</h2>
 
             <?php if(!isset($_POST["sbut"])){ ?>
@@ -122,12 +122,19 @@ $url = SaveGetParams();
                 <p><span><input type="button" name="editsub" id="editsub" onClick="submitedit();" value="Tallenna tiedot"></span><span><input type="button" name="canceledit" id="canceledit" onClick="RemoveWordView();" value="Peruuta"></span></p>
             </div>
 
-            <p>
-            <?php 
-                $pickedid = GetDateList($con); 
-                #Tallennetaan valittu id
-                echo "<input type='text' class='hidden' name='pickedid' value='$pickedid'>";
-            ?>
+            <p id='selectcontainer'>
+
+            <span>
+                <?php 
+                    $pickedid = GetDateList($con); 
+                    $urlparams = GetMessuParams($con, $pickedid);
+                ?>
+            </span>
+            <span>
+                <a href='index.php?<?php echo $urlparams;?>'>Tämä messu perusnäkymässä</a>
+            </span>
+
+            <input type='text' class='hidden' name='pickedid' value='<?php echo $pickedid; ?>'>
             </p>
 
             <h3 id='firstheader'>Yksittäiset laulut</h3>

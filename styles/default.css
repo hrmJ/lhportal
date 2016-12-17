@@ -12,6 +12,19 @@ h2{
 h3{
     color: #7b0000;
     font-style: italic;
+    /* text-shadow: 1px 1px 1px #dadada; */
+    text-shadow: black;
+}
+
+#selectcontainer span{
+    margin-right:3em;
+}
+
+.brightlink a{
+    color: #7b0101;
+    /* background: green; */
+    /* font-family: monospace; */
+    /* text-shadow: 1px 1px 1px #000; */
 }
 
 .widetables table{
