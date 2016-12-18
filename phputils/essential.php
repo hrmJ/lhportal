@@ -53,11 +53,11 @@ function CreateNavi($vastuulist, $url){
     $li->AddAttribute('id','homeli');
     $li->AddAttribute('title','Takaisin alkunäkymään');
 
-    if($vastuulist == True){
         $span = new DomEl('span','',$form);
         $span->AddAttribute('class','menuright');
         $ul = new DomEl('ul','',$span);
         $li = new DomEl('li','',$ul);
+    if($vastuulist == True){
         CreateVastuuList($li);
 
         #Tallenna vielä tieto kausista

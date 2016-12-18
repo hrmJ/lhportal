@@ -39,6 +39,7 @@ $con = new DbCon();
 <html lang="fi">
 <head>
   <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://fonts.googleapis.com/css?family=Nothing+You+Could+Do|Quicksand" rel="stylesheet"> 
   <link rel="stylesheet" href="styles/default.css">
   <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
@@ -130,9 +131,9 @@ $url = SaveGetParams();
                     $urlparams = GetMessuParams($con, $pickedid);
                 ?>
             </span>
-            <span>
-                <a href='index.php?<?php echo $urlparams;?>'>Tämä messu perusnäkymässä</a>
-            </span>
+            <p class='topper'>
+                <a href='index.php?<?php echo $urlparams;?>'>Näytä tämä messu perusnäkymässä</a>
+            </p>
 
             <input type='text' class='hidden' name='pickedid' value='<?php echo $pickedid; ?>'>
             </p>
