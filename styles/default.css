@@ -241,6 +241,10 @@ span{
     /* white-space:nowrap; */
 }
 
+td>span{
+    display:table-cell;
+}
+
 td>span:first-child {
     color: white;
     padding-left: 0.2em;
