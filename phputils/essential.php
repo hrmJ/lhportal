@@ -59,6 +59,7 @@ function CreateNavi($vastuulist, $url){
         $li = new DomEl('li','',$ul);
     if($vastuulist == True){
         CreateVastuuList($li);
+    }
 
         #Tallenna vielä tieto kausista
         $input1 = new DomEl('input','',$form);
@@ -72,7 +73,6 @@ function CreateNavi($vastuulist, $url){
         $input1->AddAttribute('class','hidden');
         $input1->AddAttribute('id','seasonsubmit');
         $input1->AddAttribute('type','submit');
-    }
 
     echo $section->Show();
 }
