@@ -435,9 +435,9 @@ input#messutheme{
     overflow:auto;
     display: none;
     /* border: 5px solid black; */
-    -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.56);
-    -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.56);
-    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.56);
+    -webkit-box-shadow: 10px 0px 25px 0px rgba(0,0,0,0.56);
+    -moz-box-shadow: 10px 0px 25px 0px rgba(0,0,0,0.56);
+    box-shadow: 10px 0px 25px 0px rgba(0,0,0,0.56);
     /* font-family:monospace; */
 }
 
@@ -565,18 +565,20 @@ label {
     background: #5d5353;
     position:fixed;
     padding-top:2px;
-    padding-bottom:0.7em;
     color:white;
     display:none;
     left:0em;
     top:2.6em;
     padding-left:0em
     padding-right:0em;
-    -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.56);
-    -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.56);
-    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.56);
+    -webkit-box-shadow: 10px 0px 25px 0px rgba(0,0,0,0.56);
+    -moz-box-shadow: 10px 0px 25px 0px rgba(0,0,0,0.56);
+    box-shadow: 10px 0px 25px 0px rgba(0,0,0,0.56);
 }
 
+#menu li:last-child{
+    border-bottom:none;
+}
 
 
 #menu li:hover{
@@ -588,9 +590,7 @@ label {
     margin-top: 0em;
     border-bottom:1px solid white;
     padding-left:0.5em;
-    padding-right:0.5em;
-    padding-top:1.5em;
-    padding-bottom:1.5em;
+    padding-right:0.5em; padding-top:1.3em; padding-bottom:1.2em;
 }
 
 
@@ -656,6 +656,18 @@ input[type = submit]{
     border-bottom: 3px solid #7b7777;
 }
 
+#maintenancelist{
+    display:none;
+    position:fixed;
+    left:0;
+    top:0;
+    background:#5d5353;
+    -webkit-box-shadow: 10px 0px 25px 0px rgba(0,0,0,0.56);
+    -moz-box-shadow: 10px 0px 25px 0px rgba(0,0,0,0.56);
+    box-shadow: 10px 0px 25px 0px rgba(0,0,0,0.56);
+}
+
+
 @media only screen and (max-device-width: 481px) {
 
     table{
@@ -689,6 +701,11 @@ input[type = submit]{
         font-size: 60%;
         /* width: 50%; */
         width: 70%;
+    }
+
+    #homeli{
+        font-size: 70%;
+        letter-spacing: -1px;
     }
 
 }

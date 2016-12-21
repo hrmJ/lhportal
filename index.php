@@ -170,6 +170,7 @@ CreateNavi($vastuulist, $url);
         icon.addEventListener('click',CommentClick,false);
     }
 
+
 </script>
 
 </body>

@@ -467,8 +467,10 @@ function DomEl(eltype, id, classname){
 
 function MenuClick(event){
     var child = event.target.children[0];
-    if (child.tagName == 'A'){
-        child.click();
+    if(child!==undefined){
+        if (child.tagName == 'A'){
+            child.click();
+        }
     }
 }
 
@@ -537,3 +539,17 @@ function MoreSongInfo(){
         link.textContent = '';
     }
 }
+
+function ViewMaintenance(li){
+    var rect = li.getBoundingClientRect();
+    var submenu = document.getElementById("maintenancelist");
+    if (submenu.style.display=='block'){
+        submenu.style.display = "none";
+    }
+    else{
+        submenu.style.left = rect.left + li.offsetWidth + 1 +  "px";
+        submenu.style.top = rect.top + "px";
+        submenu.style.display = "block";
+    }
+}
+

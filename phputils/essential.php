@@ -187,6 +187,7 @@ function CreateMessulist($con, $vastuu=''){
                 $theme = implode($pvm_list, ".") . ": (ei teemaa lisättynä)";
 
             $content_span = new DomEl("span", $theme, $tr->cells[0]);
+            $content_span->AddAttribute("class","themespan");
             $tr->cells[0]->AddAttribute("class","messurow");
         }
         $tr->cells[0]->AddAttribute('id',"messu_" . $row["id"]);
