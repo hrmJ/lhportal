@@ -51,6 +51,7 @@ $con = new DbCon();
 <body>
 
 <?php
+$kausi = SetSeason($con);
 CreateNavi(False, $url);
 require('menu.php');
 ?>
