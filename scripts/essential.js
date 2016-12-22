@@ -253,8 +253,17 @@ function edit (evt){
             //Hyväksy myös vasemmanpuoleisen solun klikkaukset
             element = element.parentElement.children[1];
         }
+        if(element.children[0]!==undefined){
+            //Jos soulssa jo tekstikenttä, ota *sen* arvo muistiin
+            if(element.children[0].tagName == 'INPUT'){
+                var text = element.children[0].value;
+            }
+        
+        }
+        else{
+            var text = element.textContent;
+        }
 
-        var text = element.textContent;
         var id_and_name = 'anonymous';
         if (element.hasAttribute("name")){
             id_and_name = element.getAttribute("name");
