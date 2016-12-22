@@ -80,7 +80,7 @@ class DomEl{
         else
             $this->dom = new DOMDocument('1.0');
 
-        $this->el = $this->dom->createElement($tag,$text);
+        $this->el = $this->dom->createElement($tag,htmlspecialchars($text));
 
         if (isset($parent))
             $parent->el->appendChild($this->el);
