@@ -104,49 +104,38 @@ function ShowWords(evt){
     var rect = link.getBoundingClientRect();
     var commentdiv = document.getElementById("wordview");
     ClearContent(commentdiv);
+    commentdiv.innerHTML = "<span onClick='RemoveWordView();' class='fa-stack fa-lg close-button'> <i class='fa fa-circle fa-stack-2x'></i> <i class='fa fa-times fa-stack-1x fa-inverse'></i></span>";
+    //var closebut = TagWithText("a","","boxclose");
+
+    //commentdiv.appendChild(closebut);
 
     var addremover = false;
     var contrect = document.getElementById('maincontainer').getBoundingClientRect();
-    commentdiv.style.left = contrect.left + 20  + "px" ;
 
     if(document.getElementById(songname)==undefined){
-        commentdiv.removeEventListener('click', RemoveWordView);
         //Lisää sanat, jos laulua ei löydy
         var title = document.getElementById("editedtitle");
         //Laulun otsikko
-        title.innerText = songname.replace("song_","").replace(/_/g," ");
+        title.textContent = songname.replace("song_","").replace(/_/g," ");
 
         var worddiv = document.getElementById("editor").cloneNode(true);
+        worddiv.className = "cont2";
         var editarea = document.getElementById("editarea");
         document.getElementById("edited_song_name").value=songname;
         worddiv.style.display="block";
         commentdiv.appendChild(worddiv);
 
-        commentdiv.style.top = "5em";
     }
     else{
         var worddiv = document.getElementById(songname).cloneNode(true);
         addremover = true;
+        worddiv.innerHTML = worddiv.innerHTML.replace(/\n/g,'<br>')
         commentdiv.appendChild(worddiv);
-        commentdiv.style.top = rect.top + 5 + "px";
-    }
-    if(addremover==true){
-        commentdiv.addEventListener('click',RemoveWordView,false);
     }
 
     commentdiv.style.display="block";
-    if (rect.top>=document.body.clientHeight/3*2){
-        //jos 2/3 ylhäältä
-        commentdiv.style.top = rect.top - commentdiv.offsetHeight/4*3;
-    }
-    else if (rect.top>=document.body.clientHeight/2){
-        //jos alle puolenvälin
-        commentdiv.style.top = rect.top - commentdiv.offsetHeight/2;
-    }
-    else{
-        var fhrect = document.getElementById('firstheader').getBoundingClientRect();
-        commentdiv.style.top = fhrect.top + 20 + "px";
-    }
+    commentdiv.style.marginLeft=contrect.left + 5 + "px";
+    //commentdiv.style.width=contrect.width-80 + "px";
 }
 
 function UpdateLyrics(evt){
@@ -165,10 +154,10 @@ function UpdateLyrics(evt){
     var link = td.parentElement.children[2].children[0];
     link.id = linkid;
     if(document.getElementById(songid)==undefined){
-        link.innerText = "Lisää sanat";
+        link.textContent = "Lisää sanat";
     }
     else{
-        link.innerText = "Katso sanoja";
+        link.textContent = "Katso sanoja";
     }
 }
 
@@ -187,7 +176,7 @@ function UpdateLit(type){
         console.log(document.getElementById('pyhä-hymni').value);
     }
 
-    if(sel[sel.selectedIndex].innerText == "Jokin muu"){
+    if(sel[sel.selectedIndex].textContent == "Jokin muu"){
         console.log("...");
         var this_input = document.createElement('input');
         this_input.className = "liteditinput";
@@ -333,11 +322,11 @@ function ShowSongList(){
     var songswitch = document.getElementById('songswitch');
     if(element.style.display=="block"){
         element.style.display = "none";
-        songswitch.innerText = "Näytä messun laulut" ;
+        songswitch.textContent = "Näytä messun laulut" ;
     }
     else{
         element.style.display = "block";
-        songswitch.innerText = "Piilota laulut" ;
+        songswitch.textContent = "Piilota laulut" ;
     }
 }
 
@@ -437,7 +426,7 @@ function Table(){
                 td.appendChild(tdcontent);
             }
             else{
-                td.innerText = tdcontent;
+                td.textContent = tdcontent;
             }
             row.appendChild(td);
         }
@@ -512,12 +501,12 @@ function AddWsSong(type){
     this_input.addEventListener('focusout',UpdateLyrics,false);
 
     var this_link = document.createElement('a');
-    this_link.innerText = "Katso sanoja";
+    this_link.textContent = "Katso sanoja";
     this_link.className = "lyricslink";
     this_link.addEventListener('click',ShowWords,false);
     
 
-    left.innerText = type + " " + (allws.length + 1);
+    left.textContent = type + " " + (allws.length + 1);
     this_input.name = type + "_" + (allws.length + 1);
     right.appendChild(this_input);
     lyricslinkcell.appendChild(this_link);
@@ -562,3 +551,49 @@ function ViewMaintenance(li){
     }
 }
 
+TagWithText = function(tagname, tagtext, tagclass){
+    var tag = document.createElement(tagname);
+    tag.textContent = tagtext;
+    tag.className = tagclass;
+    return tag;
+}
+
+TagParent = function(tagname, childlist, classname, tagid){
+    var tag = document.createElement(tagname);
+    tag.className = classname;
+    for (child_idx in childlist){
+        tag.appendChild(childlist[child_idx]);
+    }
+    if (tagid!==undefined){
+        tag.id = tagid;
+    
+    }
+    return tag;
+}
+
+function EditWords(songname){
+    var div = document.getElementById(songname);
+    var ps = div.getElementsByTagName('P');
+    var oldtext = "";
+    for(var idx = 1;idx<ps.length;idx++){
+        var p = ps[idx];
+        oldtext += "\n\n" + p.textContent;
+    }
+    oldtext = oldtext.trim();
+
+    var wordview = document.getElementById("wordview");
+    var titlecont = div.getElementsByTagName('H3');
+    var title = titlecont[0].cloneNode(true);
+    ClearContent(wordview);
+    wordview.appendChild(title);
+    wordview.appendChild(TagWithText("textarea",oldtext,"earea"));
+    var but = TagWithText("input","","");
+    but.setAttribute("type","button");
+    but.value = "Tallenna";
+    but.addEventListener("click","SendEditedWords");
+    wordview.appendChild(TagParent("p",[but]));
+}
+
+function SendEditedWords(){
+
+}

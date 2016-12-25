@@ -113,14 +113,12 @@ $url = SaveGetParams();
             <div id="editor">
                 <h3 id="editedtitle"></h3>
                 <p>Tätä laulua ei ole vielä tietokannassa (ainakaan tämännimisenä). Lisäisitkö 
-                   ystävällisesti alla olevaan tekstilaatikkoon laulun sanat, niin että: </p>
-                <ol>
-                    <li> Älä kirjoita enää tekstikenttään laulun nimeä, vaan aloita suoraan 1. säkeistöstä
-                    <li> Erota säkeistöt, kertosäe ym. toisistaan yhdellä tyhjällä rivivälillä.
-                    <li> Paina lopuksi "Tallenna tiedot" -painiketta
-                    <li> Poistu tallentamatta painamalla "Peruuta"
-                </ol>
-                <p><textarea id="editarea"></textarea></p>
+                   ystävällisesti alla olevaan tekstilaatikkoon laulun sanat:
+                <p><textarea id="editarea">- Ei laulun nimeä, aloita suoraan 1. säkeistöstä
+- Erota säkeistöt, kertosäe ym. toisistaan yhdellä tyhjällä rivivälillä.
+- Paina lopuksi "Tallenna tiedot" -painiketta
+- Poistu tallentamatta painamalla "Peruuta"
+                </textarea></p>
                 <p><span><input type="button" name="editsub" id="editsub" onClick="submitedit();" value="Tallenna tiedot"></span><span><input type="button" name="canceledit" id="canceledit" onClick="RemoveWordView();" value="Peruuta"></span></p>
             </div>
 
@@ -231,6 +229,14 @@ $url = SaveGetParams();
 
 </script>
 
+
+<div class='hidden'>
+    <form name="esongedit" method="POST" action="songs.php">
+        <input name="editedsongid" id="editedsongid">
+        <textarea name="edited_existing_text" id="edited_existing_text"></textarea>
+        <input type="submit" name="edited_existing" id="edited_existing_button">
+    </form>
+</div>
 
 </body>
 

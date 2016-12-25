@@ -696,11 +696,17 @@ function FetchSongNames($con){
             echo $span->Show();
 
             $div = new DomEl('div',"");
-            $div->AddAttribute("id","song_" . str_replace(' ', '_', $row["filename"]));
+            $rep_name = "song_" . str_replace(' ', '_', $row["filename"]);
+            $div->AddAttribute("id", $rep_name);
 
 
 
             $title = new DomEl('h3',$row["title"],$div);
+            $editp = new DomEl('p',"",$div);
+            $editlink = new DomEl('a',"Muokkaa sanoja",$editp);
+            $editlink->AddAttribute("href","javascript:void(0);");
+            $editlink->AddAttribute("OnClick","EditWords('" . $rep_name ."');");
+
             foreach($verses as $verse){
                 $p = new DomEl('p',$verse["content"],$div);
             }

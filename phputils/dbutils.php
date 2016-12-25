@@ -13,7 +13,7 @@ class DbCon{
         $dbname = 'majakka_auth';
         $this->connection = new PDO("mysql:host=$hostname;dbname=$dbname;charset=utf8", $username, $password);
         // set the error mode to exceptions
-        $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        //$this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         //mysql_set_charset('utf8', $this->connection);  
     }
 
