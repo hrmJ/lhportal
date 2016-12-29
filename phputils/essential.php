@@ -691,6 +691,7 @@ function FetchSongNames($con){
             //Hae laulujen sanat
             $verses = $con->select("verses",Array("content"),Array(Array("song_id","=",intval($row["id"]))),"","ORDER BY id")->fetchAll();
 
+
             $span = new DomEl('span',$row["filename"]);
             $span->AddAttribute('class',"hidden songtitleentry");
             echo $span->Show();
@@ -710,6 +711,8 @@ function FetchSongNames($con){
             foreach($verses as $verse){
                 $p = new DomEl('p',$verse["content"],$div);
             }
+
+            $span = new DomEl('span',$row["id"], $div);
 
             #$p = new DomEl('p',"Sulje sanojen katselu klikkaamalla mihin tahansa laatikkoa",$div);
 
@@ -798,6 +801,19 @@ function UpdateSongData($con){
         }
 
         }
+    if (isset($_POST["edited_existing"])){
+
+        #Poista vanhat säkeistöt kokonaan
+        $con->query = $con->connection->prepare("DELETE FROM verses WHERE song_id = :sid");
+        $con->query->bindParam(':sid', intval($_POST["editedsongid"]), PDO::PARAM_STR);
+        $con->Run();
+
+        #syötä päivitetyt säkeistöt
+        $verses = preg_split("/(\\r|\\n){3,}/", $_POST['edited_existing_text']);
+        foreach($verses as $verse){
+                $con->insert("verses", Array("content"=>$verse,"song_id"=>intval($_POST["editedsongid"])));
+        }
+    }
 }
 
 class SongInserter{

@@ -581,19 +581,31 @@ function EditWords(songname){
     }
     oldtext = oldtext.trim();
 
+
     var wordview = document.getElementById("wordview");
     var titlecont = div.getElementsByTagName('H3');
     var title = titlecont[0].cloneNode(true);
     ClearContent(wordview);
+    wordview.innerHTML = "<span onClick='RemoveWordView();' class='fa-stack fa-lg close-button'> <i class='fa fa-circle fa-stack-2x'></i> <i class='fa fa-times fa-stack-1x fa-inverse'></i></span>";
     wordview.appendChild(title);
-    wordview.appendChild(TagWithText("textarea",oldtext,"earea"));
+    var etextarea = TagWithText("textarea",oldtext,"earea");
+    etextarea.id = "editedoldwords";
+    wordview.appendChild(etextarea);
     var but = TagWithText("input","","");
     but.setAttribute("type","button");
     but.value = "Tallenna";
-    but.addEventListener("click","SendEditedWords");
+    but.addEventListener("click",SendEditedWords,false);
     wordview.appendChild(TagParent("p",[but]));
+
+    //Tallenna laulun id
+    var idspans = div.getElementsByTagName('SPAN');
+    document.getElementById('editedsongid').value = idspans[0].textContent;
 }
 
 function SendEditedWords(){
-
+    var editfield = document.getElementById("editedoldwords");
+    var sendfield = document.getElementById("edited_existing_text");
+    sendfield.value = editfield.value;
+    var but = document.getElementById("edited_existing_button");
+    but.click();
 }

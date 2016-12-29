@@ -426,7 +426,6 @@ input#messutheme{
 
 
 #wordview div p{
-    /* max-width: 24em; */
     /* overflow:auto; */
 }
 
@@ -439,7 +438,7 @@ input#messutheme{
     position: fixed;
     display: block;
     margin-top: 4em;
-    max-width:35em;
+    max-width: 19em;
     /* max-height: 30em; */
     /* overflow: scroll; */
     padding: 2em;
@@ -681,7 +680,7 @@ input[type = submit]{
 
 .earea{
     width:100%;
-    height:10em;
+    height: 20em;
 }
 
 a.boxclose{
@@ -701,7 +700,7 @@ a.boxclose{
 }
 
 .boxclose:before {
-    content: "ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â";
+    content: "ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â";
 }
 
 .close-button {
@@ -712,6 +711,10 @@ a.boxclose{
 
 .contdiv{
     overflow:auto;
+}
+
+#wordview span:last-child{
+    display:none;
 }
 
 @media only screen and (max-device-width: 481px) {
@@ -730,7 +733,7 @@ a.boxclose{
         /* width: 40em; */
     }
     #wordview{
-        width:90%;
+        /* width:90%; */
         left: 3;
     }
 
@@ -744,9 +747,9 @@ a.boxclose{
     }
 
     #wordview{
-        font-size: 60%;
+        font-size: 80%;
         /* width: 50%; */
-        width: 70%;
+        /* width: 70%; */
     }
 
     #homeli{

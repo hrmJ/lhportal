@@ -231,7 +231,7 @@ $url = SaveGetParams();
 
 
 <div class='hidden'>
-    <form name="esongedit" method="POST" action="songs.php">
+    <form name="esongedit" method="POST" action="<?php echo $url;?>">
         <input name="editedsongid" id="editedsongid">
         <textarea name="edited_existing_text" id="edited_existing_text"></textarea>
         <input type="submit" name="edited_existing" id="edited_existing_button">
