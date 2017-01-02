@@ -513,47 +513,101 @@ input#messutheme{
     border-top: 1px solid grey;
     border-left: 1px solid grey;*/
     padding-left: 2em;
+    /* border-top: 1px solid grey; */
     /* border-radius: 25px; */
-    padding-top: 3em;
+    padding-top: 0.3em;
+    background: rgba(255, 255, 255, 0.67);
+    padding: 0.5em;
 }
 
 .comment_container{
-    padding-top: 1em;
-    padding-left: 2em;
+    /* padding-top: 1em; */
+    /* padding-left: 2em; */
     padding-bottom: 0.2em;
     padding-right: 0.2em;
-    background: #86884B;
-    color: white;
-    margin: 2em;
-    border-radius: 3px;
+    /* background: #86884B; */
+    /* color: white; */
+    /* margin: 2em; */
+    /* border-radius: 3px; */
+    font-size: 90%;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 1em;
 }
 
 .newcomment{
     /*background: lightblue;*/
 }
 
+#commentthemes{
+    color: #AEABBB;
+}
+
+
 .commenttext{
     font-size: 10;
-    max-width: 40em;
+    height: 3em;
+    /* max-width: 40em; */
+    outline: none;
+    width: 100%;
     min-width: 40em;
-    height: 15em;
+    /* height: 15em; */
     display: block;
     margin-top: 2em;
-    margin-left: 3em;
+    /* margin-left: 3em; */
+    transition: all .15s ease-in-out;
 }
 
 .comment_header{
-    border-top: 1px dashed white;
-    margin-top: 1.5em;
+    /* border-top: 1px dashed white; */
     padding-top: 0.2em;
     font-style: italic;
     font-size: 80%;
-    text-align: right;
+    text-align: left;
+    width: 10em;
+    background: #C3C3C3;
+    padding: 0.5em;
+}
+
+.comment_header div a:hover{
+    color:darkblue;
+    cursor:pointer;
+}
+
+.comment_header div a{
+    color: #AB0303;
+}
+
+#cmeditsub{
+    font-size:75%;
+
+}
+
+.commentator{
+    font-size: 80%;
+    color: #AB0303;
+    font-weight: bold;
+}
+
+.comment_header div a:first-child:after{
+    content: "|";
+    padding-right:0.5em;
+    padding-left:0.5em;
+}
+
+.comment_header div{
+    margin-bottom:1em;
+}
+
+.comment_content{
+    margin-left:1.5em;
+    width: 100%;
 }
 
 #cmsub{
-    margin-top:1.5em;
-    margin-left: 3em;
+    margin-top: 0em;
+    margin-left: 0em;
+    font-size: 80%;
 }
 
 #homeli{
@@ -679,7 +733,8 @@ input[type = submit]{
 }
 
 .earea{
-    width:100%;
+    /* width:100%; */
+    /* min-width: 30em; */
     height: 20em;
 }
 
@@ -700,7 +755,7 @@ a.boxclose{
 }
 
 .boxclose:before {
-    content: "ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â";
+    content: "ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¾ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¡ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â";
 }
 
 .close-button {
@@ -715,6 +770,14 @@ a.boxclose{
 
 #wordview span:last-child{
     display:none;
+}
+
+.commentadder{
+    margin-top: 0.6em;
+}
+
+.selcont{
+    margin-top:0.5em;
 }
 
 @media only screen and (max-device-width: 481px) {

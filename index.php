@@ -114,15 +114,29 @@ CreateNavi($vastuulist, $url);
             }
             ?>
             <section id="comments">
+                <h4>Huomioita messusta</h4>
                 <form name='commentform' id='commentform' method="post" action="<?php echo $url;?>">
-                <input class='hidden' value="<?php echo $_GET['messuid'];?>" name="messu_id_comments">
-                    <a href='javascript:void(0);' onClick='AddComment();'>&#x25b7; Lisää infoasia/kommentti/kysymys/yms.</a>
-                </form>
+                    <input class='hidden' value="<?php echo $_GET['messuid'];?>" name="messu_id_comments">
+                    <textarea name="newcomment_text" id="cm1" class="commenttext" placeholder="Lisää huomio tai kommentti..." onClick='ExpandComment(this);'></textarea>
+
+            <div class='commentadder hidden' id='themechooser'>
+            <?php
+                //Lisää aihevalitsin
+                $vlist = CreateVastuuList();
+                echo $vlist->Show();
+            ?>
+            </div>
+            </form>
+            <form name='comment_edit_form' id='comment_edit_form' method="post" action="<?php echo $url;?>">
             <?php
                 LoadComments($con);
-                echo "</section>";
             }
-        ?>
+            ?>
+            <input type='text' class='hidden' id='edited_comment_id' name='edited_comment_id'>
+            <input type='text' class='hidden' id='deleted_comment_id' name='deleted_comment_id'>
+            <input type='submit' class='hidden' id='submit_comment_edits' name='cmdeletesub' value='toteuta'>
+            </form>
+            </section>
 
 </article>
 

@@ -283,23 +283,72 @@ function SwitchSeason(direction){
     document.getElementById('seasonsubmit').click();
 }
 
-function AddComment(){
-    if (document.getElementById("cm1") == null){
-        var form = document.getElementById('commentform');
 
-        var commentdiv = DomEl('div','ncdiv','newcomment');
-        var commentarea = DomEl('textarea','cm1','commenttext');
+
+function ExpandComment(el){
+    if (el.style.height == '' || el.style.height == '2em'){
+        el.style.height = '8em';
+
+        var form = document.getElementById('commentform');
+        var from = TagWithText('input','','');
+        from.type = "text";
+        from.name = "commentator";
+        from.setAttribute('Placeholder','Nimesi');
+        document.getElementById('themechooser').appendChild(from);
+
         var commentsubmit = DomEl('input','cmsub','sbutton');
         commentsubmit.type = 'submit';
         commentsubmit.name = 'cmsub';
         commentsubmit.value = 'Lisää';
-        commentarea.name = 'newcomment_text';
+        form.appendChild(TagParent('div',[commentsubmit],'commentadder'));
 
-        commentdiv.appendChild(commentarea);
-        commentdiv.appendChild(commentsubmit);
-        form.appendChild(commentdiv);
+        document.getElementById('themechooser').style.display='block';
+
     }
 }
+
+
+function RemoveComment(commentid){
+   var conf = window.confirm('Oletko aivan varma, että haluat poistaa kommentin? Tätä ei voi perua!');
+   if(conf==true){
+       document.getElementById('deleted_comment_id').value = commentid;
+       document.getElementById('deleted_comment_id').value = commentid;
+        document.getElementById('submit_comment_edits').click();
+   }
+}
+
+function EditComment(commentid){
+    var content = document.getElementById("commentcontent_" + commentid);
+    if(content.getElementsByTagName("TEXTAREA").length == 0){
+        // jos ei vielä aloitettu muokkausta
+        var textarea = TagWithText("textarea",content.textContent,"commenttext");
+        textarea.id = "editedcomment";
+        textarea.name = "editedcomment";
+        textarea.style.height = content.offsetHeight - 10 + "px";
+        content.textContent = "";
+        content.appendChild(textarea);
+
+        var select = document.getElementById('commentthemes').cloneNode(true);
+        content.appendChild(TagParent('div',[select],'selcont'));
+
+
+       for(var idx = 0;idx<select.length;idx++) {
+           var opt = select[idx];
+            if(opt.value == document.getElementById("ctheme_" + commentid).textContent) {
+                select.selectedIndex = idx;
+                break;
+            }
+        }
+
+        var commentsubmit = DomEl('input','cmeditsub','seditbutton');
+        commentsubmit.type = 'submit';
+        commentsubmit.name = 'cmeditsub';
+        commentsubmit.value = 'Tallenna muutokset';
+        content.appendChild(TagParent('div',[commentsubmit],''));
+        document.getElementById('edited_comment_id').value=commentid;
+    }
+}
+
 
 function ClearContent(myNode){
     //Remove child nodes,

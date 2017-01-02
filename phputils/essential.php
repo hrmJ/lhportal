@@ -207,10 +207,22 @@ function CreateVastuuList($parent){
     $con = new DbCon();
     $result = $con->select("vastuut",Array("vastuu"),Array(),"DISTINCT")->fetchAll();
 
-    $select = new DomEl("select",'',$parent);
-    $select->AddAttribute('id',"vastuulist");
-    $option = new DomEl('option','Yleisnäkymä',$select);
-    $option = new DomEl('option','----',$select);
+    if(!isset($parent)){
+        $select = new DomEl("select",'');
+        $select->AddAttribute('id',"commentthemes");
+        $select->AddAttribute('name',"commenttheme");
+        $option = new DomEl('option','Kommentin aihe',$select);
+        $option = new DomEl('option','----',$select);
+        $option = new DomEl('option','Yleinen',$select);
+        $option = new DomEl('option','Infoasia',$select);
+    }
+    else{
+        $select = new DomEl("select",'',$parent);
+        $select->AddAttribute('id',"vastuulist");
+        $option = new DomEl('option','Yleisnäkymä',$select);
+        $option = new DomEl('option','----',$select);
+    }
+
     foreach($result as $row){
         $litext = $row["vastuu"];
         $option = new DomEl('option',$litext,$select);
@@ -481,8 +493,26 @@ function UpdateMessudata($con){
             elseif (array_key_exists("newcomment_text",$_POST)){
                 #3. Jos käyttäjä on lisännyt kommentin, lataa se tietokantaan
                 date_default_timezone_set('Europe/Helsinki');
+
+                #Varmista, ettei valitsemattomia teemoja
+                if(in_array($_POST["commenttheme"], Array("Kommentin aihe","----")))
+                    $_POST["commenttheme"] = "Yleinen";
+
                 $date = date('Y-m-d H:i:s');
-                $con->insert("comments", Array("messu_id"=>$_POST["messu_id_comments"],"comment_time"=>$date,"content"=>$_POST["newcomment_text"],"commentator"=>""));
+                $con->insert("comments", Array("messu_id"=>$_POST["messu_id_comments"],"comment_time"=>$date,"content"=>$_POST["newcomment_text"],"commentator"=>$_POST["commentator"],"theme"=>$_POST["commenttheme"]));
+            }
+            elseif (array_key_exists("edited_comment_id",$_POST)){
+                #4. Jos käyttäjä on muokannut kommentteja
+                if(!empty($_POST["deleted_comment_id"])){
+                    #4.a poistetaan
+                    $con->query = $con->connection->prepare("DELETE FROM comments WHERE id = :sid");
+                    $con->query->bindParam(':sid', intval($_POST["deleted_comment_id"]), PDO::PARAM_STR);
+                    $con->Run();
+                }
+                else{
+                    #4.b päivitetään
+                    $con->update("comments", Array("theme"=>$_POST["commenttheme"], "content"=>$_POST["editedcomment"]),Array(Array("id","=",intval($_POST["edited_comment_id"]))));
+                }
             }
             elseif (array_key_exists("themesubmit",$_POST)){
                 $con->update("messut",
@@ -551,7 +581,7 @@ function MonthName($month_number){
 function LoadComments($con){ //TODO: Use only one open connection, pass it on as argument $con = new DbCon();
     if (array_key_exists("messuid",$_GET)){
         $messuid = $_GET["messuid"];
-        $comments = $con->select("comments",Array("content","commentator","id","comment_time"),Array(Array("messu_id","=",intval($messuid))),'','ORDER BY comment_time DESC')->fetchAll();
+        $comments = $con->select("comments",Array("content","commentator","id","comment_time","theme"),Array(Array("messu_id","=",intval($messuid))),'','ORDER BY comment_time DESC')->fetchAll();
         foreach ($comments as $comment){
             $thiscomment = new Comment($comment);
             echo $thiscomment->container->Show();

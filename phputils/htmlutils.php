@@ -4,14 +4,23 @@ class Comment{
 
 
     public function __construct($commentdata){
-        $cont = new DomEl("div");
+
+        $outercont  = new DomEl("div");
+        $outercont->AddAttribute('class',"outer_comment_container");
+
+        //$persondiv = new DomEl("div","",$outercont);
+        //$persondiv->AddAttribute('class','commentator');
+        //$cdate = strtotime($commentdata["comment_time"]);
+        //$bolded = new DomEl("span",$commentdata["commentator"] . " kommentoi " . date('j.n.Y',$cdate) . ": ", $persondiv);
+
+        $cont = new DomEl("div","",$outercont);
         $cont->AddAttribute('class',"comment_container");
+        $cont->AddChild(FormatCommentHeader($commentdata));
 
         $commentcontent = new DomEl("div",$commentdata["content"],$cont);
         $commentcontent->AddAttribute('class',"comment_content");
+        $commentcontent->AddAttribute("id","commentcontent_" . $commentdata["id"]);
 
-        $commentheader = new DomEl("div",FormatCommentHeader($commentdata),$cont);
-        $commentheader->AddAttribute('class',"comment_header");
 
         $this->container = $cont;
     }
@@ -20,8 +29,23 @@ class Comment{
 }
 
 function FormatCommentHeader($commentdata){
-    $text = "Viesti lähetetty " . $commentdata["comment_time"];
-    return $text;
+    $cont = new DomEl("div");
+    $cont->AddAttribute('class',"comment_header");
+
+    $infocont = new DomEl("div",$commentdata["commentator"],$cont);
+    $cdate = strtotime($commentdata["comment_time"]);
+    $infocont2 = new DomEl("div",date('j.n.Y',$cdate) ,$cont);
+    $infocont3 = new DomEl("div",$commentdata["theme"] ,$cont);
+    $infocont3->AddAttribute("id","ctheme_" . $commentdata["id"]);
+
+    $linkcont = new DomEl("div", "", $cont);
+    $editlink = new DomEl("a","Muokkaa",$linkcont);
+    $editlink->AddAttribute("id","editcomment_" . $commentdata["id"]);
+    $editlink->AddAttribute("onClick","EditComment(" . $commentdata["id"] . ");");
+    $removelink = new DomEl("a","Poista",$linkcont);
+    $removelink->AddAttribute("onClick","RemoveComment(" . $commentdata["id"] . ");");
+
+    return $cont;
 }
 
 class HtmlTable{
