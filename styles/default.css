@@ -518,6 +518,7 @@ input#messutheme{
     padding-top: 0.3em;
     background: rgba(255, 255, 255, 0.67);
     padding: 0.5em;
+    margin-top: 3em;
 }
 
 .comment_container{
@@ -530,7 +531,17 @@ input#messutheme{
     /* margin: 2em; */
     /* border-radius: 3px; */
     font-size: 90%;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
     display: flex;
+    -webkit-box-orient: horizontal;
+    -moz-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -moz-box-direction: normal;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
     flex-direction: row;
     margin-bottom: 1em;
 }

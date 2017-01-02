@@ -19,7 +19,7 @@ echo '<html lang="fi">
       <link href="https://fonts.googleapis.com/css?family=Nothing+You+Could+Do|Quicksand" rel="stylesheet"> 
      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
      <meta name="viewport" content="width=device-width, initial-scale=1">
-     <link rel="stylesheet" href="styles/default.css">
+     <link rel="stylesheet" href="styles/updated.css">
      <link rel="stylesheet" href="font-awesome-4.6.3/css/font-awesome.min.css">
      <script src="scripts/essential.js"></script>
      <title>Majakkaportaali 0.1</title>
