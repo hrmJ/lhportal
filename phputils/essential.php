@@ -751,9 +751,8 @@ function FetchSongNames($con){
     }
 }
 
-function FetchTechInfo($pickedid, $con){
+function FetchTechInfo($pickedid, $con, $infostring){
     $result = $con->select("messut",Array("info"),Array(Array("id","=",intval($pickedid))),"","")->fetchAll();
-    $infostring = "Lisää tähän miksaajalle tiedoksi, mitä soitimia teillä on ja keitä soittajia.  Esimerkiksi: kitara (Ville V.), cajon (Hessu H.). Samoin, jos on jotain toiveita äänitekniikan suhteen, niin voit ilmoittaa niistä tässä. Tai mitä vain muuta viestiä :)";
     if(!empty($result[0]["info"])){
         return $result[0]["info"];
     }
@@ -843,6 +842,12 @@ function UpdateSongData($con){
         foreach($verses as $verse){
                 $con->insert("verses", Array("content"=>$verse,"song_id"=>intval($_POST["editedsongid"])));
         }
+    }
+    if (isset($_POST["removed_type"])){
+        $con->query = $con->connection->prepare("DELETE FROM laulut WHERE tyyppi = :tyyp AND messu_id =  :mid ORDER BY id DESC LIMIT 1");
+        $con->query->bindParam(':tyyp', $_POST["removed_type"], PDO::PARAM_STR);
+        $con->query->bindParam(':mid', $_POST["messu_id"], PDO::PARAM_STR);
+        $con->Run();
     }
 }
 

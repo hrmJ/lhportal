@@ -339,7 +339,7 @@ tr:hover{
 }
 
 #songs{
-    border-top: 2px solid white;
+    /*border-top: 2px solid white;*/
     padding:1em;
     background: darkgray;
 }
@@ -600,14 +600,16 @@ input#messutheme{
     font-weight: bold;
 }
 
+/*
 .comment_header div a:first-child:after{
     content: "|";
     padding-right:0.5em;
     padding-left:0.5em;
 }
+*/
 
 .comment_header div{
-    margin-bottom:1em;
+    margin-bottom:0.2em;
 }
 
 .comment_content{
@@ -789,6 +791,10 @@ a.boxclose{
 
 .selcont{
     margin-top:0.5em;
+}
+
+.plusminus{
+    margin-right:0.5em;
 }
 
 @media only screen and (max-device-width: 481px) {

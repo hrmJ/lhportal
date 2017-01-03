@@ -146,16 +146,16 @@ $url = SaveGetParams();
             ?>
             <h3>Ylistyslaulut</h3>
             <?php
-                $wssonglist =  WsSongList($con, $pickedid, "Ylistyslaulu"); 
-                echo $wssonglist;
+                $ylistys_songlist =  WsSongList($con, $pickedid, "Ylistyslaulu"); 
+                echo $ylistys_songlist;
             ?>
-            <p><input type="button" onClick='AddWsSong("Ylistyslaulu");' value="+"></p>
+            <p ><input type="button" title='Lisää ylistyslaulu'  class='plusminus' onClick='AddWsSong("Ylistyslaulu");' value="+"><input type="button" title='Poista viimeinen ylistyslaulu'  onClick='RemoveWsSong("Ylistyslaulu");' value="-"> </p>
             <h3>Ehtoollisen aikana laulettavat</h3>
             <?php
-                $wssonglist =  WsSongList($con, $pickedid, "Ehtoollislaulu"); 
-                echo $wssonglist;
+                $eht_songlist =  WsSongList($con, $pickedid, "Ehtoollislaulu"); 
+                echo $eht_songlist;
             ?>
-            <p><input type="button" onClick='AddWsSong("Ehtoollislaulu");' value="+"></p>
+            <p ><input type="button" class='plusminus' title='Lisää ehtoollislaulu' onClick='AddWsSong("Ehtoollislaulu");' value="+"><input type="button" title='Poista viimeinen ehtoollislaulu'   onClick='RemoveWsSong("Ehtoollislaulu");' value="-"></p>
 
             <h3>Liturgiset</h3>
 
@@ -170,8 +170,17 @@ $url = SaveGetParams();
 
             <h3>Tiedot tekniikalle</h3>
             <p>
-            <?php $techinfo=FetchTechInfo($pickedid, $con);?>
-            <textarea class='area' name="techinfo" value="<?php echo $techinfo;?>" id="techinfobox"><?php echo $techinfo;?></textarea>
+            <?php 
+            $infostring = "Lisää tähän miksaajalle tiedoksi, mitä soitimia teillä on ja keitä soittajia.  Esimerkiksi: kitara (Ville V.), cajon (Hessu H.). Samoin, jos on jotain toiveita äänitekniikan suhteen, niin voit ilmoittaa niistä tässä. Tai mitä vain muuta viestiä :)";
+            $techinfo=FetchTechInfo($pickedid, $con, $infostring);
+            if($techinfo==$infostring){
+                echo "<textarea class='area' name='techinfo' placeholder='$techinfo' id='techinfobox'></textarea>";
+            }
+            else{
+                echo "<textarea class='area' name='techinfo' value='$techinfo' id='techinfobox'>$techinfo</textarea>";
+            }
+            ?>
+    
             </p>
 
             <p><input type="submit" name="sbut" id="sbut" value="Tallenna tiedot"></p>
@@ -236,6 +245,29 @@ $url = SaveGetParams();
         <textarea name="edited_existing_text" id="edited_existing_text"></textarea>
         <input type="submit" name="edited_existing" id="edited_existing_button">
     </form>
+
+    <form name="remover" method="POST" action="<?php echo $url;?>">
+        <input name="messu_id" id="removed_messuid" value="<?php echo $pickedid ?>">
+        <input name="removed_type" id="removed_type">
+        <input type="submit" name="removed_ws" id="removed_ws_sub">
+    </form>
+
+<!--Tallenna muistiin   -->
+
+<div id="ylistys_memo" class="hidden">
+<?php
+    $ylistys_songlist = str_replace('Ylistyslaulutable','Ylistyslaulutable_memo',$ylistys_songlist);
+    echo $ylistys_songlist;
+?>
+</div>
+
+<div id="eht_memo" class="hidden">
+<?php
+    $eht_songlist = str_replace('Ehtoollislaulutable','Ehtoollislaulutable_memo',$eht_songlist);
+    echo $eht_songlist;
+?>
+</div>
+
 </div>
 
 </body>

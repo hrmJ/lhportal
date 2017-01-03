@@ -38,11 +38,13 @@ function FormatCommentHeader($commentdata){
     $infocont3 = new DomEl("div",$commentdata["theme"] ,$cont);
     $infocont3->AddAttribute("id","ctheme_" . $commentdata["id"]);
 
-    $linkcont = new DomEl("div", "", $cont);
-    $editlink = new DomEl("a","Muokkaa",$linkcont);
+    $linkcont1 = new DomEl("div", "", $cont);
+    $editlink = new DomEl("a","Muokkaa",$linkcont1);
     $editlink->AddAttribute("id","editcomment_" . $commentdata["id"]);
     $editlink->AddAttribute("onClick","EditComment(" . $commentdata["id"] . ");");
-    $removelink = new DomEl("a","Poista",$linkcont);
+
+    $linkcont2 = new DomEl("div", "", $cont);
+    $removelink = new DomEl("a","Poista",$linkcont2);
     $removelink->AddAttribute("onClick","RemoveComment(" . $commentdata["id"] . ");");
 
     return $cont;

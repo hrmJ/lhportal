@@ -532,13 +532,35 @@ function AddSaveButton(){
     }
 }
 
+
+function RemoveWsSong(type){
+    var rows = document.getElementById(type + "table").getElementsByTagName('TR');
+    if(rows.length>1){
+        document.getElementById('removed_type').value = type;
+        // Tarkista, mitä on jo tallennettuna
+        var memo = document.getElementById(type + 'table_memo');
+        var memorows = memo.getElementsByTagName('TR');
+        //var lastmemoval = memorows[memorows.length-1].getElementsByTagName('input')[0].value;
+        //vertaa nykyiseen näkymään
+        //var lastviewval = rows[rows.length-1].getElementsByTagName('input')[0].value;
+        if(memorows.length==rows.length){
+            // Jos halutaan postaa jo tallennettuja muutoksia
+            document.getElementById('removed_ws_sub').click();
+        }
+        else if(memorows.length < rows.length){
+            // Jos poistetaan tallentamattomia
+            document.getElementById(type + "table").removeChild(rows[rows.length-1]);
+        }
+    }
+}
+
 function AddWsSong(type){
     var table = document.getElementById(type + "table");
     var row = document.createElement('tr');
     var left = document.createElement('td');
     var right = document.createElement('td');
     var lyricslinkcell = document.createElement('td');
-    var allws = document.getElementsByClassName("editable" + type);
+    var allws = table.getElementsByClassName("editable" + type);
 
     left.className = "left";
     right.className = "right";
