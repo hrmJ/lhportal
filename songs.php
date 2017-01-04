@@ -27,6 +27,7 @@ if (!isset( $_SESSION['user_id'] )){
     }
     if($loginfail or !$valid or !isset($_POST["username"],$_POST["password"])){
         #Kun saavutaan sivulle 1. kertaa tai kirjautuminen ei onnistunut
+        $fromsongs = True;
         require('login.php');
     }
 }

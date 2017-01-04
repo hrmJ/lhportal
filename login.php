@@ -30,6 +30,18 @@ $msg = "Kirjaudu sisään";
         <p>
             <input type="submit" value="Kirjaudu" />
         </p>
+    <?php
+    if(isset($fromsongs)){
+    ?>
+        <p>
+            Majakkamessun laululista on muuttanut osaksi Majakkaportaalia ja
+            siirtynyt kirjautumisen taakse. Jos et tiedä kirjautumistunnuksia,
+            tiedustele Juholta (juho.harme *at* gmail.com) /  045 136 1939. Tunnukset
+            löytyvät myös majakan vastuunkantajan ABC-vihkosesta.
+        </p>
+    <?php
+    }
+    ?>
     </form>
 </article>
 
