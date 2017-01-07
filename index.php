@@ -90,7 +90,7 @@ $con = new DbCon();
 
 
 <?php
-CreateNavi($vastuulist, $url);
+CreateNavi($vastuulist, $url, False);
 ?>
 
 <article id='maincontainer'>

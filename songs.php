@@ -53,9 +53,12 @@ $con = new DbCon();
 
 <?php
 $kausi = SetSeason($con);
-CreateNavi(False, $url);
+$vastuulist = CreateNavi(False, $url, True);
 require('menu.php');
 ?>
+
+<section id='songlistsection'>
+</section>
 
 <form id="sform" method="post" action="<?php echo $url; ?>">
 <?php

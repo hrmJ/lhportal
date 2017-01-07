@@ -1,3 +1,5 @@
+var songlist_g = null;
+
 function FixOut(evt, direction){
     var row = evt.target;
     MouseFix('off', row);
@@ -679,4 +681,38 @@ function SendEditedWords(){
     sendfield.value = editfield.value;
     var but = document.getElementById("edited_existing_button");
     but.click();
+}
+
+function ViewSongList(){
+    if (songlist_g == null){
+        songlist_g = new SongList();
+    }
+    var section = document.getElementById('songlistsection');
+    var h = window.innerHeight||document.documentElement.clientHeight||document.body.clientHeight||0;
+    var newheight = (h - document.getElementById('leftbanner').offsetHeight - 50) / 2;
+    section.style.marginTop = document.getElementById('leftbanner').offsetHeight;
+    if (section.style.height == '' || section.style.height == '0px'){
+        section.style.height= newheight + "px";
+        document.getElementById('laululista_launcher').style.background = 'cadetblue';
+    }
+    else{
+        document.getElementById('laululista_launcher').style.background = 'none';
+        section.style.height = "0px";
+    }
+}
+
+function SongList(){
+    //an object containing all the names of the songs
+    //these can be ordered, search etc
+    //TODO make the songnames themselves OBJECTS with properties
+    //like composer, theme etc
+    this.order='';
+    this.namelist = function(){
+        var songnames = document.getElementsByClassName('songtitleentry');
+        var namelist = [];
+        for (var idx=0;idx<songnames.length; idx++) {
+            namelist.push(songnames[idx].textContent);
+        }
+        return namelist;
+    }();
 }

@@ -29,7 +29,7 @@ echo '<html lang="fi">
      #<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
 }
 
-function CreateNavi($vastuulist, $url){
+function CreateNavi($vastuulist, $url, $songmenu=False){
 
     $section = new DomEl('section','');
     $section->AddAttribute('id','leftbanner');
@@ -43,20 +43,28 @@ function CreateNavi($vastuulist, $url){
 
     $ul = new DomEl('ul','',$span);
     $li = new DomEl('li','',$ul);
+    $li->AddAttribute('id','settings');
+    $li->AddAttribute('onClick','ShowSettings();');
+    $li->AddAttribute('onClick','ShowSettings();');
+
     $icon = new DomEl('i','',$li);
     $icon->AddAttribute('class','fa fa-bars');
-    $icon->AddAttribute('id','settings');
     $icon->AddAttribute('karia-hidden','true');
-    $icon->AddAttribute('onClick','ShowSettings();');
-    $icon->AddAttribute('onClick','ShowSettings();');
     $li = new DomEl('li','Majakkaportaali',$ul);
     $li->AddAttribute('id','homeli');
     $li->AddAttribute('title','Takaisin alkunäkymään');
+    if($songmenu==True){
+        $li = new DomEl('li','Selaa laululuja >',$ul);
+        $li->AddAttribute('id','laululista_launcher');
+        $li->AddAttribute('title','Selaa lauluja');
+        $li->AddAttribute('onClick','ViewSongList();');
+    }
 
-        $span = new DomEl('span','',$form);
-        $span->AddAttribute('class','menuright');
-        $ul = new DomEl('ul','',$span);
-        $li = new DomEl('li','',$ul);
+
+    $span = new DomEl('span','',$form);
+    $span->AddAttribute('class','menuright');
+    $ul = new DomEl('ul','',$span);
+    $li = new DomEl('li','',$ul);
     if($vastuulist == True){
         CreateVastuuList($li);
     }
