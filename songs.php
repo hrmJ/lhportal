@@ -61,6 +61,11 @@ require('menu.php');
     <div id='songlistcontainer'>
         <input type='text' value='' id='pickedlistsong' class='hidden'>
         <div id='searchtools' class='searchdiv'>
+            <p>Tässä näkymässä voit selailla olemassaolevien laulujen listaa tarkemmin. 
+            Voit hakea laulun nimen perusteella kirjoittamalla alla olevaan tekstikenttään.
+            Klikkaa laulun nimeä listalta, niin voit asettaa sen alkulauluksi,
+            päivän lauluksi jne. Voit myös tutkia ja muokata laulusta tallennettuja sanoja.
+            </p>
             <input type="text" id="songfilterinput" OnKeyUp="CheckFilter();">
         </div>
         <div id='songlistdivcont' class='searchdiv'>
@@ -102,7 +107,7 @@ $url = SaveGetParams();
                         <li> Vasemmalla ei aluksi näy listaa lauluista, mutta
                             <em>kun alat kirjoittaa jotakin laulun nimeä esimerkiksi kohdan "Alkulaulu"
                             viereiseen kenttään, ruudulle ilmestyy lista kaikista olemassaolevista
-                            lauluista, joissa näpyttelemäsi kirjaimet / sana esiintyy.</em>
+                            lauluista, joissa näpyttelemäsi kirjaimet / sana esiintyy.</em> (Jos haluat tutkia olemassaolevien laulujen listaa perinteisemmin, klikkaa ylhäältä "Selaa lauluja")
                         <li> Jos etsimäsi laulu on listassa, klikkaa sitä.
                         <li> Voit katsella valitsemasi laulun sanoja klikkaamalla laulun viereistä "Katso sanoja" -linkkejä
                         <li> Jos kyseisestä laulusta ei ole sanoja, linkissä lukee "lisää sanat"
@@ -240,7 +245,7 @@ $url = SaveGetParams();
     //TODO lisää myös dyn.luotuihin
     var lyricslinks = document.getElementsByClassName('right');
     for(var idx = 0; idx < lyricslinks.length;idx++){
-        var link = lyricslinkids[idx];
+        var link = lyricslinks[idx];
         link.addEventListener('focusout',UpdateLyrics,false);
     }
 

@@ -956,9 +956,20 @@ a.boxclose{
     text-decoration: underline;
 }
 
-#listeditwords p{
+#listeditwords p, #searchtools p{
     color:antiquewhite;
 }
+
+#searchtools p {
+    text-align:justify;
+    font-size:80%;
+    padding:0.2em;
+}
+
+#searchtools{
+    width:15em;
+}
+
 #listeditwords span{
     display:none;
 }
