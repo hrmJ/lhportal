@@ -838,7 +838,7 @@ function SongList(){
                 //
                 for (var idx=0;idx<this.namelist.length; idx++) {
                     var name = this.namelist[idx];
-                    if(name.textContent.search(pattern)>-1){
+                    if(name.textContent.toLowerCase().indexOf(pattern.toLowerCase()) != -1){
                         filtered.push(name);
                     }
                 }
