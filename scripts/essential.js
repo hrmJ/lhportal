@@ -141,7 +141,12 @@ function ShowWords(evt){
 }
 
 function UpdateLyrics(evt){
-    var td = evt.target;
+    if(evt.parentElement !== undefined){
+        var td = evt.parentElement;
+    }
+    else{
+        var td = evt.target;
+    }
     if(td.tagName=="SELECT"){
         //Jos Jumalan karitsa tai Pyhä
         return 0;
@@ -581,6 +586,7 @@ function AddWsSong(type){
 
     left.textContent = type + " " + (allws.length + 1);
     this_input.name = type + "_" + (allws.length + 1);
+    this_input.id = type + "_" + (allws.length + 1);
     right.appendChild(this_input);
     lyricslinkcell.appendChild(this_link);
 
@@ -650,16 +656,26 @@ function EditWords(songname){
     var oldtext = "";
     for(var idx = 1;idx<ps.length;idx++){
         var p = ps[idx];
+        //hack.. ->
+        p.innerHTML = p.innerHTML.replace(/<br>/g,'\n');
         oldtext += "\n\n" + p.textContent;
     }
     oldtext = oldtext.trim();
 
 
-    var wordview = document.getElementById("wordview");
     var titlecont = div.getElementsByTagName('H3');
     var title = titlecont[0].cloneNode(true);
-    ClearContent(wordview);
-    wordview.innerHTML = "<span onClick='RemoveWordView();' class='fa-stack fa-lg close-button'> <i class='fa fa-circle fa-stack-2x'></i> <i class='fa fa-times fa-stack-1x fa-inverse'></i></span>";
+    
+    var section = document.getElementById('songlistsection');
+    if (section.style.height == '' || section.style.height == '0px'){
+        var wordview = document.getElementById("wordview");
+        wordview.innerHTML = "<span onClick='RemoveWordView();' class='fa-stack fa-lg close-button'> <i class='fa fa-circle fa-stack-2x'></i> <i class='fa fa-times fa-stack-1x fa-inverse'></i></span>";
+    }
+    else{
+        // Jos muokataan laululistanäkymässä
+        var wordview = document.getElementById("listeditwords");
+        ClearContent(wordview);
+    }
     wordview.appendChild(title);
     var etextarea = TagWithText("textarea",oldtext,"earea");
     etextarea.id = "editedoldwords";
@@ -683,6 +699,11 @@ function SendEditedWords(){
     but.click();
 }
 
+function CheckFilter(){
+    var input = document.getElementById("songfilterinput");
+    songlist_g.PrintList(input.value);
+}
+
 function ViewSongList(){
     if (songlist_g == null){
         songlist_g = new SongList();
@@ -693,12 +714,95 @@ function ViewSongList(){
     section.style.marginTop = document.getElementById('leftbanner').offsetHeight;
     if (section.style.height == '' || section.style.height == '0px'){
         section.style.height= newheight + "px";
+        document.getElementById('songlistcontainer').style.display = 'block';
+        document.getElementById('songlistdiv').style.display = 'block';
+        document.getElementById('searchtools').style.display = 'block';
         document.getElementById('laululista_launcher').style.background = 'cadetblue';
+        songlist_g.PrintList("all");
     }
     else{
         document.getElementById('laululista_launcher').style.background = 'none';
+        document.getElementById('songlistcontainer').style.display = 'none';
         section.style.height = "0px";
     }
+    var cdiv = document.getElementById('songcontrols');
+    cdiv.style.display = 'none';
+}
+
+function BackToSongList(){
+    //stupid??
+    ViewSongList();
+    ViewSongList();
+}
+
+function UseSong(evt){
+    var li = evt.target;
+    //save the song name for future use
+    document.getElementById('pickedlistsong').value = li.textContent;
+
+    //hide songlist
+    var sdiv = document.getElementById('songlistdiv');
+    var searchcontrols = document.getElementById('searchtools');
+    sdiv.style.display = "none";
+    searchcontrols.style.display = 'none';
+
+    //show controls
+    var cdiv = document.getElementById('songcontrols');
+    cdiv.style.display = 'block';
+
+    //Insert information and controls
+    var wcont = document.getElementById('listeditwords');
+    var songname = "song_" + li.textContent.replace(/ /g,'_');
+    var worddiv = document.getElementById(songname).cloneNode(true);
+    worddiv.innerHTML = worddiv.innerHTML.replace(/\n/g,'<br>')
+
+    ClearContent(wcont);
+
+    var link = TagWithText("a","<< Takaisin listaan","");
+    link.href = "javascript:void(0)";
+    link.addEventListener('click',BackToSongList,false);
+    wcont.appendChild(TagParent("p",[link],""));
+
+    wcont.appendChild(worddiv);
+
+    //Add functionality
+    var appliedsongs = document.getElementsByClassName('left');
+    var functions = [];
+    var usedroles = [];
+    for(var idx =0; idx<appliedsongs.length; idx++){
+        var song = appliedsongs[idx];
+        if(usedroles.indexOf(song.textContent)==-1 && ['Jumalan karitsa','Pyhä-hymni'].indexOf(song.textContent)==-1){
+            var thisli = TagWithText("li",song.textContent,"");
+            thisli.addEventListener('click',AssignRole,false);
+            functions.push(thisli);
+            usedroles.push(song.textContent);
+        }
+    }
+    var functiondiv = document.getElementById("songpanel");
+    ClearContent(functiondiv);
+    functiondiv.appendChild(TagParent("ul",functions,""));
+
+}
+
+function SongElement(spanel){
+    this.verses =  [];
+    var songdiv = spanel.nextElementSibling;
+    var verses = songdiv.getElementsByTagName('P');
+    for (var idx = 0;idx<verses.length;idx++){
+        var verse = verses[idx];
+        this.verses.push(verse.cloneNode(true));
+    }
+}
+
+function AssignRole(evt){
+    var li = evt.target;
+    id = li.textContent;
+    if(li.textContent.indexOf("Ylistyslaulu") > -1 || li.textContent.indexOf("Ehtoollislaulu") > -1){
+        var id = id.replace(/ /g,'_');
+    }
+    document.getElementById(id).value = document.getElementById('pickedlistsong').value ;
+    ViewSongList();
+    UpdateLyrics(document.getElementById(id));
 }
 
 function SongList(){
@@ -707,12 +811,41 @@ function SongList(){
     //TODO make the songnames themselves OBJECTS with properties
     //like composer, theme etc
     this.order='';
-    this.namelist = function(){
+    this.namelist = function(thisobj){
         var songnames = document.getElementsByClassName('songtitleentry');
         var namelist = [];
+        //another list containing more information
+        thisobj.objlist = {};
         for (var idx=0;idx<songnames.length; idx++) {
-            namelist.push(songnames[idx].textContent);
+            var songtitle = songnames[idx].textContent;
+            var li = TagWithText("li",songtitle,"");
+            li.addEventListener('click',UseSong,false);
+            li.setAttribute('title','Klikkaa valitaksesi laululle tehtävä');
+            namelist.push(li);
+            //save a more detailed object indexed by the song name
+            thisobj.objlist[songtitle.replace(/ /g,'_')] = new SongElement(songnames[idx]);
         }
         return namelist;
-    }();
-}
+    }(this);
+
+    this.PrintList = function(pattern){
+            var filtered = [];
+            var section = document.getElementById('songlistsection');
+            if (pattern=="all"){
+                filtered = this.namelist;
+            }
+            else{
+                //
+                for (var idx=0;idx<this.namelist.length; idx++) {
+                    var name = this.namelist[idx];
+                    if(name.textContent.search(pattern)>-1){
+                        filtered.push(name);
+                    }
+                }
+            }
+            var listdiv = document.getElementById('songlistdiv');
+            ClearContent(listdiv);
+            listdiv.appendChild(TagParent("ul",filtered,""));
+        };
+    }
+

@@ -58,10 +58,22 @@ require('menu.php');
 ?>
 
 <section id='songlistsection'>
+    <div id='songlistcontainer'>
+        <input type='text' value='' id='pickedlistsong' class='hidden'>
+        <div id='searchtools' class='searchdiv'>
+            <input type="text" id="songfilterinput" OnKeyUp="CheckFilter();">
+        </div>
+        <div id='songlistdivcont' class='searchdiv'>
+            <div id='songcontrols'>
+                <div id='listeditwords'></div>
+                <div id='songpanel'></div>
+            </div>
+            <div id='songlistdiv'></div>
+        </div>
+    </div>
 </section>
 
-<form id="sform" method="post" action="<?php echo $url; ?>">
-<?php
+<form id="sform" method="post" action="<?php echo $url; ?>"> <?php
 UpdateSongData($con);
 ?>
 
@@ -228,7 +240,7 @@ $url = SaveGetParams();
     //TODO lisää myös dyn.luotuihin
     var lyricslinks = document.getElementsByClassName('right');
     for(var idx = 0; idx < lyricslinks.length;idx++){
-        var link = lyricslinks[idx];
+        var link = lyricslinkids[idx];
         link.addEventListener('focusout',UpdateLyrics,false);
     }
 

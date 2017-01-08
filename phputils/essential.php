@@ -54,7 +54,7 @@ function CreateNavi($vastuulist, $url, $songmenu=False){
     $li->AddAttribute('id','homeli');
     $li->AddAttribute('title','Takaisin alkunäkymään');
     if($songmenu==True){
-        $li = new DomEl('li','Selaa laululuja >',$ul);
+        $li = new DomEl('li','Selaa lauluja >',$ul);
         $li->AddAttribute('id','laululista_launcher');
         $li->AddAttribute('title','Selaa lauluja');
         $li->AddAttribute('onClick','ViewSongList();');
