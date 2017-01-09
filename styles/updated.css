@@ -1079,6 +1079,7 @@ a.boxclose{
         font-size: 75%;
         float:left;
         /* width: 15%; */
+        width: auto;
         width: initial;
     }
 
