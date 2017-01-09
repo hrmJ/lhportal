@@ -723,7 +723,7 @@ function AddCommentIcon($comments, $row, $cell){
 }
 
 function FetchSongNames($con){
-    $result = $con->select("songs",Array("filename","id","title"),Array())->fetchAll();
+    $result = $con->select("songs",Array("filename","id","title"),Array(),"","ORDER BY filename")->fetchAll();
     foreach($result as $row){
         if (!empty($row["filename"])){
             //Hae laulujen sanat

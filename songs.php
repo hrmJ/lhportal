@@ -110,7 +110,7 @@ $url = SaveGetParams();
                             lauluista, joissa näpyttelemäsi kirjaimet / sana esiintyy.</em> (Jos haluat tutkia olemassaolevien laulujen listaa perinteisemmin, klikkaa ylhäältä "Selaa lauluja")
                         <li> Jos etsimäsi laulu on listassa, klikkaa sitä.
                         <li> Voit katsella valitsemasi laulun sanoja klikkaamalla laulun viereistä "Katso sanoja" -linkkejä
-                        <li> Jos kyseisestä laulusta ei ole sanoja, linkissä lukee "lisää sanat"
+                        <li> Jos kyseisestä laulusta ei ole sanoja, linkissä lukee "lisää sanat". Teksti päivittyy, kun klikkaat jotain toista tekstikenttää.
                         <li> Klikkaa siinä tapauksessa Lisää sanat -linkkiä, jolloin näyttöön ilmestyy uusi ikkuna
                         <li> Kirjoita puuttuvat sanat suoraan ilmestyvään tekstikenttään ja paina "Tallenna"
                         <li> Tiedot eivät enää lähde sähköpostitse eteenpäin, vaan tallentuvat Majakkaportaalin tietokantaan.

@@ -710,7 +710,13 @@ function ViewSongList(){
     }
     var section = document.getElementById('songlistsection');
     var h = window.innerHeight||document.documentElement.clientHeight||document.body.clientHeight||0;
-    var newheight = (h - document.getElementById('leftbanner').offsetHeight - 50) / 2;
+    if(h<700){
+        //pienet laitteet
+        var newheight = h;
+    }
+    else{
+        var newheight = (h - document.getElementById('leftbanner').offsetHeight) / 3 * 2;
+    }
     section.style.marginTop = document.getElementById('leftbanner').offsetHeight;
     if (section.style.height == '' || section.style.height == '0px'){
         section.style.height= newheight + "px";
@@ -772,7 +778,7 @@ function UseSong(evt){
     for(var idx =0; idx<appliedsongs.length; idx++){
         var song = appliedsongs[idx];
         if(usedroles.indexOf(song.textContent)==-1 && ['Jumalan karitsa','Pyhä-hymni'].indexOf(song.textContent)==-1){
-            var thisli = TagWithText("li",song.textContent,"");
+            var thisli = TagWithText("div",song.textContent,"");
             thisli.addEventListener('click',AssignRole,false);
             functions.push(thisli);
             usedroles.push(song.textContent);
@@ -780,7 +786,9 @@ function UseSong(evt){
     }
     var functiondiv = document.getElementById("songpanel");
     ClearContent(functiondiv);
-    functiondiv.appendChild(TagParent("ul",functions,""));
+    var cont = TagParent("div",functions,"");
+    cont.id = "panelcont";
+    functiondiv.appendChild(cont);
 
 }
 
