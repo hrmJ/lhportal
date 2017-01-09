@@ -1045,6 +1045,7 @@ a.boxclose{
 
     #searchtools {
         width:100%;
+        max-height: 30%;
     }
 
     #songlistdiv{
@@ -1063,11 +1064,11 @@ a.boxclose{
     }
 
     #listeditwords{
-        height: 68%;
+        height: 62%;
         width:100%;
         padding: 0;
         margin: 0;
-        /* font-size: 80%; */
+        font-size: 80%;
     }
 
     #panelcont{
@@ -1075,7 +1076,7 @@ a.boxclose{
     }
 
     #panelcont div{
-        font-size: 80%;
+        font-size: 75%;
         float:left;
         /* width: 15%; */
         width: initial;

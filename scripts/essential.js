@@ -725,6 +725,7 @@ function ViewSongList(){
         document.getElementById('searchtools').style.display = 'block';
         document.getElementById('laululista_launcher').style.background = 'cadetblue';
         songlist_g.PrintList("all");
+        var cdiv = document.getElementById('songfilterinput').focus();
     }
     else{
         document.getElementById('laululista_launcher').style.background = 'none';
