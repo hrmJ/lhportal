@@ -918,6 +918,7 @@ a.boxclose{
 #listeditwords{
     overflow:auto;
     height:85%;
+    width: 20em;
     /* min-width:27em; */
 }
 
@@ -933,7 +934,7 @@ a.boxclose{
 }
 
 #songpanel{
-    width:30%;
+    /* width:30%; */
     height: 100%;
 }
 
@@ -968,7 +969,7 @@ a.boxclose{
     padding-top: 0.1em;
     padding-bottom: 0.5em;
     border-bottom: 1px solid white;
-    overflow-y: scroll;
+    /* overflow-y: scroll; */
 }
 
 #songlistsection a{
