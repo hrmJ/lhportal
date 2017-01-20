@@ -326,7 +326,7 @@ function GetDateList($con){
         $litext = FormatPvm($messu["pvm"]);
         $option = new DomEl('option',$litext,$select);
         if(strtotime($messu["pvm"])>=strtotime($date) and $dateset==False and $datechange==False){
-            #Jos ei muuta valittu, valitse oletuksena tätä ensimmäinen
+            #Jos ei muuta valittu, valitse oletuksena  ensimmäinen
             #tämän päivän jälkeinen sunnuntai
             $dateset = True;
             $option->AddAttribute("selected","selected");
@@ -909,6 +909,7 @@ class MessuPresentation{
             $this->messutitle = $con->select("messut",Array('teema'), Array(Array("id","=",$messuid)),'','')->fetchColumn(0);
     }
 
+
     public function GetMultiSongs($con, $tyyppi){
         $res = $con->select("laulut",Array("nimi"),Array(Array("messu_id","=",$this->id),Array("tyyppi","=",$tyyppi)),'','ORDER by id')->fetchAll();
         #Nimeämiseroja js:n ja php:n välillä, TODO poista tämä. -->
@@ -969,6 +970,11 @@ class MessuPresentation{
 
         #evankeliumi evl:n sivuilta:
         $address = ParseBibleAddress($address);
+        $booknames = Array('Matt', 'Mark', 'Luuk', 'Joh', 'Apt', 'Room', '1Kor', '2Kor', 'Gal', 'Ef', 'Fil', 'Kol', '1Tess', '2Tess', '1Tim', '2Tim', 'Tit', 'Filem', 'Hepr', 'Jaak', '1Piet', '2Piet', '1Joh', '2Joh', '3Joh', 'Juud', 'Ilm','1Moos', '2Moos', '3Moos', '4Moos', '5Moos', 'Joos', 'Tuom', 'Ruut', '1Sam', '2Sam', '1Kun', '2Kun', '1Aik', '2Aik', 'Esra', 'Neh', 'Est', 'Job', 'Ps', 'Sananl', 'Saarn', 'Laull', 'Jes', 'Jer', 'Valit', 'Hes', 'Dan', 'Hoos', 'Joel', 'Aam', 'Ob', 'Joona', 'Miika', 'Nah', 'Hab', 'Sef', 'Hagg', 'Sak', 'Mal');
+        //if(!in_array($address["book"],$booknames)){
+        //    $msg = "<p style='width:40em;'>Raamattutekstin hakeminen ei onnistu, koska ohjelma ei tunnista kirjaa <strong>". $address["book"] . "</strong>. Hyväksytyt kirjojen lyhenteet ovat: <strong>" . implode($booknames,", ") . "</strong>. Käy korjaamassa Raamattuviittaus portaalin messukohtaisessa näkymässä ja päivitä tämä sivu.</p>";
+        //    die($msg);
+        //};
         
         $gospelverses = FetchBibleContent($address["book"] . "." . $address["chapter"], $address["verses"]);
 
@@ -986,6 +992,61 @@ class MessuPresentation{
         $title->AddAttribute('id','messutitle');
         echo $gospel->Show();
         echo $title->Show();
+    }
+
+
+    public function UploadTrackingInfo($con){
+        #Tallenna tiedot messun etenemisen seuraamista varten
+
+        #1. Poista mahdolliset vanhat tiedot tästä messusta
+        $con->query = $con->connection->prepare("DELETE FROM messukulku WHERE messu_id = :sid");
+        $con->query->bindParam(':sid', $this->id, PDO::PARAM_STR);
+        $con->Run();
+
+        $con->insert("messukulku", Array("typeidentifier"=>"none", "messu_id"=>$this->id,"entrytype"=>"item","entry"=>"Johdanto"));
+        $con->insert("messukulku", Array("typeidentifier"=>"Alkulaulu", "messu_id"=>$this->id,"entrytype"=>"subitem","entry"=>"Alkulaulu: " . $this->singlesongs["Alkulaulu"]->songtitle, "iscurrent"=>true));
+        $con->insert("messukulku", Array("typeidentifier"=>"Alkusanat", "messu_id"=>$this->id,"entrytype"=>"subitem","entry"=>"Alkusanat"));
+        $con->insert("messukulku", Array("typeidentifier"=>"Seurakuntalaisen sana", "messu_id"=>$this->id,"entrytype"=>"subitem","entry"=>"Seurakuntalaisen sana"));
+        $con->insert("messukulku", Array("typeidentifier"=>"none", "messu_id"=>$this->id,"entrytype"=>"item","entry"=>"Sana"));
+        $con->insert("messukulku", Array("typeidentifier"=>"Päivän laulu", "messu_id"=>$this->id,"entrytype"=>"subitem","entry"=>"Päivän laulu: " . $this->singlesongs["Päivän laulu"]->songtitle));
+        $con->insert("messukulku", Array("typeidentifier"=>"Evankeliumi", "messu_id"=>$this->id,"entrytype"=>"subitem","entry"=>"Evankeliumiteksti"));
+        $con->insert("messukulku", Array("typeidentifier"=>"Saarna", "messu_id"=>$this->id,"entrytype"=>"subitem","entry"=>"Saarna"));
+        $con->insert("messukulku", Array("typeidentifier"=>"Synnintunnustus", "messu_id"=>$this->id,"entrytype"=>"subitem","entry"=>"Synnintunnustus"));
+        $con->insert("messukulku", Array("typeidentifier"=>"Uskontunnustus", "messu_id"=>$this->id,"entrytype"=>"subitem","entry"=>"Uskontunnustus"));
+        $con->insert("messukulku", Array("typeidentifier"=>"none", "messu_id"=>$this->id,"entrytype"=>"item","entry"=>"Ylistys ja rukous"));
+        $idx=1;
+        foreach($this->wssongs as $song){
+            $con->insert("messukulku", Array("typeidentifier"=>"ylistyslaulu" . $idx, "messu_id"=>$this->id,"entrytype"=>"subitem","entry"=>"Ylistys- ja rukouslauluja: " . $song->songtitle));
+            $idx++;
+        }
+        $con->insert("messukulku", Array("typeidentifier"=>"Esirukous", "messu_id"=>$this->id,"entrytype"=>"subitem","entry"=>"Esirukous"));
+        $con->insert("messukulku", Array("typeidentifier"=>"none", "messu_id"=>$this->id,"entrytype"=>"item","entry"=>"Ehtoollisen asetus"));
+        $con->insert("messukulku", Array("typeidentifier"=>"Pyhä", "messu_id"=>$this->id,"entrytype"=>"subitem","entry"=>"Pyhä-hymni"));
+        $con->insert("messukulku", Array("typeidentifier"=>"Ehtoollisrukous", "messu_id"=>$this->id,"entrytype"=>"subitem","entry"=>"Ehtoollisrukous"));
+        $con->insert("messukulku", Array("typeidentifier"=>"Isä meidän", "messu_id"=>$this->id,"entrytype"=>"subitem","entry"=>"Isä meidän"));
+        $con->insert("messukulku", Array("typeidentifier"=>"Jumalan karitsa", "messu_id"=>$this->id,"entrytype"=>"subitem","entry"=>"Jumalan karitsa"));
+        $con->insert("messukulku", Array("typeidentifier"=>"none", "messu_id"=>$this->id,"entrytype"=>"item","entry"=>"Ehtoollisen vietto"));
+        $idx=1;
+        foreach($this->comsongs as $song){
+            $con->insert("messukulku", Array("typeidentifier"=>"ehtoollislaulu" . $idx, "messu_id"=>$this->id,"entrytype"=>"subitem","entry"=>"Ylistys- ja rukouslauluja: " . $song->songtitle));
+            $idx++;
+        }
+        $con->insert("messukulku", Array("typeidentifier"=>"none", "messu_id"=>$this->id,"entrytype"=>"item","entry"=>"Siunaus ja lähettäminen"));
+        $con->insert("messukulku", Array("typeidentifier"=>"Herran siunaus", "messu_id"=>$this->id,"entrytype"=>"subitem","entry"=>"Herran siunaus"));
+        $con->insert("messukulku", Array("typeidentifier"=>"Loppusanat", "messu_id"=>$this->id,"entrytype"=>"subitem","entry"=>"Loppusanat"));
+        $con->insert("messukulku", Array("typeidentifier"=>"Loppulaulu", "messu_id"=>$this->id,"entrytype"=>"subitem","entry"=>"Loppulaulu: " . $this->singlesongs["Loppulaulu"]->songtitle));
+
+        #$con->insert("messukulku", Array("messu_id"=>$this->id,""=>$date,"content"=>$_POST["newcomment_text"],"commentator"=>$_POST["commentator"],"theme"=>$_POST["commenttheme"]));
+        #$struct_div->AddChild($this->singlesongs["Alkulaulu"]);
+        #$struct_div->AddChild($this->singlesongs["Päivän laulu"]);
+        #foreach($this->wssongs as $song){
+        #    $struct_div->AddChild($song);
+        #}
+        #$struct_div->AddChild($this->pyha);
+        #$struct_div->AddChild($this->jk);
+        #foreach($this->comsongs as $song){
+        #    $struct_div->AddChild($song);
+        #}
     }
 
 }
@@ -1012,6 +1073,7 @@ class SongDom extends DomEl{
     public function __construct ($role, $name) {
         parent::__construct('song',$name);
         $this->AddAttribute('role', $role);
+        $this->songtitle = $name;
     }
 
 }

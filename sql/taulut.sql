@@ -180,3 +180,34 @@ CREATE TABLE verses (
 ) ;
 
 
+/*
+ 
+Seuraava taulu messun kulun näkymiseksi erillisellä sivulla
+
+*/
+
+
+CREATE TABLE messukulku (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  entry varchar(300) DEFAULT NULL,
+  messu_id int(11),
+  entrytype varchar(100) DEFAULT NULL,
+  typeidentifier varchar(100) DEFAULT NULL,
+  iscurrent boolean DEFAULT FALSE,
+  PRIMARY KEY (id)
+) ;
+
+/*
+ 
+Lokien tallentamiseksi portaalin tapahtumista:
+
+*/
+
+
+CREATE TABLE logs (
+  id int(20) NOT NULL AUTO_INCREMENT,
+  time DATETIME DEFAULT NULL,
+  event varchar(200) DEFAULT NULL,
+  PRIMARY KEY (id)
+) ;
+

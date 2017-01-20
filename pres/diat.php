@@ -42,7 +42,7 @@ $con = new DbCon();
 <head>
 <link href="https://fonts.googleapis.com/css?family=Nothing+You+Could+Do|Quicksand" rel="stylesheet">
 <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
-<link rel="stylesheet" href="tyylit.css">
+<link rel="stylesheet" href="tyylit2.css">
 <title>Majakkamessu</title>
 </head>
 
@@ -51,6 +51,7 @@ $con = new DbCon();
 <?php
 
 $messu = new MessuPresentation($_GET["id"], $con);
+$messu->UploadTrackingInfo($con);
 $messu->CreateHtml();
 
 } #Login

@@ -99,7 +99,7 @@ class CommentList{
 
 class DomEl{
 
-    public function __construct ($tag,$text="",$parent=Null) {
+    public function __construct ($tag,$text="",$parent=Null, $class="", $id="") {
         //the parent variable is set if the element is nested inside another already created one
         if (isset($parent))
             $this->dom = $parent->dom;
@@ -108,11 +108,15 @@ class DomEl{
 
         $this->el = $this->dom->createElement($tag,htmlspecialchars($text));
 
+        if (!empty($class))
+            $this->AddAttribute("class",$class);
+
         if (isset($parent))
             $parent->el->appendChild($this->el);
         else
             $this->dom->appendChild($this->el);
     }
+
 
     public function AddAttribute($attr, $value){
         $domAttribute = $this->dom->createAttribute($attr);
