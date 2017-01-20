@@ -18,19 +18,32 @@ $con = new DbCon();
 <?php
 
 
+date_default_timezone_set('Europe/Helsinki');
 $date = date('Y-m-d');
 #Valitse messu, joka on tänään tai seuraava lähin päivä
-$messuid = $con->select("messut",Array("id"),Array(Array("pvm",">=",$date)))->fetchColumn(0);
-$items = $con->select("messukulku",Array('entry','entrytype','iscurrent'), Array(Array("messu_id","=",$messuid)),"","")->fetchAll();
+$messuid = $con->select("messut",Array("id"),Array(Array("pvm",">=",$date)),'','ORDER BY pvm')->fetchColumn(0);
+$items = $con->select("messukulku",Array('entry','entrytype','iscurrent'), Array(Array("messu_id","=",$messuid)),"","ORDER BY id")->fetchAll();
 
 $updated = $con->select("logs",Array("time"),Array(Array("event","=","presentation update")))->fetchColumn(0);
-$updated = date("H:i:s",strtotime($updated));
+
+$tz = new DateTimeZone('Europe/Helsinki');
+
+$updated = new DateTime($updated,$tz);
+$updated = $updated->format('H:i:s');
+
+$dt = new DateTime();
+$dt->setTimezone($tz);
+
+$dt = $dt->format('H:i:s');
+#$updated->setTimezone($tz);
+#$checked = date("H:i:s");
+
 ?>
 
 <section id="trackersection">
 
 <p>Messun tilanne päivitetty viimeksi:  <?php echo $updated;?></p>
-<p>Tarkistit viimeksi:  <?php echo date("H:i:s");?></p>
+<p>Tarkistit viimeksi:  <?php echo $dt;?></p>
 
 <?php
 

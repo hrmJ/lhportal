@@ -1,9 +1,10 @@
 <?php
 require('../phputils/essential.php');
+date_default_timezone_set('Europe/Helsinki');
 $con = new DbCon();
 $date = date('Y-m-d');
 #Valitse messu, joka on tänään tai seuraava lähin päivä
-$messuid = $con->select("messut",Array("id"),Array(Array("pvm",">=",$date)))->fetchColumn(0);
+$messuid = $con->select("messut",Array("id"),Array(Array("pvm",">=",$date)),'','ORDER BY pvm')->fetchColumn(0);
 #Ensin aseta kaikki epäaktiivisiksi
 $con->update("messukulku", Array("iscurrent" => 0), Array(Array("messu_id","=",$messuid)));
 #Aktivoi tunnisteen perusteella:
