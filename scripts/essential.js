@@ -81,6 +81,37 @@ function submitedit(){
    document.getElementById("sbut").click();
 }
 
+function confirmsubmit(){
+    var inputs = document.getElementsByClassName("songeditinput");
+    var songnames = [];
+    var abort = false;
+    for(var i=0;i<inputs.length;i++){
+        var thisinput = inputs[i];
+        var songname = thisinput.value;
+        if(songnames.indexOf(songname)==-1){
+            songnames.push(songname);
+            var songid = "song_" + songname.replace(/ /g,"_");
+            if(document.getElementById(songid)==undefined){
+                if(songname==""){
+                    //   var conf = window.confirm("Kaikkia lauluja ei ole lisätty. Haluatko jatkaa?");
+                    //   if(conf!=true){
+                    //       abort = true;
+                    //   }
+                }
+                else{
+                    var conf = confirm("Laulua " + songname + " ei löydy tietokannasta. Haluatko silti jatkaa? Jos suinkin mahdollista, lisää laulun sanat painamalla laulun nimen oikealla puolella olevaa linkkiä. Kiitos!");
+                    if(conf!=true){
+                        abort = true;
+                    }
+                }
+            }
+        }
+    }
+    if(abort != true){
+        document.getElementById("sbut").click();
+    }
+}
+
 
 function ShowWords(evt){
 

@@ -48,6 +48,24 @@ $con = new DbCon();
 
 <body>
 
+<!-- 
+<div id='menu'>
+
+    <ul>
+        <li class='menuli'><a href='songs.php'>Syötä lauluja</a></li>
+        <li class='menuli' OnClick='ViewMaintenance(this);'>Ylläpito</li>
+        <li class='menuli'><a href='index.php?logout=Yes'>Kirjaudu ulos</a></li>
+    </ul>
+
+        <ul id='maintenancelist'>
+            <li class='menuli'><a href='insert_messudata.php'>Syötä uusia messuja</a></li>
+            <li class='menuli'><a href='uusivastuu.php'>Syötä uusia vastuutyyppejä</a></li>
+        </ul>
+</div>
+
+-->
+
+
 <?php
 
 $messu = new MessuPresentation($_GET["id"], $con);
