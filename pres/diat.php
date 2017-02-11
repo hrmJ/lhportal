@@ -40,6 +40,7 @@ $con = new DbCon();
 
 <html lang="fi">
 <head>
+ <link rel="stylesheet" href="../font-awesome-4.6.3/css/font-awesome.min.css">
 <link href="https://fonts.googleapis.com/css?family=Nothing+You+Could+Do|Quicksand" rel="stylesheet">
 <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
 <link rel="stylesheet" href="tyylit2.css">
@@ -48,22 +49,43 @@ $con = new DbCon();
 
 <body>
 
-<!-- 
+
+<section id='leftbanner'>
+
+        <span class='menuleft'>
+            <ul>
+                <li id='homeli' title='Takaisin alkunäkymään'>Majakkamessu</li>
+            </ul>
+        </span>
+        <span class='menuright'>
+            <ul>
+                <li><a href="javascript:void(0);" OnClick="OpenFunctionMenu();" id="openfunctlink">Toiminnot</a></li>
+            </ul>
+        </span>
+
+</section>
+
+
+<section id="functionalmenu">
+
+
+
+</section>
+
+
 <div id='menu'>
 
     <ul>
-        <li class='menuli'><a href='songs.php'>Syötä lauluja</a></li>
+        <li class='menuli'><a href='../songs.php'>Laulujen syöttö</a></li>
         <li class='menuli' OnClick='ViewMaintenance(this);'>Ylläpito</li>
-        <li class='menuli'><a href='index.php?logout=Yes'>Kirjaudu ulos</a></li>
+        <li class='menuli'><a href='../index.php?logout=Yes'>Kirjaudu ulos</a></li>
     </ul>
-
         <ul id='maintenancelist'>
             <li class='menuli'><a href='insert_messudata.php'>Syötä uusia messuja</a></li>
             <li class='menuli'><a href='uusivastuu.php'>Syötä uusia vastuutyyppejä</a></li>
         </ul>
 </div>
 
--->
 
 
 <?php
