@@ -997,6 +997,73 @@ a.boxclose{
 }
 
 
+#addplayerheader{
+    margin-bottom:0;
+    padding:0.2em;
+}
+
+#addplayerheader:hover{
+    cursor:pointer;
+    background:white;
+}
+
+#addplayersec{
+    margin-top:0px;
+    padding-left:2em;
+    padding-bottom:1em;
+}
+
+#emptyinstrumentspan{
+    margin-left:3em;
+    font-style:italic;
+    font-size:80%;
+    color:grey;
+    width:70%;
+}
+
+#addplayersec a{
+    text-decoration: underline;
+}
+
+#instrumentadder{
+    width: 20em;
+    padding-left:0.4em;
+    padding-right:0.4em;
+    padding-top:0.2em;
+    padding-bottom:0.2em;
+    margin-top: 5px;
+}
+
+#instrumentadder, #addplayersec{
+    height: 0px;
+    overflow:hidden;
+    /* max-width: 40em; */
+    display: block;
+    transition: all .15s ease-in-out;
+}
+
+#instrumentaddparagraph span:first-child{
+    margin-right:1em;
+    padding-left:2em;
+}
+
+#addedinstruments{
+    margin-top:1em;
+    margin-bottom:1em;
+    width: 100%;
+    height: 3em;
+}
+
+.instrbadge{
+    float:left;
+    padding:0.3em;
+    margin:0.5em;
+    background:lightblue;
+}
+
+#datalist table tr td{
+    padding:0.6em;
+}
 
 @media only screen and (max-device-width: 481px) {
 

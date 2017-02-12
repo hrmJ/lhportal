@@ -211,3 +211,38 @@ CREATE TABLE logs (
   PRIMARY KEY (id)
 ) ;
 
+
+
+/*  
+ 
+Soittajapankin taulut 
+ 
+*/
+
+
+
+CREATE TABLE soittajat (
+  id int(10) unsigned NOT NULL AUTO_INCREMENT,
+  nimi varchar(100) NOT NULL,
+  puhelin varchar(100) NOT NULL,
+  email varchar(9999),
+  PRIMARY KEY (id)
+);
+
+
+/*
+ Vastuut-taulu sisältää informaation esimerkiksi siitä, että
+ Messussa, jonka id=4 vastuuta nimeltä "kahvitus" hoitaa henkilö nimeltä "pekka"
+ Vastuita voi siis teoriassa olla mitä tahansa, ja kunkin vastuun nimi annetaan joka kerta
+ erikseen vastuullinen-kentässä
+*/
+
+CREATE TABLE soittimet (
+  id int(10) unsigned NOT NULL AUTO_INCREMENT,
+  soittaja_id int(10) unsigned NOT NULL,
+  soitin varchar(100) DEFAULT NULL,
+  PRIMARY KEY (id),
+  KEY soittaja_index (soittaja_id),
+  CONSTRAINT soittimet_ibfk_1 FOREIGN KEY (soittaja_id) REFERENCES soittajat (id)
+) ;
+

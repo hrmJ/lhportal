@@ -1,5 +1,5 @@
 <?php
-AddHeader();
+AddHeader($relpath);
 $msg = "Kirjaudu sisään";
 ?>
 <body>

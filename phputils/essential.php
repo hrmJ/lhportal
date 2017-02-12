@@ -12,18 +12,18 @@ function validate_login(){
     return $valid;
 }
 
-function AddHeader(){
+function AddHeader($relpath=""){
 
-echo '<html lang="fi">
+echo "<html lang='fi'>
      <head>
-      <link href="https://fonts.googleapis.com/css?family=Nothing+You+Could+Do|Quicksand" rel="stylesheet"> 
-     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1">
-     <link rel="stylesheet" href="styles/updated.css">
-     <link rel="stylesheet" href="font-awesome-4.6.3/css/font-awesome.min.css">
-     <script src="scripts/essential.js"></script>
+      <link href='https://fonts.googleapis.com/css?family=Nothing+You+Could+Do|Quicksand' rel='stylesheet'> 
+     <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+     <meta name='viewport' content='width=device-width, initial-scale=1'>
+     <link rel='stylesheet' href='$relpath" . "styles/updated.css'>
+     <link rel='stylesheet' href='$relpath" . "font-awesome-4.6.3/css/font-awesome.min.css'>
+     <script src='$relpath" . "scripts/essential.js'></script>
      <title>Majakkaportaali 0.1</title>
-     </head>';
+     </head>";
 
      #<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
      #<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
@@ -1110,6 +1110,36 @@ function FetchSongsForSlides($con){
 function GetMessuParams($con, $id){
     $res = $con->select("messut",Array("pvm","teema"),Array(Array("id","=",$id)),"","")->FetchAll();
     return "messuid=$id&pvm=" . $res[0]["pvm"] . "&teema=" . $res[0]["teema"];
+}
+
+
+function InsertPlayers($con){
+    $con->insert("soittajat", Array("nimi"=>$_POST["playername"],"email" => $_POST["email"], "puhelin" =>$_POST["phone"]));
+    $id = $con->select("soittajat",Array("id"),Array(),"","ORDER BY id DESC")->fetchColumn(0);
+    $instruments = explode(";",$_POST["instruments"]);
+    foreach($instruments as $instrument){
+        if(!empty($instrument)){
+            $con->insert("soittimet", Array("soitin"=>$instrument,"soittaja_id"=>$id));
+        }
+    }
+}
+
+Function FetchPlayers($con){
+
+    $result = $con->select("soittajat",Array("nimi","puhelin","email","id"),Array(),"","ORDER BY nimi")->fetchAll();
+    $table = new HtmlTable();
+    foreach($result as $row){
+        $instrlist = "";
+        $instruments = $con->select("soittimet",Array("soitin"),Array(Array("soittaja_id","=",$row["id"])))->fetchAll();
+        foreach($instruments as $instrument){
+            if(!empty($instrlist)){
+                $instrlist .= ", ";
+            }
+            $instrlist .= $instrument["soitin"];
+        }
+        $tr = $table->AddRow(Array($row["nimi"],$instrlist, $row["puhelin"],$row["email"]));
+    }
+    return $table->element->Show();
 }
 
 

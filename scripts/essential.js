@@ -845,6 +845,58 @@ function AssignRole(evt){
     UpdateLyrics(document.getElementById(id));
 }
 
+
+function ConfirmInstrAdd(){
+
+}
+
+function AddInstrument(){
+    var section = document.getElementById("instrumentadder");
+    if (section.style.height == '' || section.style.height == '0px'){
+        section.style.background = 'rgba(63, 57, 57, 0.48)';
+        section.style.height= '3em';
+        document.getElementById('instrumentaddparagraph').style.display = 'block';
+        //section.style.marginTop = "-" + section.offsetHeight + "px";
+    }
+    else{
+        document.getElementById('instrumentaddparagraph').style.display = 'none';
+        section.style.height = "0px";
+        section.style.background = 'none';
+    }
+}
+
+
+function ConfirmInstrAdd(){
+    var defaulttext = document.getElementById("emptyinstrumentspan");
+    if(defaulttext!==undefined){
+        defaulttext.innerHTML="";
+    }
+    var instruments = document.getElementsByClassName("instrbadge");
+    var instrname = document.getElementById("instrumentname").value;
+    for (var i=0;i<instruments.length;i++){
+        var instrument = instruments[i];
+        if(instrname==instrument.textContent){
+            return 0;
+        }
+    }
+    document.getElementById("addedinstruments").appendChild(TagWithText("div",instrname,"instrbadge"));
+    document.getElementById("repertoire").value = document.getElementById("repertoire").value  + instrname + ";";
+}
+
+function ShowPlayerAdder(){
+    var section = document.getElementById("addplayersec");
+    if (section.style.height == '' || section.style.height == '0px'){
+        section.style.height= '25em';
+        section.style.background = "white";
+        document.getElementById("addplayerheader").style.background = "white";
+    }
+    else{
+        section.style.height = "0px";
+        section.style.background = "none";
+        document.getElementById("addplayerheader").style.background = "none";
+    }
+}
+
 function SongList(){
     //an object containing all the names of the songs
     //these can be ordered, search etc
@@ -888,4 +940,5 @@ function SongList(){
             listdiv.appendChild(TagParent("ul",filtered,""));
         };
     }
+
 
