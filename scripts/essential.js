@@ -846,8 +846,20 @@ function AssignRole(evt){
 }
 
 
-function ConfirmInstrAdd(){
 
+function EditInstrument(){
+    var section = document.getElementById("instrumentadder_edit");
+    if (section.style.height == '' || section.style.height == '0px'){
+        section.style.background = 'rgba(63, 57, 57, 0.48)';
+        section.style.height= '3em';
+        document.getElementById('instrumentaddparagraph_edit').style.display = 'block';
+        //section.style.marginTop = "-" + section.offsetHeight + "px";
+    }
+    else{
+        document.getElementById('instrumentaddparagraph_edit').style.display = 'none';
+        section.style.height = "0px";
+        section.style.background = 'none';
+    }
 }
 
 function AddInstrument(){
@@ -866,6 +878,70 @@ function AddInstrument(){
 }
 
 
+function ConfirmInstrEdit(){
+    var instruments = document.getElementById("editrowsection").getElementsByClassName("instrbadge");
+    var instrname = document.getElementById("instrumentname_edit").value;
+    //varmista, ettei samaa soitinta kahdesti
+    for (var i=0;i<instruments.length;i++){
+        var instrument = instruments[i];
+        if(instrname==instrument.textContent){
+            return 0;
+        }
+    }
+    var newinstr = TagWithText("div",instrname,"instrbadge");
+    newinstr.addEventListener('click',RemoveInstrument_edit,false);
+    document.getElementById("addedinstruments_edit").appendChild(newinstr);
+    document.getElementById("edit_repertoire").value = document.getElementById("edit_repertoire").value  + instrname + ";";
+}
+
+function RemoveInstrument(evt){
+    var instr = evt.target.textContent;
+    var conf = confirm("Haluatko varmasti poistaa soittimen?");
+    if(conf!=true){
+        return 0;
+    }
+    var repertoire =  document.getElementById("repertoire").value.split(";");
+    var keptinstr = [];
+    for(var i=0;i<repertoire.length;i++){
+        if(repertoire[i]!=instr){
+            keptinstr.push(repertoire[i]);
+        }
+    }
+    document.getElementById("repertoire").value=keptinstr.join(";");
+    evt.target.outerHTML="";
+}
+
+function RemovePlayer(){
+    document.getElementById("playerdeleted").value="true";
+    var conf = window.confirm("Oletko varma, että haluat poistaa soittajan?");
+    if(conf==true){
+        document.getElementById("playerdeleted").value="true";
+        document.getElementById("savechanges").click();
+    }
+}
+
+function RemoveInstrument_edit(evt){
+    var instr = evt.target.textContent;
+    var conf = confirm("Haluatko varmasti poistaa soittimen?");
+    if(conf!=true){
+        return 0;
+    }
+    var repertoire =  document.getElementById("edit_repertoire").value.split(";");
+    var keptinstr = [];
+    for(var i=0;i<repertoire.length;i++){
+        if(repertoire[i]!=instr){
+            keptinstr.push(repertoire[i]);
+        }
+    }
+    if(keptinstr.length>0){
+        document.getElementById("edit_repertoire").value=keptinstr.join(";");
+    }
+    else{
+        document.getElementById("edit_repertoire").value="";
+    }
+    evt.target.outerHTML="";
+}
+
 function ConfirmInstrAdd(){
     var defaulttext = document.getElementById("emptyinstrumentspan");
     if(defaulttext!==undefined){
@@ -879,7 +955,9 @@ function ConfirmInstrAdd(){
             return 0;
         }
     }
-    document.getElementById("addedinstruments").appendChild(TagWithText("div",instrname,"instrbadge"));
+    var newinstr = TagWithText("div",instrname,"instrbadge");
+    newinstr.addEventListener('click',RemoveInstrument,false);
+    document.getElementById("addedinstruments").appendChild(newinstr);
     document.getElementById("repertoire").value = document.getElementById("repertoire").value  + instrname + ";";
 }
 
@@ -894,6 +972,33 @@ function ShowPlayerAdder(){
         section.style.height = "0px";
         section.style.background = "none";
         document.getElementById("addplayerheader").style.background = "none";
+    }
+}
+
+
+function CloseRowEdit(){
+    document.getElementById("editrowsection").style.display="none";
+}
+
+function EditRow(row){
+    document.getElementById("editrowsection").style.display="block";
+    //Tyhjennä mahdolliset edellisen muokkauksen soittimet
+    document.getElementById("addedinstruments_edit").innerHTML="";
+    document.getElementById("edit_repertoire").value = "";
+    //Muistiin tieto siitä, kuka kyseessä (3, koska tyyppiä id_nro)
+    document.getElementById("player_id").value = row.id.substring(3);
+    var fieldnames = ["playername","phone","email"];
+    for(var i=0;i<fieldnames.length;i++){
+        document.getElementById("edit_" + fieldnames[i]).value = row.getElementsByClassName(fieldnames[i])[0].textContent;
+    }
+    var instrumentstring = row.getElementsByClassName("instruments")[0].textContent;
+    var instruments = instrumentstring.split(",");
+    for(var i=0;i<instruments.length;i++){
+        var instrument = instruments[i].trim();
+        var newinstr = TagWithText("div",instrument,"instrbadge");
+        newinstr.addEventListener('click',RemoveInstrument_edit,false);
+        document.getElementById("addedinstruments_edit").appendChild(newinstr);
+        document.getElementById("edit_repertoire").value = document.getElementById("edit_repertoire").value  + instrument + ";";
     }
 }
 

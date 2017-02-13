@@ -38,7 +38,9 @@ $con = new DbCon();
     if(isset($_POST["playeradded"])){
         #Jos äsken syötetty uusia messuja:
         InsertPlayers($con);
-        echo "<script>window.alert('Uusi soittaja syötetty onnistuneesti!');</script>";
+    }
+    elseif(isset($_POST["playeredited"])){
+        UpdatePlayers($con);
     }
 
     AddHeader($relpath);
@@ -47,6 +49,22 @@ $con = new DbCon();
     #Aseta vastuulista tyhjäksi ja muuta tätä, jos messulistanäkymässä
     $vastuulist = False;
 
+    function PlayerEditInfo($idprefix="insert"){
+        
+    echo '
+    <p>
+    <label for="playername">Nimi: </label><input type="text" id="' . $idprefix . '_playername" name="playername">
+    </p>
+
+    <p>
+    <label for="phone">Puhelin: </label><input type="text" id="' . $idprefix . '_phone" name="phone">
+    </p>
+
+    <p>
+    <label for="email">Sähköposti: </label><input type="text" name="email" id="' . $idprefix . '_email">
+    </p>';
+
+    }
 
 ?>
 
@@ -66,7 +84,7 @@ CreateNavi($vastuulist, $url, False);
 
     Soittajapankin tarkoituksena on pitää yllä listaa 
     Majakkamessussa käytettävissä olevista  muusikoista. Yhteystiedot ovat
-    luottamuksellisia.
+    luottamuksellisia. Voit muokata soittajia klikkaamalla soittajan riviä.
 
     </p>
 
@@ -75,19 +93,10 @@ CreateNavi($vastuulist, $url, False);
     <h3 onClick="ShowPlayerAdder();" id="addplayerheader">Lisää uusi soittaja >></h3>
     <section id="addplayersec">
 
-        <p>
-            <label for="playername">Nimi: </label><input type="text" name="playername">
-        </p>
-
-        <p>
-            <label for="phone">Puhelin: </label><input type="text" name="phone">
-        </p>
-
-        <p>
-            <label for="email">Sähköposti: </label><input type="text" name="email">
-        </p>
+        <?php PlayerEditInfo(); ?>
 
         <h4>Soittimet</h4>
+
 
         <div id="addedinstruments">
             <div id="emptyinstrumentspan">Tälle soittajalle ei ole vielä lisättynä yhtään soitinta. Lisää ainakin yksi soitin (tai rooli) painamalla alla olevaa linkkiä. </div>
@@ -103,7 +112,7 @@ CreateNavi($vastuulist, $url, False);
 
         <div id="instrumentadder">
             <p id="instrumentaddparagraph" class="hidden">
-                <span><input type="text" id="instrumentname"></span>
+                <span><input type="text" id="instrumentname" placeholder="Kirjoita soittimen nimi"></span>
                 <span><input type="button" value="Lisää" onClick="ConfirmInstrAdd();"></span>
             </p>
         </div>
@@ -140,6 +149,51 @@ CreateNavi($vastuulist, $url, False);
 
 
 </script>
+
+<section id="editrowsection">
+<span onClick='CloseRowEdit();' class='fa-stack fa-lg close-button'> <i class='fa fa-circle fa-stack-2x'></i> <i class='fa fa-times fa-stack-1x fa-inverse'></i></span>
+
+<form name="editplayer" id="editplayer" method="POST" action="<?php echo $url;?>">
+    <h4>Muokkaa soittajan tietoja</h4>
+
+    <p class="small">(Peru muokkaus sulkemalla ikkuna ruksista)</p>
+
+    <p><a href="javascript:void(0);" onClick="RemovePlayer()"; class='deletelink'>Poista tämä soittaja</a></p>
+
+    <?php echo PlayerEditInfo("edit"); ?>
+
+    <h4>Soittimet</h4>
+
+    <p>Poista soitin klikkaamalla sitä
+    <input type="text" name="playerdeleted" value="false" class="hidden" id="playerdeleted">
+    </p>
+
+    <div id="addedinstruments_edit">
+        <div></div>
+    </div>
+
+
+    <div>
+        <span>
+            <a href="javascript:void(0);" onClick="EditInstrument();">Lisää soitin</a>
+        </span>
+    </div>
+
+    <div id="instrumentadder_edit">
+        <p id="instrumentaddparagraph_edit" class="hidden">
+            <span><input type="text" id="instrumentname_edit" placeholder="Kirjoita soittimen nimi" ></span>
+            <span><input type="button" value="Lisää" onClick="ConfirmInstrEdit();"></span>
+        </p>
+    </div>
+
+    <div>
+        <input type="submit" name="playeredited" value="Tallenna muutokset" id="savechanges">
+    </div>
+
+    <input type="text" name="instruments" id="edit_repertoire" class="hidden">
+    <input type="text" name="player_id" id="player_id" class="hidden">
+</form>
+</section>
 
 </body>
 

@@ -19,9 +19,9 @@ echo "<html lang='fi'>
       <link href='https://fonts.googleapis.com/css?family=Nothing+You+Could+Do|Quicksand' rel='stylesheet'> 
      <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
      <meta name='viewport' content='width=device-width, initial-scale=1'>
-     <link rel='stylesheet' href='$relpath" . "styles/updated.css'>
+     <link rel='stylesheet' href='$relpath" . "styles/updated.css?v='" . time() .">
      <link rel='stylesheet' href='$relpath" . "font-awesome-4.6.3/css/font-awesome.min.css'>
-     <script src='$relpath" . "scripts/essential.js'></script>
+     <script src='$relpath" . "scripts/essential.js?v='" . time() ."></script>
      <title>Majakkaportaali 0.1</title>
      </head>";
 
@@ -1113,6 +1113,38 @@ function GetMessuParams($con, $id){
 }
 
 
+function UpdatePlayers($con){
+    $id = $_POST["player_id"];
+
+    #Poistaminen:
+    if($_POST["playerdeleted"]=="true"){
+        $con->query = $con->connection->prepare("DELETE FROM soittimet WHERE soittaja_id = :soittajaid");
+        $con->query->bindParam(':soittajaid', intval($id), PDO::PARAM_STR);
+        $con->Run();
+        $con->query = $con->connection->prepare("DELETE FROM soittajat WHERE id = :soittajaid");
+        $con->query->bindParam(':soittajaid', intval($id), PDO::PARAM_STR);
+        $con->Run();
+        return 0;
+    }
+
+    #Normaali päivitys
+    $con->update("soittajat", Array("nimi"=>$_POST["playername"], "puhelin"=>$_POST["phone"],"email"=>$_POST["email"]),Array(Array("id","=",$id)));
+
+    #poista vanhat soittimet...
+    $con->query = $con->connection->prepare("DELETE FROM soittimet WHERE soittaja_id = :soittajaid");
+    $con->query->bindParam(':soittajaid', intval($id), PDO::PARAM_STR);
+    $con->Run();
+
+    # ...ja lisää uudet
+    $instruments = explode(";",$_POST["instruments"]);
+    foreach($instruments as $instrument){
+        if(!empty($instrument)){
+            $con->insert("soittimet", Array("soitin"=>$instrument,"soittaja_id"=>$id));
+        }
+    }
+}
+
+
 function InsertPlayers($con){
     $con->insert("soittajat", Array("nimi"=>$_POST["playername"],"email" => $_POST["email"], "puhelin" =>$_POST["phone"]));
     $id = $con->select("soittajat",Array("id"),Array(),"","ORDER BY id DESC")->fetchColumn(0);
@@ -1138,6 +1170,12 @@ Function FetchPlayers($con){
             $instrlist .= $instrument["soitin"];
         }
         $tr = $table->AddRow(Array($row["nimi"],$instrlist, $row["puhelin"],$row["email"]));
+        $tr->element->AddAttribute("id","id_" . $row["id"]);
+        $tr->element->AddAttribute("onClick","EditRow(this)");
+        $tr->cells[0]->AddAttribute("class","playername");
+        $tr->cells[1]->AddAttribute("class","instruments");
+        $tr->cells[2]->AddAttribute("class","phone");
+        $tr->cells[3]->AddAttribute("class","email");
     }
     return $table->element->Show();
 }

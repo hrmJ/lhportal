@@ -1025,7 +1025,7 @@ a.boxclose{
     text-decoration: underline;
 }
 
-#instrumentadder{
+#instrumentadder, #instrumentadder_edit{
     width: 20em;
     padding-left:0.4em;
     padding-right:0.4em;
@@ -1034,7 +1034,7 @@ a.boxclose{
     margin-top: 5px;
 }
 
-#instrumentadder, #addplayersec{
+#instrumentadder, #addplayersec, #instrumentadder_edit{
     height: 0px;
     overflow:hidden;
     /* max-width: 40em; */
@@ -1042,16 +1042,31 @@ a.boxclose{
     transition: all .15s ease-in-out;
 }
 
-#instrumentaddparagraph span:first-child{
+#instrumentaddparagraph span:first-child, #instrumentaddparagraph_edit span:first-child{
     margin-right:1em;
     padding-left:2em;
 }
 
-#addedinstruments{
+#addedinstruments,#addedinstruments_edit{
     margin-top:1em;
     margin-bottom:1em;
     width: 100%;
     height: 3em;
+}
+
+.instrbadge:hover{
+    cursor:pointer;
+    background:red;
+}
+
+.deletelink:hover{
+}
+
+.deletelink{
+    padding:2px;
+    font-size:90%;
+    text-decoration:underline;
+    font-color:darkred;
 }
 
 .instrbadge{
@@ -1063,6 +1078,30 @@ a.boxclose{
 
 #datalist table tr td{
     padding:0.6em;
+}
+
+#editrowsection{
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-40%, -50%);
+  max-width:60em;
+  background:rgba(155, 177, 160, 0.98);
+  padding-top:0px;
+  padding-left:2em;
+  padding-right:2em;
+  padding-bottom:2em;
+  background: white;
+  display:none;
+}
+
+.small{
+    font-size:60%;
+    margin:0.1em;
+}
+
+.close-button:hover{
+    cursor:pointer;
 }
 
 @media only screen and (max-device-width: 481px) {
