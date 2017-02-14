@@ -1119,25 +1119,35 @@ function GetMessuParams($con, $id){
 }
 
 
-function UpdatePlayers($con){
+function UpdatePlayers($con, $type="soittaja"){
     $id = $_POST["player_id"];
+    if($type=="soittaja"){
+        $onetable = "soittajat";
+        $manytable = "soittimet";
+        $person = "soittaja";
+    }
+    elseif($type=="puhuja"){
+        $onetable = "puhujat";
+        $manytable = "puheenaiheet";
+        $person = "puhuja";
+    }
 
     #Poistaminen:
     if($_POST["playerdeleted"]=="true"){
-        $con->query = $con->connection->prepare("DELETE FROM soittimet WHERE soittaja_id = :soittajaid");
+        $con->query = $con->connection->prepare("DELETE FROM $manytable WHERE $person" . "_id = :soittajaid");
         $con->query->bindParam(':soittajaid', intval($id), PDO::PARAM_STR);
         $con->Run();
-        $con->query = $con->connection->prepare("DELETE FROM soittajat WHERE id = :soittajaid");
+        $con->query = $con->connection->prepare("DELETE FROM $onetable WHERE id = :soittajaid");
         $con->query->bindParam(':soittajaid', intval($id), PDO::PARAM_STR);
         $con->Run();
         return 0;
     }
 
     #Normaali päivitys
-    $con->update("soittajat", Array("nimi"=>$_POST["playername"], "puhelin"=>$_POST["phone"],"email"=>$_POST["email"]),Array(Array("id","=",$id)));
+    $con->update($onetable, Array("nimi"=>$_POST["playername"], "puhelin"=>$_POST["phone"],"email"=>$_POST["email"]),Array(Array("id","=",$id)));
 
     #poista vanhat soittimet...
-    $con->query = $con->connection->prepare("DELETE FROM soittimet WHERE soittaja_id = :soittajaid");
+    $con->query = $con->connection->prepare("DELETE FROM $manytable WHERE $person" . "_id = :soittajaid");
     $con->query->bindParam(':soittajaid', intval($id), PDO::PARAM_STR);
     $con->Run();
 
@@ -1145,36 +1155,58 @@ function UpdatePlayers($con){
     $instruments = explode(";",$_POST["instruments"]);
     foreach($instruments as $instrument){
         if(!empty($instrument)){
-            $con->insert("soittimet", Array("soitin"=>$instrument,"soittaja_id"=>$id));
+            if($type=="soittaja")
+                $con->insert("soittimet", Array("soitin"=>$instrument,"soittaja_id"=>$id));
+            elseif($type=="puhuja")
+                $con->insert("puhujat", Array("puheenaihe"=>$instrument,"puhuja_id"=>$id));
         }
     }
 }
 
 
-function InsertPlayers($con){
-    $con->insert("soittajat", Array("nimi"=>$_POST["playername"],"email" => $_POST["email"], "puhelin" =>$_POST["phone"]));
-    $id = $con->select("soittajat",Array("id"),Array(),"","ORDER BY id DESC")->fetchColumn(0);
+function InsertPlayers($con, $tyyppi="soittaja"){
+    if($tyyppi=="soittaja"){
+        $con->insert("soittajat", Array("nimi"=>$_POST["playername"],"email" => $_POST["email"], "puhelin" =>$_POST["phone"]));
+        $id = $con->select("soittajat",Array("id"),Array(),"","ORDER BY id DESC")->fetchColumn(0);
+    }
+    elseif($tyyppi=="puhuja"){
+        $con->insert("puhujat", Array("nimi"=>$_POST["playername"],"email" => $_POST["email"], "puhelin" =>$_POST["phone"]));
+        $id = $con->select("puhujat",Array("id"),Array(),"","ORDER BY id DESC")->fetchColumn(0);
+    }
     $instruments = explode(";",$_POST["instruments"]);
     foreach($instruments as $instrument){
         if(!empty($instrument)){
-            $con->insert("soittimet", Array("soitin"=>$instrument,"soittaja_id"=>$id));
+            if($tyyppi=="soittaja")
+                $con->insert("soittimet", Array("soitin"=>$instrument,"soittaja_id"=>$id));
+            elseif($tyyppi=="puhuja")
+                $con->insert("puheenaiheet", Array("puheenaihe"=>$instrument,"puhuja_id"=>$id));
         }
     }
 }
 
-Function FetchPlayers($con){
+Function FetchPlayers($con, $type="soittajat"){
 
-    $result = $con->select("soittajat",Array("nimi","puhelin","email","id"),Array(),"","ORDER BY id DESC")->fetchAll();
+    if($type=="soittajat")
+        $result = $con->select("soittajat",Array("nimi","puhelin","email","id"),Array(),"","ORDER BY id DESC")->fetchAll();
+    elseif($type=="puhuja")
+        $result = $con->select("puhujat",Array("nimi","puhelin","email","id"),Array(),"","ORDER BY id DESC")->fetchAll();
     $table = new HtmlTable();
     $table->element->AddAttribute("id","playertable");
     foreach($result as $row){
         $instrlist = "";
-        $instruments = $con->select("soittimet",Array("soitin"),Array(Array("soittaja_id","=",$row["id"])))->fetchAll();
+        if($type=="soittajat")
+            $instruments = $con->select("soittimet",Array("soitin"),Array(Array("soittaja_id","=",$row["id"])))->fetchAll();
+        elseif($type=="puhuja")
+            $instruments = $con->select("puheenaiheet",Array("puheenaihe"),Array(Array("puhuja_id","=",$row["id"])))->fetchAll();
+
         foreach($instruments as $instrument){
             if(!empty($instrlist)){
                 $instrlist .= ", ";
             }
-            $instrlist .= $instrument["soitin"];
+            if($type=="soittajat")
+                $instrlist .= $instrument["soitin"];
+            elseif($type=="puhuja")
+                $instrlist .= $instrument["puheenaihe"];
         }
         $tr = $table->AddRow(Array($row["nimi"],$instrlist, $row["puhelin"],$row["email"]));
         $tr->element->AddAttribute("id","id_" . $row["id"]);

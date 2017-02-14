@@ -246,3 +246,29 @@ CREATE TABLE soittimet (
   CONSTRAINT soittimet_ibfk_1 FOREIGN KEY (soittaja_id) REFERENCES soittajat (id)
 ) ;
 
+
+CREATE TABLE puhujat (
+  id int(10) unsigned NOT NULL AUTO_INCREMENT,
+  nimi varchar(100) NOT NULL,
+  puhelin varchar(100) NOT NULL,
+  email varchar(9999),
+  PRIMARY KEY (id)
+);
+
+
+/*
+ Vastuut-taulu sisältää informaation esimerkiksi siitä, että
+ Messussa, jonka id=4 vastuuta nimeltä "kahvitus" hoitaa henkilö nimeltä "pekka"
+ Vastuita voi siis teoriassa olla mitä tahansa, ja kunkin vastuun nimi annetaan joka kerta
+ erikseen vastuullinen-kentässä
+*/
+
+CREATE TABLE puheenaiheet (
+  id int(10) unsigned NOT NULL AUTO_INCREMENT,
+  puhuja_id int(10) unsigned NOT NULL,
+  puheenaihe varchar(100) DEFAULT NULL,
+  PRIMARY KEY (id),
+  KEY puhuja_index (puhuja_id),
+  CONSTRAINT puheenaiheet_ibfk_1 FOREIGN KEY (puhuja_id) REFERENCES puhujat (id)
+) ;
+

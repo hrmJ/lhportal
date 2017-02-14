@@ -1102,6 +1102,7 @@ a.boxclose{
   padding-bottom:2em;
   background: white;
   display:none;
+  border: 1px solid;
 }
 
 .small{

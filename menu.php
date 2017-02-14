@@ -23,6 +23,7 @@
         <li class='menuli'><a href='<?php echo $relpath; ?>index.php'>Yleisnäkymä</a></li>
         <li class='menuli'><a href='<?php echo $relpath; ?>songs.php'>Syötä lauluja</a></li>
         <li class='menuli'><a href='<?php echo $relpath; ?>soittajapankki/index.php'>Soittajapankki</a></li>
+        <li class='menuli'><a href='<?php echo $relpath; ?>puhujapankki/index.php'>Puhujapankki</a></li>
         <li class='menuli' OnClick='ViewMaintenance(this);'>Ylläpito</li>
         <li class='menuli'><a href='<?php echo $relpath; ?>index.php?logout=Yes'>Kirjaudu ulos</a></li>
     </ul>
