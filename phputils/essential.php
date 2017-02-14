@@ -12,18 +12,24 @@ function validate_login(){
     return $valid;
 }
 
-function AddHeader($relpath=""){
+function AddHeader($relpath="",$jquery=false){
 
-echo "<html lang='fi'>
+    echo "<!DOCTYPE html>
+     <html lang='fi'>
      <head>
       <link href='https://fonts.googleapis.com/css?family=Nothing+You+Could+Do|Quicksand' rel='stylesheet'> 
      <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
      <meta name='viewport' content='width=device-width, initial-scale=1'>
      <link rel='stylesheet' href='$relpath" . "styles/updated.css?v='" . time() .">
      <link rel='stylesheet' href='$relpath" . "font-awesome-4.6.3/css/font-awesome.min.css'>
-     <script src='$relpath" . "scripts/essential.js?v='" . time() ."></script>
-     <title>Majakkaportaali 0.1</title>
-     </head>";
+     <script src='$relpath" . "scripts/essential.js?v='" . time() ."></script>";
+     if($jquery==true){
+         echo '<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+               <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+               <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+               ';
+     }
+    echo"<title>Majakkaportaali 0.1</title></head>";
 
      #<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
      #<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
@@ -1158,8 +1164,9 @@ function InsertPlayers($con){
 
 Function FetchPlayers($con){
 
-    $result = $con->select("soittajat",Array("nimi","puhelin","email","id"),Array(),"","ORDER BY nimi")->fetchAll();
+    $result = $con->select("soittajat",Array("nimi","puhelin","email","id"),Array(),"","ORDER BY id DESC")->fetchAll();
     $table = new HtmlTable();
+    $table->element->AddAttribute("id","playertable");
     foreach($result as $row){
         $instrlist = "";
         $instruments = $con->select("soittimet",Array("soitin"),Array(Array("soittaja_id","=",$row["id"])))->fetchAll();

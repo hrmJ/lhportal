@@ -43,7 +43,8 @@ $con = new DbCon();
         UpdatePlayers($con);
     }
 
-    AddHeader($relpath);
+    #Lataa myös jquery:
+    AddHeader($relpath,true);
     #Hae url-parametrit talteen
     $url = SaveGetParams();
     #Aseta vastuulista tyhjäksi ja muuta tätä, jos messulistanäkymässä
@@ -75,6 +76,18 @@ $con = new DbCon();
 CreateNavi($vastuulist, $url, False);
 ?>
 
+<div class='hidden' id='instrument_placeholder'>
+
+<?php
+
+$instruments = $con->select("soittimet",Array("soitin"),Array(),"DISTINCT","")->fetchAll();
+foreach($instruments as $instrument){
+    echo "<span class='listedinstrument'>" . $instrument["soitin"] ."</span>";
+}
+?>
+
+</div>
+
 <article id='maincontainer'>
 
 <section id="addnew">
@@ -91,6 +104,8 @@ CreateNavi($vastuulist, $url, False);
     <form name="addplayer" id="addplayer" method="POST" action="<?php echo $url;?>">
 
     <h3 onClick="ShowPlayerAdder();" id="addplayerheader">Lisää uusi soittaja >></h3>
+
+
     <section id="addplayersec">
 
         <?php PlayerEditInfo(); ?>
@@ -111,7 +126,7 @@ CreateNavi($vastuulist, $url, False);
 
 
         <div id="instrumentadder">
-            <p id="instrumentaddparagraph" class="hidden">
+            <p id="instrumentaddparagraph" class="hidden" onkeypress="return event.keyCode != 13;">
                 <span><input type="text" id="instrumentname" placeholder="Kirjoita soittimen nimi"></span>
                 <span><input type="button" value="Lisää" onClick="ConfirmInstrAdd();"></span>
             </p>
@@ -126,6 +141,18 @@ CreateNavi($vastuulist, $url, False);
 
         </form>
     </section>
+
+    <section id="filters">
+        <p>
+            <label for="instrumentfilter">Suodata soittimen perusteella:</label>
+            <input type="text" name="instrumentfilter" id="instrumentfilter" placeholder="hae tästä soitinta" OnKeyUp="CheckPlayerFilter(this,'instruments');">
+        </p>
+        <p>
+            <label for="playerfilter">Suodata soittajan nimen perusteella:</label>
+            <input type="text" name="playerfilter" id="playerfilter" placeholder="hae tästä soittajaa" OnKeyUp="CheckPlayerFilter(this, 'playername');">
+        </p>
+    </section>
+
 </section>
 
 <section id="datalist">
@@ -180,8 +207,8 @@ CreateNavi($vastuulist, $url, False);
     </div>
 
     <div id="instrumentadder_edit">
-        <p id="instrumentaddparagraph_edit" class="hidden">
-            <span><input type="text" id="instrumentname_edit" placeholder="Kirjoita soittimen nimi" ></span>
+        <p id="instrumentaddparagraph_edit" class="hidden" onkeypress="return event.keyCode != 13;">
+            <span><input type="text" id="instrumentname_edit" placeholder="Kirjoita soittimen nimi" OnKeyUp="Auto"></span>
             <span><input type="button" value="Lisää" onClick="ConfirmInstrEdit();"></span>
         </p>
     </div>
@@ -194,6 +221,18 @@ CreateNavi($vastuulist, $url, False);
     <input type="text" name="player_id" id="player_id" class="hidden">
 </form>
 </section>
+
+<script>
+var instrspans = document.getElementsByClassName("listedinstrument");
+var instrlist = [];
+for(var i=0;i<instrspans.length;i++){
+    instrlist.push(instrspans[i].textContent);
+}
+
+$("#instrumentname_edit").autocomplete({ source: instrlist });
+$("#instrumentname").autocomplete({ source: instrlist });
+
+</script>
 
 </body>
 

@@ -1,6 +1,9 @@
 <div id='menu'>
 
     <?php
+    if(!isset($relpath)){
+        $relpath = "";
+    }
     $seasonname = $_SESSION["kausi"]["nimi"];
     $nextseason = $url . "&kausi=next&";
     $prevseason = $url . "&kausi=previous&";
@@ -17,15 +20,15 @@
                 <i class="fa fa-forward" aria-hidden="true"></i>
             </a> 
         </li>
-        <li class='menuli'><a href='index.php'>Yleisnäkymä</a></li>
-        <li class='menuli'><a href='#'>Lue ohjeet</a></li>
-        <li class='menuli'><a href='songs.php'>Syötä lauluja</a></li>
+        <li class='menuli'><a href='<?php echo $relpath; ?>index.php'>Yleisnäkymä</a></li>
+        <li class='menuli'><a href='<?php echo $relpath; ?>songs.php'>Syötä lauluja</a></li>
+        <li class='menuli'><a href='<?php echo $relpath; ?>soittajapankki/index.php'>Soittajapankki</a></li>
         <li class='menuli' OnClick='ViewMaintenance(this);'>Ylläpito</li>
-        <li class='menuli'><a href='index.php?logout=Yes'>Kirjaudu ulos</a></li>
+        <li class='menuli'><a href='<?php echo $relpath; ?>index.php?logout=Yes'>Kirjaudu ulos</a></li>
     </ul>
 
         <ul id='maintenancelist'>
-            <li class='menuli'><a href='insert_messudata.php'>Syötä uusia messuja</a></li>
-            <li class='menuli'><a href='uusivastuu.php'>Syötä uusia vastuutyyppejä</a></li>
+            <li class='menuli'><a href='<?php echo $relpath; ?>insert_messudata.php'>Syötä uusia messuja</a></li>
+            <li class='menuli'><a href='<?php echo $relpath; ?>uusivastuu.php'>Syötä uusia vastuutyyppejä</a></li>
         </ul>
 </div>

@@ -730,6 +730,22 @@ function SendEditedWords(){
     but.click();
 }
 
+function CheckPlayerFilter(input, filtertype){
+    var table = document.getElementById("playertable");
+    var rows = table.getElementsByTagName("tr");
+    for(var i=0;i<rows.length;i++){
+        var row = rows[i];
+        var thisname = row.getElementsByClassName(filtertype)[0].textContent;
+        if(thisname.indexOf(input.value)==-1){
+            //jos rivi ei sisällä tätä merkkijonoa soittajan nimessä
+            row.style.display = "none";
+        }
+        else{
+            row.style.display = "table-row";
+        }
+    }
+}
+
 function CheckFilter(){
     var input = document.getElementById("songfilterinput");
     songlist_g.PrintList(input.value);

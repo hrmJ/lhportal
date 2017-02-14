@@ -675,7 +675,7 @@ label {
     color:white;
     display:none;
     left:0em;
-    top:2.6em;
+    top:2em;
     padding-left:0em
     padding-right:0em;
     -webkit-box-shadow: 10px 0px 25px 0px rgba(0,0,0,0.56);
@@ -697,7 +697,7 @@ label {
     margin-top: 0em;
     border-bottom:1px solid white;
     padding-left:0.5em;
-    padding-right:0.5em; padding-top:1.3em; padding-bottom:1.2em;
+    padding-right:0.5em; padding-top:1em; padding-bottom:1em;
 }
 
 
@@ -1078,6 +1078,15 @@ a.boxclose{
 
 #datalist table tr td{
     padding:0.6em;
+}
+
+#filters label{
+    width:15em;
+}
+
+#filters{
+    margin-bottom:2em;
+    font-size:80%;
 }
 
 #editrowsection{
