@@ -129,6 +129,7 @@ function ShowWords(evt){
         }
         var select = link.parentNode.parentNode.children[1].children[0];
         var songname = select[select.selectedIndex].id.replace("link_","song_");
+        songname = songname.replace(/ /g, "_");
     }
     else{
         var songname = link.id.replace("link_","song_");
