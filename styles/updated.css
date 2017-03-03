@@ -1114,6 +1114,13 @@ a.boxclose{
     cursor:pointer;
 }
 
+
+.comment_container:first-child{
+    margin-top:1em;
+}
+
+
+
 @media only screen and (max-device-width: 481px) {
 
     table{

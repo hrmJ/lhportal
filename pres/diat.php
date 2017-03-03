@@ -60,6 +60,8 @@ $con = new DbCon();
         <span class='menuright'>
             <ul>
                 <li><a href="javascript:void(0);" OnClick="OpenFunctionMenu();" id="openfunctlink">Toiminnot</a></li>
+                <li id="openlink" title="Käynnistä esitys"><a href="javascript:void(0);" OnClick="OpenPres();">Avaa esitys</a> </li>
+                <li id="closelink" title="Sulje esitys"><a href="javascript:void(0);" OnClick="ClosePres();">Sulje esitys</a> </li>
             </ul>
         </span>
 
