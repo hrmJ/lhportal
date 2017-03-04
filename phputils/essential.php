@@ -938,7 +938,7 @@ class MessuPresentation{
         return $el;
     }
 
-    public function CreateHtml(){
+    public function CreateHtml($onbackground=false){
         $struct_div = new DomEl('div','');
         $struct_div->AddAttribute('id','structure');
         $struct_div->AddChild($this->singlesongs["Alkulaulu"]);
@@ -982,7 +982,7 @@ class MessuPresentation{
         //    die($msg);
         //};
         
-        $gospelverses = FetchBibleContent($address["book"] . "." . $address["chapter"], $address["verses"]);
+        $gospelverses = FetchBibleContent($address["book"] . "." . $address["chapter"], $address["verses"], $onbackground);
 
         if (sizeof($gospelverses)>1)
             $gospeltext =  implode($gospelverses, "¤");
