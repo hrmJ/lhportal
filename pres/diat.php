@@ -62,7 +62,7 @@ $con = new DbCon();
                 <li><a href="javascript:void(0);" OnClick="OpenFunctionMenu();" id="openfunctlink">Toiminnot</a></li>
                 <li id="openlink" title="Käynnistä esitys"><a href="javascript:void(0);" OnClick="OpenPres();">Avaa esitys</a> </li>
                 <li id="closelink" title="Sulje esitys"><a href="javascript:void(0);" OnClick="ClosePres();">Sulje esitys</a> </li>
-                <li id="updatelink" title="Päivitä esitys"><a href="javascript:void(0);" OnClick="UpdatePres();">Päivitä esitys</a> </li>
+                <li id="updatelink" title="Päivitä esitys"><a href="javascript:void(0);" OnClick="UpdateStructure();">Päivitä esitys</a> </li>
                 <li id="" title="Peitä esitysnäyttö"><button id="blanklink" OnClick="BlankScreen();">BLANK SCREEN</button></li>
                 <li id="" title="Suurenna esitysikkunan fonttia">Fonttikoko:  <button id="fontplus" OnClick="FontIncrease(this);">+</button> 
                                                                               <button id="fontminus" OnClick="FontIncrease(this);">-</button> 
@@ -81,7 +81,6 @@ $con = new DbCon();
 
 
 <div id='menu'>
-
     <ul>
         <li class='menuli'><a href='../songs.php'>Laulujen syöttö</a></li>
         <li class='menuli' OnClick='ViewMaintenance(this);'>Ylläpito</li>
@@ -108,5 +107,8 @@ $messu->CreateHtml();
 </div>
 
 <script src='presenter.js'></script>
+
+<iframe id="updaterframe"></iframe>
+
 </body>
 </html>
