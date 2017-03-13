@@ -32,14 +32,12 @@ AddHeader();
 $con = new DbCon();
 
 ?>
+<body>
 
+<?php
+CreateNavi(false, $url, False);
+?>
 
-<section id='leftbanner'>
-    <ul>
-        <li id='homeli' title='Takaisin alkunäkymään'>Majakkaportaali</li>
-        <li style='margin-right:0px;'><a id='help' title="Lue ohjeet!">?</a></li>
-    </ul>
-</section>
 
 
 <?php
@@ -47,37 +45,88 @@ if(isset($_POST["uusivastuu"])){
     $messut = $con->select('vastuut',Array('messu_id'),Array(),"distinct")->fetchAll();
     foreach($messut as $messu){
         $con->insert("vastuut", Array("messu_id"=>$messu["messu_id"],"vastuu"=>$_POST["uusivastuu"], "vastuullinen"=>""));
-        $con->insert("messut", Array("pvm"=>$row["pvm"],"teema"=>$row["teema"]));
     }
     echo "<p>Vastuu lisätty!</p>";
 }
 ?>
-<h3 style="margin-top:3em;">Lisää uusi vastuu </h3>
+<article id="maincontainer2">
 
-<p>Tällä hetkellä käytössä seuraavat:</p>
+    <h3 style="margin-top:3em;">Muokkaa nykyisiä vastuita</h3>
 
-<ul>
-<?php
-    $vastuut = $con->select('vastuut',Array('vastuu'),Array(),"distinct")->fetchAll();
-    foreach($vastuut as $vastuu){
-        echo "<li>" . $vastuu["vastuu"] . "</li>";
+    <form id='vastuuhallinta' action="uusivastuu.php" method="post" >
+        <p>Tällä hetkellä käytössä alla olevat vastuut. Voit nimetä vastuun uudelleen klikkaamalla sitä. Muista painaa tämän jälkeen "Tallenna muutetut nimet" -linkkiä.</p>
+
+    <?php
+
+    if(isset($_POST["remover"])){
+        foreach($_POST as $key => $item){
+            $pos = strpos($key,'REM_');
+            if($pos!==false){
+                $vastuu = substr($key,$pos+strlen('REM_'));
+                $con->query = $con->connection->prepare("DELETE FROM vastuut WHERE vastuu = :tyyp ");
+                $con->query->bindParam(':tyyp', $vastuu, PDO::PARAM_STR);
+                $con->Run();
+            }
+
+            $pos = strpos($key,'edited_');
+            if($pos!==false){
+                $editedname = substr($key,$pos+strlen('edited_'));
+                $editedname = str_replace('_', ' ', $editedname);
+                $con->update("vastuut", Array("vastuu"=>$item),Array(Array("vastuu","=",$editedname)));
+            }
+
+        }
     }
 
-?>
-</ul>
+        $ul = new DomEl('ul','');
+        $vastuut = $con->select('vastuut',Array('vastuu'),Array(),"distinct")->fetchAll();
+        foreach($vastuut as $vastuu){
+            $li = new DomEl('li',"",$ul);
+            $span1 = new DomEl('span',"",$li);
+            $checkbox = new DomEl('input', "", $span1);
+            $checkbox->AddAttribute("type", "checkbox");
+            $checkbox->AddAttribute("name", "REM_" . $vastuu["vastuu"]);
+            $span2 = new DomEl('span',$vastuu["vastuu"],$li);
+            $span2->AddAttribute("class","editable");
+            $span2->AddAttribute("name", "edited_" . str_replace(' ', '_', $vastuu["vastuu"]));
+            $span3 = new DomEl('span',"",$li);
+        }
+        echo $ul->Show();
 
-<form id='messusyotto' action="uusivastuu.php" method="post" >
-    <label for="uusivastuu">Anna uuden vastuutyypin nimi:</label>
-    <input type="text" name="uusivastuu">
-    <input type="submit" value="Tallenna">
-</form>
+    ?>
+    <div>
+        <ul>
+            <li> <a class="simplelink" href="javascript:void(0);" OnClick="EditVastuuNames();">Tallenna muutetut nimet</a>
+            <li> <a class="simplelink" href="javascript:void(0);" OnClick="EditVastuuNames(true);">Poista valitut vastuut kokonaan</a>
+        </ul>
+    </div>
+
+    <input class="hidden" id="remover" type="submit" value="Poista valitut" name="remover">
+    </form>
+
+    <h3 style="margin-top:3em;">Lisää uusi vastuu</h3>
+
+    <form id='messusyotto' action="uusivastuu.php" method="post" >
+        <label for="uusivastuu">Anna uuden vastuutyypin nimi:</label>
+        <input type="text" name="uusivastuu">
+        <input type="submit" value="Tallenna">
+    </form>
+
+</article>
 
 <script src="scripts/essential.js"></script>
 <script>
-document.getElementById('homeli').addEventListener('click',function(){window.location='index.php';});
-document.getElementById('seasonlist').addEventListener('change',NewSeason,false);
+
+var editables = document.getElementsByClassName('editable');
+for(var row_idx = 0; row_idx < editables.length;row_idx++){
+    var editable = editables[row_idx];
+    var e_row = editable.parentElement.parentElement;
+    e_row.addEventListener('click',edit,false);
+}
 
 </script>
+
+<?php require('menu.php');?>
 
 </body>
 

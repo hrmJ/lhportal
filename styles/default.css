@@ -57,6 +57,13 @@ a#help:hover{
     margin-bottom:1.4em;
 }
 
+
+.simplelink,.simplelink:visited, .simplelink:active{
+    color:blue;
+    text-decoration:underline;
+}
+
+
 #menu a,#menu a:visited, #menu a:active{
     color:white;
     text-decoration:none;

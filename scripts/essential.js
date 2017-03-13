@@ -1,5 +1,7 @@
 var songlist_g = null;
 
+
+
 function FixOut(evt, direction){
     var row = evt.target;
     MouseFix('off', row);
@@ -272,9 +274,10 @@ function SelectVastuu (evt){
     window.location.search = "vastuu=" + vastuu;
 }
 
+
 function edit (evt){
     var element = evt.target;
-    if (element.tagName == 'TD') {
+    if (element.tagName == 'TD' || element.tagName == "SPAN") {
         //VAIN jos kyseessä ei jo ole tekstikenttä
         //
         if (element.className.indexOf('left') > -1){
@@ -296,8 +299,10 @@ function edit (evt){
         if (element.hasAttribute("name")){
             id_and_name = element.getAttribute("name");
         }
-        else if(element.children[0].hasAttribute("name")){
-            id_and_name = element.children[0].getAttribute("name");
+        else if(element.children[0]!==undefined){
+            if(element.children[0].hasAttribute("name")){
+                id_and_name = element.children[0].getAttribute("name");
+            }
         }
         ClearContent(element);
         element.appendChild(TextField(id_and_name, 'linestyle', text));
@@ -308,6 +313,18 @@ function edit (evt){
         var text = element.textContent;
         ClearContent(element);
         element.appendChild(TextField('messutheme', 'linestyle', text));
+    }
+}
+
+function EditVastuuNames (ask){
+    if(ask==true){
+        var confirmed = window.confirm("Oletko varma? Tämä poistaa kaikki valitut vastuut.");
+        if(confirmed==true){
+            document.getElementById("remover").click();
+        }
+    }
+    else{
+        document.getElementById("remover").click();
     }
 }
 
@@ -996,6 +1013,7 @@ function ShowPlayerAdder(){
 function CloseRowEdit(){
     document.getElementById("editrowsection").style.display="none";
 }
+
 
 function EditRow(row){
     document.getElementById("editrowsection").style.display="block";

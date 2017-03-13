@@ -60,7 +60,7 @@ class DbCon{
         foreach($valuedict as $key => $value){
             if (!empty($valuelist))
                 $valuelist .= ", ";
-            $valuelist .= "$key = :$key";
+            $valuelist .= "$key = :uval_$key";
         }
 
         $this->BuildwhereClause($wheredict);
@@ -69,7 +69,7 @@ class DbCon{
         $this->BindWhereClause();
         foreach($valuedict as $key=>$value){
             //TODO: check the PDO stuff
-            $this->query->bindParam(":$key", $valuedict[$key], PDO::PARAM_STR);
+            $this->query->bindParam(":uval_$key", $valuedict[$key], PDO::PARAM_STR);
         }
         $this->Run();
 
@@ -145,6 +145,7 @@ class DbCon{
     }
 
 }
+
 
 
 ?>

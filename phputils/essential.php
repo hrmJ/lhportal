@@ -1158,7 +1158,7 @@ function UpdatePlayers($con, $type="soittaja"){
             if($type=="soittaja")
                 $con->insert("soittimet", Array("soitin"=>$instrument,"soittaja_id"=>$id));
             elseif($type=="puhuja")
-                $con->insert("puhujat", Array("puheenaihe"=>$instrument,"puhuja_id"=>$id));
+                $con->insert("puheenaiheet", Array("puheenaihe"=>$instrument,"puhuja_id"=>$id));
         }
     }
 }

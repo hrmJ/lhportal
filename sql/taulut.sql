@@ -121,7 +121,7 @@ CREATE TABLE liturgiset (
   PRIMARY KEY (id)
 );
 
-CREATE UNIQUE INDEX idx_liturgiset ON liturgiset(name);
+--CREATE UNIQUE INDEX idx_liturgiset ON liturgiset(name);
 
 INSERT INTO `liturgiset` (`songtype`, `songname`, `name`) VALUES ('Jumalan karitsa', 'jk_v1', 'Versio 1 (Riemumessusta)') ON DUPLICATE KEY UPDATE name=name;
 INSERT INTO `liturgiset` (`songtype`, `songname`, `name`) VALUES ('Jumalan karitsa', 'jk_v2', 'Versio 2 (Rantatalo = Oi Jumalan karitsa)') ON DUPLICATE KEY UPDATE name=name;

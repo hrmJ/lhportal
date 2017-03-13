@@ -20,6 +20,11 @@ h3{
     margin-right:3em;
 }
 
+.simplelink,.simplelink:visited, .simplelink:active{
+    color:blue;
+    text-decoration:underline;
+}
+
 .brightlink a, #wordview a{
     color: #7b0101;
     /* background: green; */
@@ -29,6 +34,26 @@ h3{
 
 .widetables table{
     width:100%;
+}
+
+#maincontainer2 li{
+    list-style-type:none;
+}
+
+#maincontainer2 .linestyle{
+    color:black;
+    width:auto;
+    width:inherit;
+}
+
+#maincontainer2{
+    max-width:45em;
+    margin: auto;
+    /* position: absolute; */
+    padding-top: 2em;
+    /* overflow: auto; */
+    /* background: url(../majakka_logo.png); */
+    /* width: 100%; */
 }
 
 #maincontainer{
