@@ -693,8 +693,14 @@ function InsertServices($con){
         //Syötä mahdolliset jo tiedossa olevat vastuut + saarnateksti
         $max = $con->maxval("messut","id");
         $vastuudata=Array();
+
         foreach($vastuufields as $vastuufield){
-            $con->insert("vastuut", Array("messu_id"=>$max,"vastuu" => $vastuufield, "vastuullinen" =>$row[$vastuufield]));
+            if(isset($row[$vastuufield]))
+                $vastuullinen = $row[$vastuufield];
+            else
+                $vastuullinen = "";
+
+            $con->insert("vastuut", Array("messu_id"=>$max,"vastuu" => $vastuufield, "vastuullinen" =>$vastuullinen));
         }
         
     }
