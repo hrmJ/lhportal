@@ -1,5 +1,40 @@
 var songlist_g = null;
+var globalservicelist = null;
 
+function AddNewService(){
+    if (globalservicelist==null){
+        globalservicelist = new NewServiceList();
+    }
+    globalservicelist.AddNew();
+}
+
+
+
+function NewServiceList(){
+
+    //Luo lista
+    var grandpa = document.getElementById("addedservices");
+    var listparent = TagWithText("ul","","");
+    listparent.id = "servicelistparent";
+    grandpa.appendChild(listparent);
+    this.listparent = document.getElementById("servicelistparent");
+
+    this.AddNew = function(){
+        var pvm = this.AddInput("Päivämäärä","dateinput","pvm_");
+        var name = this.AddInput("Messun aihe","","teema_");
+        var li = TagParent("li",[pvm, name],"");
+        this.listparent.appendChild(li);
+        $(".dateinput").datepicker(); 
+    };
+
+    this.AddInput = function(placeholder,thisclass, thistype){
+        var input = TagWithText("input","",thisclass);
+        input.setAttribute("Placeholder", placeholder);
+        input.setAttribute("name",thistype + (this.listparent.children.length+1));
+        return input;
+    };
+
+}
 
 
 function FixOut(evt, direction){
@@ -316,6 +351,15 @@ function edit (evt){
     }
 }
 
+
+function RemoveExistingServices(){
+    var confirmed = window.confirm("Oletko varma? Tämä poistaa kaikki valitut messut.");
+    if(confirmed==true){
+        document.getElementById("remover").click();
+    }
+}
+
+
 function EditVastuuNames (ask){
     if(ask==true){
         var confirmed = window.confirm("Oletko varma? Tämä poistaa kaikki valitut vastuut.");
@@ -458,13 +502,14 @@ function NewSeason(){
         lab2 = new DomEl('span','sname','');
         lab2.appendChild(TextField('newsname', 'regular', ''));
         cont.appendChild(lab2);
+        document.getElementById("existingserviceslist").innerHTML="";
     }
     else{
-        if (document.getElementById("snamelab") != null){
-                document.getElementById("snamelab").outerHTML='';
-                document.getElementById("sname").outerHTML='';
-            }
+        window.location.search = "seasonname=" + slist.value;
     }
+
+    document.getElementById("adderlink").style.display = "block";
+    document.getElementById("s1").style.display = "block";
 }
 
 function LaskeMessut(){

@@ -150,5 +150,26 @@ function CreateList($li_items){
 }
 
 
+class MessuAdder{
+
+
+    public function __construct(){
+        $cont  = new DomEl("div");
+        $cont->AddAttribute('class',"messuadder");
+
+        $input  = new DomEl("input","", $cont);
+        $input->AddAttribute('class',"dateinput");
+
+        $this->container = $cont;
+    }
+
+    public function Output(){
+        echo $this->container->show();
+    }
+
+
+}
+
+
 
 ?>

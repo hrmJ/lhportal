@@ -34,12 +34,6 @@ if (isset($_SESSION['user_id'])){
 #JOS kirjauduttu onnistuneesti
 $con = new DbCon();
 
-    if(isset($_POST["newservices"])){
-        #Jos äsken syötetty uusia messuja:
-        InsertServices($con);
-        echo "<script>window.alert('Uudet messut syötetty onnistuneesti');</script>";
-    }
-
     AddHeader();
     #Jos käyttäjä on päivittänyt jotain tietoja messusta tai messuista, prosessoi dataa:
     UpdateMessudata($con);
@@ -56,7 +50,7 @@ $con = new DbCon();
                 $vastuu = "";
             }
         }
-        $messulist =  CreateMessulist($con, $vastuu);
+        $messulist =  CreateMessulist($con, $vastuu,$url);
         $vastuulist =  True;
     }
     elseif(isset($_GET["messuid"])){
@@ -81,7 +75,7 @@ $con = new DbCon();
         $h3->AddAttribute('class',"editable");
         $h3->AddAttribute('onClick',"AddSaveButton();");
 
-        $messulist =  MessuDetails($_GET["messuid"]);
+        $messulist =  MessuDetails($_GET["messuid"],$url);
         }
 
 ?>

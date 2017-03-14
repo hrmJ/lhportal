@@ -1,6 +1,7 @@
 <?php
 session_start();
 require('phputils/essential.php');
+$url = SaveGetParams();
 
 if (!isset( $_SESSION['user_id'] )){
     if (isset($_POST["username"],$_POST["password"])){
@@ -39,22 +40,25 @@ CreateNavi(false, $url, False);
 ?>
 
 
-
-<?php
-if(isset($_POST["uusivastuu"])){
-    $messut = $con->select('vastuut',Array('messu_id'),Array(),"distinct")->fetchAll();
-    foreach($messut as $messu){
-        $con->insert("vastuut", Array("messu_id"=>$messu["messu_id"],"vastuu"=>$_POST["uusivastuu"], "vastuullinen"=>""));
-    }
-    echo "<p>Vastuu lisätty!</p>";
-}
-?>
 <article id="maincontainer2">
 
-    <h3 style="margin-top:3em;">Muokkaa nykyisiä vastuita</h3>
+<?php
+$messut = $con->select('messut',Array('id'),Array(),"distinct")->fetchAll();
+if(!isset($messut) or sizeof($messut)==0){
+    echo "<br><br><br><br><br><br>";
+    echo "<p>Yhtään messua ei ole vielä tietokannassa. Aloita lisäämällä messuja 
+        <a class='simplelink' href='insert_messudata.php'>Tästä linkistä</a>. </p>";
+}
+else{
+    if(isset($_POST["uusivastuu"])){
+        if(isset($messut)){
+            foreach($messut as $messu){
+                $con->insert("vastuut", Array("messu_id"=>$messu["id"],"vastuu"=>$_POST["uusivastuu"], "vastuullinen"=>""));
+            }
+        }
+    }
+?>
 
-    <form id='vastuuhallinta' action="uusivastuu.php" method="post" >
-        <p>Tällä hetkellä käytössä alla olevat vastuut. Voit nimetä vastuun uudelleen klikkaamalla sitä. Muista painaa tämän jälkeen "Tallenna muutetut nimet" -linkkiä.</p>
 
     <?php
 
@@ -91,18 +95,24 @@ if(isset($_POST["uusivastuu"])){
             $span2->AddAttribute("name", "edited_" . str_replace(' ', '_', $vastuu["vastuu"]));
             $span3 = new DomEl('span',"",$li);
         }
-        echo $ul->Show();
+        if(sizeof($vastuut)>0) {
+            ?>
 
-    ?>
-    <div>
-        <ul>
-            <li> <a class="simplelink" href="javascript:void(0);" OnClick="EditVastuuNames();">Tallenna muutetut nimet</a>
-            <li> <a class="simplelink" href="javascript:void(0);" OnClick="EditVastuuNames(true);">Poista valitut vastuut kokonaan</a>
-        </ul>
-    </div>
+            <h3 style="margin-top:3em;">Muokkaa nykyisiä vastuita</h3>
 
-    <input class="hidden" id="remover" type="submit" value="Poista valitut" name="remover">
-    </form>
+            <form id='vastuuhallinta' action="uusivastuu.php" method="post" >
+                <p>Tällä hetkellä käytössä alla olevat vastuut. Voit nimetä vastuun uudelleen klikkaamalla sitä. Muista painaa tämän jälkeen "Tallenna muutetut nimet" -linkkiä.</p>
+                <?php echo $ul->Show();?>
+            <div>
+                <ul>
+                    <li> <a class="simplelink" href="javascript:void(0);" OnClick="EditVastuuNames();">Tallenna muutetut nimet</a>
+                    <li> <a class="simplelink" href="javascript:void(0);" OnClick="EditVastuuNames(true);">Poista valitut vastuut kokonaan</a>
+                </ul>
+            </div>
+
+            <input class="hidden" id="remover" type="submit" value="Poista valitut" name="remover">
+        </form>
+        <?php }//sizeof(vastuut)?>
 
     <h3 style="margin-top:3em;">Lisää uusi vastuu</h3>
 
@@ -126,7 +136,11 @@ for(var row_idx = 0; row_idx < editables.length;row_idx++){
 
 </script>
 
-<?php require('menu.php');?>
+<?php
+
+} // isset(messut)
+
+ require('menu.php');?>
 
 </body>
 

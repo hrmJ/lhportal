@@ -110,7 +110,8 @@ function AddHidden($parent, $name, $value){
     return $input;
 }
 
-function AddSection($submit=False, $sectionclass=''){
+function AddSection($submit=False, $sectionclass='',$url="index.php"){
+    $url = str_replace("&","&amp;",$url);
     $section = new DomEl("section","");
     $section->AddAttribute("id","contentlist");
     $section->AddAttribute("class",$sectionclass);
@@ -148,7 +149,7 @@ function SeasonWarning($sname,$change){
         return $sname . $text;
 }
 
-function CreateMessulist($con, $vastuu=''){
+function CreateMessulist($con, $vastuu='',$url=''){
     $kausi = SetSeason($con);
 
     #MESSULISTA
@@ -161,10 +162,16 @@ function CreateMessulist($con, $vastuu=''){
     if(!empty($vastuu)){
         $submit=True;
     }
-    $table = AddSection($submit,"rightcontent");
+    $table = AddSection($submit,"rightcontent",$url);
 
     $months = Array();
     $years = Array();
+    #Jos ei messuja:
+    if(sizeof($result)==0){
+        $msg = "<p>Yhtään messua ei ole vielä tietokannassa. Aloita lisäämällä messuja 
+        <a class='simplelink' href='insert_messudata.php'>Tästä linkistä</a>. </p>";
+        return $msg;
+    }
     foreach($result as $row){
         $pvm_list = ParseMonth($row["pvm"]);
         #Erottele kuukaudet taulukossa
@@ -247,8 +254,13 @@ function CreateVastuuList($parent){
 function MessuDetails($id, $url=''){
     $con = new DbCon();
     $result = $con->select("vastuut",Array("vastuu","vastuullinen","id"),Array(Array("messu_id","=",$id)))->fetchAll();
-    $table = AddSection(True,"centercontent");
+    $table = AddSection(True,"centercontent",$url);
 
+    if(sizeof($result)==0){
+        $msg = "<p>Et ole vielä määritellyt yhtään vastuutehtävää. Voit lisätä 
+            vastuutehtäviä <a class='simplelink' href='uusivastuu.php'>Tästä linkistä</a>. </p>";
+        return $msg;
+    }
     foreach($result as $row){
         $tr = $table->AddRow(Array($row["vastuu"],$row["vastuullinen"]));
         if (empty($row["vastuullinen"])){
@@ -451,6 +463,9 @@ function SaveGetParams(){
     if (isset($_GET)){
         //Tallenna parametrit, jotta sama sivu latautuisi myös tallennettaessa tietoja
         foreach($_GET as $paramname => $param){
+            if($paramname=="teema" and isset($_POST["messutheme"])){
+                $param = $_POST["messutheme"];
+            }
             if ($urlparams !== "?")
                 $urlparams .= "&";
             $urlparams .= "$paramname=$param";
@@ -628,11 +643,27 @@ function ListSeasons(){
     $result = $con->select("kaudet", Array("id", "nimi","alkupvm","loppupvm"), Array(),"","ORDER BY loppupvm DESC")->fetchAll();
     $select = new DomEl("select");
     $select->AddAttribute('id',"seasonlist");
+    $select->AddAttribute('name',"seasonlist");
     $option = new DomEl('option','Valitse kausi, johon syötetään',$select);
     $option = new DomEl('option','----',$select);
     foreach($result as $row){
         $litext = $row["nimi"];
         $option = new DomEl('option',$litext,$select);
+        if(isset($_GET["seasonname"])){
+            if($litext==$_GET["seasonname"]){
+                $option->AddAttribute("selected","selected");
+            }
+        }
+        if(isset($_POST["seasonlist"])){
+            if($litext==$_POST["seasonlist"]){
+                $option->AddAttribute("selected","selected");
+            }
+        }
+        if(isset($_POST["newsname"])){
+            if($litext==$_POST["newsname"]){
+                $option->AddAttribute("selected","selected");
+            }
+        }
         }
     $option = new DomEl('option','Lisää uusi kausi',$select);
     echo $select->Show();
@@ -670,6 +701,20 @@ function FormatPvm($pvm){
     return ($pvm_arr["p"] . "." . $pvm_arr["kk"] . "." . $pvm_arr["v"]);
 }
 
+function RemoveServices($con){
+    foreach($_POST as $key => $item){
+        $pos = strpos($key,'REM_');
+        if($pos!==false){
+            $id = substr($key,$pos+strlen('REM_'));
+            $con->query = $con->connection->prepare("DELETE FROM messut WHERE id = :tyyp ");
+            $con->query->bindParam(':tyyp', intval($id), PDO::PARAM_STR);
+            $con->Run();
+        }
+    }
+}
+
+
+
 function InsertServices($con){
     $data = Array();
     foreach($_POST as $fieldname => $value){
@@ -683,31 +728,30 @@ function InsertServices($con){
             $data[$number][$dbfield] = $value;
         }
     }
-
-    $vastuufields = ListJobs($con);
     
 
-    foreach($data as $row){
-        //Syötä tiedot itse messusta:
+    foreach($data as $key=> $row){
+        $date = DateTime::createFromFormat('m/d/Y', $row["pvm"]);
+        $row["pvm"] = $date->format('Y-m-d');
+        $data[$key]["pvm"] = $date->format('Y-m-d');
         $con->insert("messut", Array("pvm"=>$row["pvm"],"teema"=>$row["teema"]));
-        //Syötä mahdolliset jo tiedossa olevat vastuut + saarnateksti
-        $max = $con->maxval("messut","id");
-        $vastuudata=Array();
-
-        foreach($vastuufields as $vastuufield){
-            if(isset($row[$vastuufield]))
-                $vastuullinen = $row[$vastuufield];
-            else
-                $vastuullinen = "";
-
-            $con->insert("vastuut", Array("messu_id"=>$max,"vastuu" => $vastuufield, "vastuullinen" =>$vastuullinen));
-        }
-        
     }
 
     //Syötä tiedot uudesta kaudesta, jos sellainen asetettu:
     if(isset($_POST["newsname"])){
-        $con->insert("kaudet", Array("alkupvm"=>$data[0]["pvm"],"loppupvm"=>$row["pvm"],"nimi"=>$_POST["newsname"]));
+        $con->insert("kaudet", Array("alkupvm"=>$data[1]["pvm"],"loppupvm"=>$row["pvm"],"nimi"=>$_POST["newsname"]));
+    }
+    elseif(isset($_POST["seasonlist"])){
+        $res = $con->select("kaudet",Array("nimi","alkupvm","loppupvm"),Array(Array("nimi","=",$_POST["seasonlist"])),"","")->fetch();
+        $seasonmin = new DateTime($res["alkupvm"]);
+        $seasonmax = new DateTime($res["loppupvm"]);
+        $insertedmin = new DateTime($data[1]["pvm"]);
+        $insertedmax = new DateTime($row["pvm"]);
+        #Päivitä kaudelle uudet minimit ja maksimit, jos tarpeen:
+        if($insertedmin < $seasonmin)
+            $con->update("kaudet", Array("alkupvm"=>$data[1]["pvm"]),Array(Array("nimi","=",$_POST["seasonlist"])));
+        if($insertedmax > $seasonmax)
+            $con->update("kaudet", Array("loppupvm"=>$row["pvm"]),Array(Array("nimi","=",$_POST["seasonlist"])));
     }
 
 }
@@ -1225,5 +1269,39 @@ Function FetchPlayers($con, $type="soittajat"){
     return $table->element->Show();
 }
 
+
+function LoadExistingServices($con){
+    if(isset($_GET["seasonname"]) or isset($_POST["seasonlist"]) or isset($_POST["newsname"])){
+        if(isset($_GET["seasonname"]))
+            $name = $_GET["seasonname"];
+        elseif(isset($_POST["newsname"]))
+            $name = $_POST["newsname"];
+        elseif(isset($_POST["seasonlist"]))
+            $name = $_POST["seasonlist"];
+
+        $kausi = $con->select("kaudet",Array("alkupvm","loppupvm"),Array(Array("nimi","=",$name)),"","")->fetch();
+        $messut = $con->select("messut",Array("pvm","teema","id"),Array(Array("pvm",">=",$kausi["alkupvm"]),Array("pvm","<=",$kausi["loppupvm"])),"","ORDER BY pvm")->fetchAll();
+        if(sizeof($messut)>0){
+            $ul = new DomEl('ul','');
+            $ul->AddAttribute("id","existingserviceslist");
+            foreach($messut as $messu){
+                $li = new DomEl('li',"",$ul);
+                $span0 = new DomEl('span',"",$li);
+                $span1 = new DomEl('span',FormatPvm($messu["pvm"]),$li);
+                $checkbox = new DomEl('input', "", $span0);
+                $checkbox->AddAttribute("type", "checkbox");
+                $checkbox->AddAttribute("name", "REM_" . $messu["id"]);
+                $span2 = new DomEl('span',$messu["teema"],$li);
+                $span2->AddAttribute("class","editable");
+                $span2->AddAttribute("name", "edited_" . str_replace(' ', '_', $vastuu["vastuu"]));
+            }
+            echo $ul->Show();
+            return "";
+        }
+
+    }
+    return "hidden";
+
+}
 
 ?>

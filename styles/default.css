@@ -16,6 +16,10 @@ h3{
     text-shadow: black;
 }
 
+#servicelistparent input{
+    margin-right:2em;
+}
+
 #selectcontainer span{
     margin-right:3em;
 }

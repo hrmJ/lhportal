@@ -1,7 +1,12 @@
+html body {
+   min-height: 100%;
+}
+
 body{
     font-family:'Quicksand',cursive;
     background:white;
     background: -webkit-radial-gradient(-200% 40%, closest-corner, #FFF002, rgb(218, 218, 218));
+    background-attachment: fixed;
 }
 
 h2{
@@ -16,7 +21,41 @@ h3{
     text-shadow: black;
 }
 
-#selectcontainer span{
+
+#servicelistparent li{
+    margin-bottom:0.4em;
+}
+
+#snamelab{
+    margin-left: 2em;
+    margin-right: 1em;
+}
+
+input.dateinput{
+    margin-right:2em;
+}
+
+#existingserviceslist li{
+    margin-bottom:0.5em;
+}
+
+#existingserviceslist span{
+    display:table-cell;
+}
+
+#existingserviceslist span:nth-child(1){
+    width:2em;
+}
+#existingserviceslist span:nth-child(2){
+    width:6em;
+}
+
+#removelinkdiv{
+    margin-top:1em;
+    margin-bottom:1em;
+}
+
+#selectcontainer span, #existingserviceslist span{
     margin-right:3em;
 }
 
@@ -549,6 +588,12 @@ input#messutheme{
  a:hover{
     color: rgb(171, 3, 3);
 
+}
+
+
+#s1{
+    font-size:inherit;
+    font-size:auto;
 }
 
 .sbutton{
