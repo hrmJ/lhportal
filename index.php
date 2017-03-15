@@ -89,6 +89,8 @@ CreateNavi($vastuulist, $url, False);
 
 <article id='maincontainer'>
 
+        <div id="instructiontext">  </div>
+
         <?php
 
         if(isset($h2)){
@@ -177,6 +179,14 @@ CreateNavi($vastuulist, $url, False);
         var icon = commenticons[idx];
         icon.addEventListener('click',CommentClick,false);
     }
+
+    var instrdiv = document.getElementById("instructiontext");
+    var table = document.getElementById("instructiontext");
+    if(table.children.length<4){
+        instrdiv.appendChild(TagWithText("p","Muistathan, että voit lisätä uusia vastuita ja messuja vasemman yläkulman valikosta kohdasta Ylläpito.",""));
+    
+    }
+
 
 
 </script>
