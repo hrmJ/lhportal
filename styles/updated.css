@@ -725,7 +725,16 @@ input#messutheme{
     padding-right:0.3em;
 }
 
-#homeli:hover{
+
+#ohjelinka:hover{
+    color:white !important;
+}
+
+#ohjelink:hover{
+    color:white !important;
+}
+
+#homeli:hover,#instrli:hover{
     cursor:pointer;
     background:cadetblue;
     color:white;

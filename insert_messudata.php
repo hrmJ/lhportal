@@ -38,6 +38,7 @@ if (isset($_SESSION['user_id'])){
 <html lang="fi">
 <head>
   <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+  <link href='https://fonts.googleapis.com/css?family=Nothing+You+Could+Do|Quicksand' rel='stylesheet'> 
   <link rel="stylesheet" href="styles/updated.css?id=jjasdasd">
   <link rel='stylesheet' href='font-awesome-4.6.3/css/font-awesome.min.css'>
   <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">

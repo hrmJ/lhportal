@@ -9,6 +9,10 @@ function AddNewService(){
 }
 
 
+function ShowExtraInfo(){
+     document.getElementById("extrainfospan").style.display = "inline";
+}
+
 
 function NewServiceList(){
 

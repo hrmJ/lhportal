@@ -20,7 +20,7 @@ function AddHeader($relpath="",$jquery=false){
       <link href='https://fonts.googleapis.com/css?family=Nothing+You+Could+Do|Quicksand' rel='stylesheet'> 
      <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
      <meta name='viewport' content='width=device-width, initial-scale=1'>
-     <link rel='stylesheet' href='$relpath" . "styles/updated.css?v='" . time() .">
+     <link rel='stylesheet' href='$relpath" . "styles/updated.css?v=ljd'" . time() .">
      <link rel='stylesheet' href='$relpath" . "font-awesome-4.6.3/css/font-awesome.min.css'>
      <script src='$relpath" . "scripts/essential.js?v='" . time() ."></script>";
      if($jquery==true){
@@ -29,7 +29,7 @@ function AddHeader($relpath="",$jquery=false){
                <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
                ';
      }
-    echo"<title>Majakkaportaali 0.1</title></head>";
+    echo"<title>Parkkiportaali</title></head>";
 
      #<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
      #<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
@@ -56,9 +56,10 @@ function CreateNavi($vastuulist, $url, $songmenu=False){
     $icon = new DomEl('i','',$li);
     $icon->AddAttribute('class','fa fa-bars');
     $icon->AddAttribute('karia-hidden','true');
-    $li = new DomEl('li','Majakkaportaali',$ul);
+    $li = new DomEl('li','Parkkiportaali',$ul);
     $li->AddAttribute('id','homeli');
     $li->AddAttribute('title','Takaisin alkunäkymään');
+    $li->AddAttribute('OnClick','window.location="index.php";');
     if($songmenu==True){
         $li = new DomEl('li','Selaa lauluja >',$ul);
         $li->AddAttribute('id','laululista_launcher');
@@ -74,6 +75,18 @@ function CreateNavi($vastuulist, $url, $songmenu=False){
     if($vastuulist == True){
         CreateVastuuList($li);
     }
+
+    $li = new DomEl('li','',$ul);
+    $li->AddAttribute("id","instrli");
+    $li->AddAttribute("title","Lue ohjeet");
+    $a = new DomEl('a','',$li);
+    $a->AddAttribute("href","ohjeet.html");
+    $a->AddAttribute("target","_blank");
+    $a->AddAttribute("id","ohjelinka");
+    $icon = new DomEl('i','',$a);
+    $icon->AddAttribute('class','fa fa-question-circle');
+    $icon->AddAttribute('karia-hidden','true');
+    $icon->AddAttribute("id","ohjelink");
 
         #Tallenna vielä tieto kausista
         $input1 = new DomEl('input','',$form);
@@ -110,7 +123,7 @@ function AddHidden($parent, $name, $value){
     return $input;
 }
 
-function AddSection($submit=False, $sectionclass='',$url="index.php"){
+function AddSection($submit=False, $sectionclass='',$url="index.php", $tableid=""){
     $url = str_replace("&","&amp;",$url);
     $section = new DomEl("section","");
     $section->AddAttribute("id","contentlist");
@@ -123,6 +136,7 @@ function AddSection($submit=False, $sectionclass='',$url="index.php"){
     $form->AddAttribute("action",$url);
 
     $table = new HtmlTable($form);
+    $table->element->AddAttribute("id",$tableid);
 
     if($submit==True){
         $submit = new DomEl("input","",$form);
@@ -162,7 +176,7 @@ function CreateMessulist($con, $vastuu='',$url=''){
     if(!empty($vastuu)){
         $submit=True;
     }
-    $table = AddSection($submit,"rightcontent",$url);
+    $table = AddSection($submit,"rightcontent",$url,"messulisttable");
 
     $months = Array();
     $years = Array();
@@ -254,7 +268,7 @@ function CreateVastuuList($parent){
 function MessuDetails($id, $url=''){
     $con = new DbCon();
     $result = $con->select("vastuut",Array("vastuu","vastuullinen","id"),Array(Array("messu_id","=",$id)))->fetchAll();
-    $table = AddSection(True,"centercontent",$url);
+    $table = AddSection(True,"centercontent",$url,"vastuulisttable");
 
     if(sizeof($result)==0){
         $msg = "<p>Et ole vielä määritellyt yhtään vastuutehtävää. Voit lisätä 

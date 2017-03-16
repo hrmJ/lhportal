@@ -2,15 +2,14 @@
 
 class DbCon{
 
-    public function __construct () {
-        $this->Connect();
+    public function __construct ($dbname="majakka_auth") {
+        $this->Connect($dbname);
     }
 
-    public function Connect(){
+    public function Connect($dbname){
         $password = 'testpw';
         $hostname = 'localhost';
         $username = 'testuser';
-        $dbname = 'majakka_auth';
         $this->connection = new PDO("mysql:host=$hostname;dbname=$dbname;charset=utf8", $username, $password);
         // set the error mode to exceptions
         $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

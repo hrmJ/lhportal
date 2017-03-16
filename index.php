@@ -181,10 +181,11 @@ CreateNavi($vastuulist, $url, False);
     }
 
     var instrdiv = document.getElementById("instructiontext");
-    var table = document.getElementById("instructiontext");
-    if(table.children.length<4){
-        instrdiv.appendChild(TagWithText("p","Muistathan, että voit lisätä uusia vastuita ja messuja vasemman yläkulman valikosta kohdasta Ylläpito.",""));
-    
+    var table = document.getElementById("vastuulisttable");
+    if(table !== undefined){
+        if(table.getElementsByTagName("TR").length<4){
+            instrdiv.appendChild(TagParent("p",[TagWithText("em","Muistathan, että voit lisätä uusia vastuita ja messuja vasemman yläkulman valikosta kohdasta Ylläpito.","")]),"");
+        }
     }
 
 

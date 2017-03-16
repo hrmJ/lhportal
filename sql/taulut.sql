@@ -272,3 +272,16 @@ CREATE TABLE puheenaiheet (
   CONSTRAINT puheenaiheet_ibfk_1 FOREIGN KEY (puhuja_id) REFERENCES puhujat (id)
 ) ;
 
+
+
+CREATE TABLE `comments` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `messu_id` int(10) unsigned NOT NULL,
+  `content` text,
+  `commentator` varchar(100) DEFAULT NULL,
+  `comment_time` datetime NOT NULL,
+  `theme` text,
+  PRIMARY KEY (`id`),
+  KEY `messu_index` (`messu_id`),
+  CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`messu_id`) REFERENCES `messut` (`id`) ON DELETE CASCADE
+)
