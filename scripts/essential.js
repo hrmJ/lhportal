@@ -3,9 +3,9 @@ var globalservicelist = null;
 
 function AddNewService(){
     if (globalservicelist==null){
-        globalservicelist = new NewServiceList();
+        globalservicelist = new DynamicList("addedservices","servicelistparent");
     }
-    globalservicelist.AddNew();
+    globalservicelist.AddNewPvm();
 }
 
 
@@ -14,16 +14,18 @@ function ShowExtraInfo(){
 }
 
 
-function NewServiceList(){
+
+
+function DynamicList(grandpaid,listparentid){
 
     //Luo lista
-    var grandpa = document.getElementById("addedservices");
+    var grandpa = document.getElementById(grandpaid);
     var listparent = TagWithText("ul","","");
-    listparent.id = "servicelistparent";
+    listparent.id = listparentid;
     grandpa.appendChild(listparent);
-    this.listparent = document.getElementById("servicelistparent");
+    this.listparent = document.getElementById(listparentid);
 
-    this.AddNew = function(){
+    this.AddNewPvm = function(){
         var pvm = this.AddInput("Päivämäärä","dateinput","pvm_");
         var name = this.AddInput("Messun aihe","","teema_");
         var li = TagParent("li",[pvm, name],"");
@@ -39,6 +41,22 @@ function NewServiceList(){
     };
 
 }
+
+
+function SlideShowSettings(){
+    var cont = document.getElementById("slidesettings");
+    var setlink = document.getElementById("showmoresettings");
+    if(cont.style.height=="400px"){
+        cont.style.height = "0px";
+        setlink.textContent = "Näytä lisää diaesityksen sisältöjä";
+    }
+    else{
+        cont.style.height = "400px";
+        setlink.textContent = "Piilota lisäsisällöt";
+    }
+}
+
+
 
 
 function FixOut(evt, direction){

@@ -21,6 +21,26 @@ h3{
     text-shadow: black;
 }
 
+#slidesettings{
+
+    background: rgba(95, 158, 160, 0.95);
+    width:100%;
+    height:0px;
+    top:0;
+    left:0;
+    transition: all .15s ease-in-out;
+    padding-top: 0;
+    top: 0;
+    overflow:hidden;
+    background:lightgrey;
+    padding:2em;
+
+}
+
+
+.twocolum a:first-child{
+    margin-right:3em;
+}
 
 #servicelistparent li{
     margin-bottom:0.4em;

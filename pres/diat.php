@@ -43,8 +43,8 @@ $con = new DbCon();
  <link rel="stylesheet" href="../font-awesome-4.6.3/css/font-awesome.min.css">
 <link href="https://fonts.googleapis.com/css?family=Nothing+You+Could+Do|Quicksand" rel="stylesheet">
 <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
-<link rel="stylesheet" href="tyylit2.css">
-<title>Majakkamessu</title>
+<link rel="stylesheet" href="styles.css?id=alksjd">
+<title>Pyhä parkki</title>
 </head>
 
 <body>
@@ -52,11 +52,6 @@ $con = new DbCon();
 
 <section id='leftbanner'>
 
-        <span class='menuleft'>
-            <ul>
-                <li id='homeli' title='Takaisin alkunäkymään'>Majakkamessu</li>
-            </ul>
-        </span>
         <span class='menuright'>
             <ul>
                 <li><a href="javascript:void(0);" OnClick="OpenFunctionMenu();" id="openfunctlink">Toiminnot</a></li>
@@ -96,7 +91,7 @@ $con = new DbCon();
 
 <?php
 
-$messu = new MessuPresentation($_GET["id"], $con);
+$messu = new MessuPresentation($_GET["id"], $con, "Pyhä parkki", "parkki");
 $messu->UploadTrackingInfo($con);
 $messu->CreateHtml();
 

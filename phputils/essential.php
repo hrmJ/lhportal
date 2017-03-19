@@ -963,9 +963,11 @@ class VerseInserter{
 
 class MessuPresentation{
 
-    public function __construct ($messuid, $con) {
+    public function __construct ($messuid, $con, $messuheader, $type) {
             $this->singlesongs = Array();
             $this->id = $messuid;
+            $this->messuheader = $messuheader;
+            $this->messutype = $type;
             $yksittaiset = Array("Alkulaulu","Päivän laulu","Loppulaulu");
             foreach($yksittaiset as $tyyppi){
                 $this->singlesongs[$tyyppi] = new SongDom($tyyppi, $con->select("laulut",Array("nimi"),Array(Array("messu_id","=",$messuid),Array("tyyppi","=",$tyyppi)),'','')->fetchColumn(0));
@@ -1060,8 +1062,15 @@ class MessuPresentation{
 
         $title = new DomEl('p',$this->messutitle);
         $title->AddAttribute('id','messutitle');
+        $header = new DomEl('p',$this->messuheader);
+        $header->AddAttribute('id','messuheader');
+        $type = new DomEl('p',$this->messutype);
+        $type->AddAttribute('id','messutype');
+
         echo $gospel->Show();
         echo $title->Show();
+        echo $type->Show();
+        echo $header->Show();
     }
 
 

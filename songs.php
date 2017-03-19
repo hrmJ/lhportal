@@ -189,6 +189,11 @@ $url = SaveGetParams();
             </table>
 
 
+            <h3 id='firstheader'>Muita lauluja?</h3>
+
+            <p>Esim. laulettu synnintunnustus tai uskontunnustus?</p>
+            <p>Laulu + mihin kohtaan messua halutaan</p>
+
             <h3>Tiedot tekniikalle</h3>
             <p>
             <?php 
@@ -207,7 +212,19 @@ $url = SaveGetParams();
             <p> <input type="button" name="confirmsub" id="confirmsub" onClick="confirmsubmit();" value="Tallenna tiedot">
                 <input type="submit" class="hidden" name="sbut" id="sbut" value="Tallenna tiedot"></p>
 
-            <p><a href='javascript:void(0);' onClick='CreateSlides(<?php echo $pickedid; ?>);'>Luo diat</a></p>
+            <p class="twocolum">
+            <a id="showmoresettings" href='javascript:void(0);' onClick='SlideShowSettings();'>Näytä lisää diaesityksen sisältöjä</a>
+            <a href='javascript:void(0);' onClick='CreateSlides(<?php echo $pickedid; ?>);'>Luo diat</a></p>
+
+            <section id="slidesettings">
+
+                <div id="oldinfoslides"></div>
+                <div id="infoslideadder">
+                <a href="javascript:void(0);">Lisää uusi infoteksti</a>
+                </div>
+                <div id="newinfoslides"></div>
+
+            </section>
 
 </article>
 
@@ -219,7 +236,7 @@ $url = SaveGetParams();
 
 </form>
 
-<script src="scripts/essential.js"></script>
+<script src="scripts/essential.js?id=98989"></script>
 <script>
     //A GLOBAL(!) variable for the songnames
     var songnames = [];
