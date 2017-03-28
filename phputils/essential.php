@@ -505,14 +505,17 @@ function ListJobs($con){
 function UpdateMessudata($con){
     //Jos käyttäjä on päivittänyt jotain tietoja messusta tai messuista, prosessoi dataa:
     if(isset($_POST)){
+
             if (array_key_exists("messu_id",$_POST)){
                 #1. Päivitykset messukohtaisesti, kaikki roolit mahdollisia
                     $updatables = ListJobs($con);
                     foreach ($updatables as $vastuu){
-                        if(array_key_exists($vastuu,$_POST)){
-                            if (!empty($_POST[$vastuu])){
+                        #muuta välit alaviivoiksi (?)
+                        $vastuukey = str_replace(" ","_",$vastuu);
+                        if(array_key_exists($vastuukey,$_POST)){
+                            if (!empty($_POST[$vastuukey])){
                                 $con->update("vastuut",
-                                    Array("vastuullinen" =>$_POST[$vastuu]),
+                                    Array("vastuullinen" =>$_POST[$vastuukey]),
                                     Array(Array("messu_id","=",intval($_POST["messu_id"])), Array("vastuu","=",$vastuu)));
                             }
                         }
