@@ -146,6 +146,13 @@ $url = SaveGetParams();
             <span>
                 <?php 
                     $pickedid = GetDateList($con); 
+                    if($pickedid==false){
+                        echo"
+                        <script>
+                            alert('Sivu ei löytänyt lähimmän sunnuntain messua.  Vaihda messun päivämäärä ensin pudotusvalikosta.');
+                        </script>";
+                            
+                    }
                     $urlparams = GetMessuParams($con, $pickedid);
                 ?>
             </span>

@@ -949,7 +949,6 @@ class SongInserter{
     }
 
     public function InsertSong($type, $name){
-        die("lkjl");
         $this->con->insert("laulut", Array("messu_id"=>$this->messuid,"tyyppi"=>$type, "nimi"=>$name));
     }
 }
