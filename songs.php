@@ -79,7 +79,7 @@ require('menu.php');
 </section>
 
 <form id="sform" method="post" action="<?php echo $url; ?>"> <?php
-UpdateSongData($con);
+UpdateSongData($con, true);
 ?>
 
 
@@ -99,15 +99,13 @@ $url = SaveGetParams();
         <h2>Majakkamessun laulut</h2>
 
             <?php if(!isset($_POST["sbut"])){ ?>
-            <div class="instr">Moi! Niin kuin huomaat, messulaulujen ilmoittaminen on vähän muuttunut, mutta älä pelästy. Luulen ihan
-               oikeasti, että helpompaan suuntaan. <a id='infolink' href='javascript:void(0);' onClick='MoreSongInfo();' >Lue pikaohjeet</a>
+            <div class="instr"> Messun laulujen lisääminen.  <a id='infolink' href='javascript:void(0);' onClick='MoreSongInfo();' >Lue pikaohjeet</a>
 
                 <div class='instr' id='help'>
                     <ul>
-                        <li> Vasemmalla ei aluksi näy listaa lauluista, mutta
-                            <em>kun alat kirjoittaa jotakin laulun nimeä esimerkiksi kohdan "Alkulaulu"
+                        <li> Kun alat kirjoittaa jotakin laulun nimeä esimerkiksi kohdan "Alkulaulu"
                             viereiseen kenttään, ruudulle ilmestyy lista kaikista olemassaolevista
-                            lauluista, joissa näpyttelemäsi kirjaimet / sana esiintyy.</em> (Jos haluat tutkia olemassaolevien laulujen listaa perinteisemmin, klikkaa ylhäältä "Selaa lauluja")
+                            lauluista, joissa näpyttelemäsi kirjaimet / sana esiintyy. (Jos haluat tutkia olemassaolevien laulujen listaa perinteisemmin, klikkaa ylhäältä "Selaa lauluja")
                         <li> Jos etsimäsi laulu on listassa, klikkaa sitä.
                         <li> Voit katsella valitsemasi laulun sanoja klikkaamalla laulun viereistä "Katso sanoja" -linkkejä
                         <li> Jos kyseisestä laulusta ei ole sanoja, linkissä lukee "lisää sanat". Teksti päivittyy, kun klikkaat jotain toista tekstikenttää.
@@ -158,73 +156,17 @@ $url = SaveGetParams();
             <input type='text' class='hidden' name='pickedid' value='<?php echo $pickedid; ?>'>
             </p>
 
-            <h3 id='firstheader'>Yksittäiset laulut</h3>
-
 
             <?php
-            $songlist =  SongListForInsertion($pickedid, $con, Array("Alkulaulu","Päivän laulu","Loppulaulu")); 
-            echo $songlist;
+                $songlist =  WsSongList($con, $pickedid, "Laulu"); 
+                echo $songlist;
             ?>
-            <h3>Ylistyslaulut</h3>
-            <?php
-                $ylistys_songlist =  WsSongList($con, $pickedid, "Ylistyslaulu"); 
-                echo $ylistys_songlist;
-            ?>
-            <p ><input type="button" title='Lisää ylistyslaulu'  class='plusminus' onClick='AddWsSong("Ylistyslaulu");' value="+"><input type="button" title='Poista viimeinen ylistyslaulu'  onClick='RemoveWsSong("Ylistyslaulu");' value="-"> </p>
-            <h3>Ehtoollisen aikana laulettavat</h3>
-            <?php
-                $eht_songlist =  WsSongList($con, $pickedid, "Ehtoollislaulu"); 
-                echo $eht_songlist;
-            ?>
-            <p ><input type="button" class='plusminus' title='Lisää ehtoollislaulu' onClick='AddWsSong("Ehtoollislaulu");' value="+"><input type="button" title='Poista viimeinen ehtoollislaulu'   onClick='RemoveWsSong("Ehtoollislaulu");' value="-"></p>
+            <p ><input type="button" title='Lisää laulu'  class='plusminus' onClick='AddWsSong("Laulu");' value="+"><input type="button" title='Poista viimeinen ylistyslaulu'  onClick='RemoveWsSong("Ylistyslaulu");' value="-"> </p>
 
-            <h3>Liturgiset</h3>
-
-            <table id="songtable">
-            <thead></thead>
-            <tbody>
-                <tr><td class="left">Jumalan karitsa</td><td class="right"> <?php $jkval = Liturgiset($con, "Jumalan karitsa", $pickedid); ?></td><td class="lyricslinkcell"><a id="jklink" class="lyricslink">Katso sanoja</a></td></tr>
-                <tr><td class="left">Pyhä-hymni</td><td class="right"> <?php $pyhval = Liturgiset($con, "Pyhä-hymni", $pickedid); ?></td><td class="lyricslinkcell"><a id="pyhalink" class="lyricslink">Katso sanoja</a></td></tr>
-            </tbody>
-            </table>
-
-
-            <h3 id='firstheader'>Muita lauluja?</h3>
-
-            <p>Esim. laulettu synnintunnustus tai uskontunnustus?</p>
-            <p>Laulu + mihin kohtaan messua halutaan</p>
-
-            <h3>Tiedot tekniikalle</h3>
-            <p>
-            <?php 
-            $infostring = "Lisää tähän miksaajalle tiedoksi, mitä soitimia teillä on ja keitä soittajia.  Esimerkiksi: kitara (Ville V.), cajon (Hessu H.). Samoin, jos on jotain toiveita äänitekniikan suhteen, niin voit ilmoittaa niistä tässä. Tai mitä vain muuta viestiä :)";
-            $techinfo=FetchTechInfo($pickedid, $con, $infostring);
-            if($techinfo==$infostring){
-                echo "<textarea class='area' name='techinfo' placeholder='$techinfo' id='techinfobox'></textarea>";
-            }
-            else{
-                echo "<textarea class='area' name='techinfo' value='$techinfo' id='techinfobox'>$techinfo</textarea>";
-            }
-            ?>
-    
-            </p>
 
             <p> <input type="button" name="confirmsub" id="confirmsub" onClick="confirmsubmit();" value="Tallenna tiedot">
                 <input type="submit" class="hidden" name="sbut" id="sbut" value="Tallenna tiedot"></p>
 
-            <p class="twocolum">
-            <a id="showmoresettings" href='javascript:void(0);' onClick='SlideShowSettings();'>Näytä lisää diaesityksen sisältöjä</a>
-            <a href='javascript:void(0);' onClick='CreateSlides(<?php echo $pickedid; ?>);'>Luo diat</a></p>
-
-            <section id="slidesettings">
-
-                <div id="oldinfoslides"></div>
-                <div id="infoslideadder">
-                <a href="javascript:void(0);">Lisää uusi infoteksti</a>
-                </div>
-                <div id="newinfoslides"></div>
-
-            </section>
 
 </article>
 

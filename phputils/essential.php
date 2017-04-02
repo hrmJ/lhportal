@@ -842,28 +842,30 @@ function FetchTechInfo($pickedid, $con, $infostring){
     }
 }
 
-function UpdateSongData($con){
+function UpdateSongData($con, $simpleupdate=false){
     #Syötä laulut messuun id:n perusteella
     if(isset($_POST["pickedid"])){
         #Luo olio (poistaa kaikki vanhat laulut tällä id:llä)
         $inserter = new SongInserter(intval($_POST["pickedid"]), $con);
         #
-        $inserter->InsertSong("Alkulaulu",$_POST["Alkulaulu"]);
-        $inserter->InsertSong("Päivän laulu",$_POST["Päivän_laulu"]);
-        $inserter->InsertSong("Loppulaulu",$_POST["Loppulaulu"]);
-        if (isset($_POST["new_Pyhä-hymni"])){
-            $con->insert("liturgiset", Array("songtype"=>"Pyhä-hymni","songname"=>$_POST["new_Pyhä-hymni"], "name"=>$_POST["new_Pyhä-hymni"]));
-            $_POST["pyhä-hymni"] = $_POST["new_Pyhä-hymni"];
+        if(!$simpleupdate){
+            $inserter->InsertSong("Alkulaulu",$_POST["Alkulaulu"]);
+            $inserter->InsertSong("Päivän laulu",$_POST["Päivän_laulu"]);
+            $inserter->InsertSong("Loppulaulu",$_POST["Loppulaulu"]);
+            if (isset($_POST["new_Pyhä-hymni"])){
+                $con->insert("liturgiset", Array("songtype"=>"Pyhä-hymni","songname"=>$_POST["new_Pyhä-hymni"], "name"=>$_POST["new_Pyhä-hymni"]));
+                $_POST["pyhä-hymni"] = $_POST["new_Pyhä-hymni"];
+            }
+            if (isset($_POST["new_Jumalan_karitsa"])){
+                $con->insert("liturgiset", Array("songtype"=>"Jumalan karitsa","songname"=>$_POST["new_Jumalan_karitsa"], "name"=>$_POST["new_Jumalan_karitsa"]));
+                $_POST["jumalan_karitsa"] = $_POST["new_Jumalan_karitsa"];
+            }
+            $inserter->InsertSong("Jumalan karitsa",$_POST["jumalan_karitsa"]);
+            $inserter->InsertSong("Pyhä-hymni",$_POST["pyhä-hymni"]);
+            #Tiedot tekniikalle
+            #TODO: jos info-kenttään jotain mutakin...
+            $con->update("messut", Array("info"=>$_POST["techinfo"]),Array(Array("id","=",intval($_POST["pickedid"]))));
         }
-        if (isset($_POST["new_Jumalan_karitsa"])){
-            $con->insert("liturgiset", Array("songtype"=>"Jumalan karitsa","songname"=>$_POST["new_Jumalan_karitsa"], "name"=>$_POST["new_Jumalan_karitsa"]));
-            $_POST["jumalan_karitsa"] = $_POST["new_Jumalan_karitsa"];
-        }
-        $inserter->InsertSong("Jumalan karitsa",$_POST["jumalan_karitsa"]);
-        $inserter->InsertSong("Pyhä-hymni",$_POST["pyhä-hymni"]);
-        #Tiedot tekniikalle
-        #TODO: jos info-kenttään jotain mutakin...
-        $con->update("messut", Array("info"=>$_POST["techinfo"]),Array(Array("id","=",intval($_POST["pickedid"]))));
 
         foreach($_POST as $entry=>$val){
             if(strpos($entry,"Ylistyslaulu") !== false){
@@ -871,6 +873,9 @@ function UpdateSongData($con){
             }
             if(strpos($entry,"Ehtoollislaulu") !== false){
                 $inserter->InsertSong("Ehtoollislaulu",$val);
+            }
+            if(strpos($entry,"Laulu") !== false){
+                $inserter->InsertSong("Laulu",$val);
             }
         }
 
@@ -944,6 +949,7 @@ class SongInserter{
     }
 
     public function InsertSong($type, $name){
+        die("lkjl");
         $this->con->insert("laulut", Array("messu_id"=>$this->messuid,"tyyppi"=>$type, "nimi"=>$name));
     }
 }
