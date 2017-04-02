@@ -140,12 +140,21 @@ function submitedit(){
    document.getElementById("sbut").click();
 }
 
+function GrabBibleAddress(){
+
+
+}
+
 function confirmsubmit(){
     var inputs = document.getElementsByClassName("songeditinput");
     var songnames = [];
     var abort = false;
     for(var i=0;i<inputs.length;i++){
         var thisinput = inputs[i];
+        if (thisinput.className.indexOf("bibletext")>-1){
+            //Grabbing bible verses
+        
+        }
         var songname = thisinput.value;
         if(songnames.indexOf(songname)==-1){
             songnames.push(songname);
@@ -675,6 +684,60 @@ function RemoveWsSong(type){
             document.getElementById(type + "table").removeChild(rows[rows.length-1]);
         }
     }
+}
+
+function AddBibleText(type){
+    var table = document.getElementById("Laulutable");
+    var row = document.createElement('tr');
+    var left = document.createElement('td');
+
+
+
+    var link = TagWithText("a","Lisää","");
+    var logger = TagWithText("p","","");
+    logger.id = "logger";
+    //link.addEventListener('click', AddBibleContent, false);
+    var select = CreateBookSelect();
+    var chapinput = document.createElement("input");
+    chapinput.id = 'chapter';
+    chapinput.value = 'Luku';
+    var verseinput = document.createElement("input");
+    verseinput.id = 'verse';
+    verseinput.value = 'jae/jakeet';
+
+
+    var right = TagParent("td",[select, chapinput, verseinput],'biblecell');
+    var this_input = document.createElement('input');
+    this_input.type = 'text';
+    this_input.className = 'hidden songeditinput bibletext';
+    right.appendChild(this_input);
+
+    var lyricslinkcell = document.createElement('td');
+
+    left.className = "left";
+
+    left.textContent =  "Raamatunkohta";
+
+    row.appendChild(left);
+    row.appendChild(right);
+    row.appendChild(lyricslinkcell);
+    table.appendChild(row);
+}
+
+function CreateBookSelect(){
+
+    var booknames = ['Valitse kirja','---------------------','Uusi testamentti','--------------------','Matt', 'Mark', 'Luuk', 'Joh', 'Apt', 'Room', '1Kor', '2Kor', 'Gal', 'Ef', 'Fil', 'Kol', '1Tess', '2Tess', '1Tim', '2Tim', 'Tit', 'Filem', 'Hepr', 'Jaak', '1Piet', '2Piet', '1Joh', '2Joh', '3Joh', 'Juud', 'Ilm','Vanha testamentti', '---------------', '1Moos', '2Moos', '3Moos', '4Moos', '5Moos', 'Joos', 'Tuom', 'Ruut', '1Sam', '2Sam', '1Kun', '2Kun', '1Aik', '2Aik', 'Esra', 'Neh', 'Est', 'Job', 'Ps', 'Sananl', 'Saarn', 'Laull', 'Jes', 'Jer', 'Valit', 'Hes', 'Dan', 'Hoos', 'Joel', 'Aam', 'Ob', 'Joona', 'Miika', 'Nah', 'Hab', 'Sef', 'Hagg', 'Sak', 'Mal']
+    var bookoptions = [];
+    for(idx in booknames){
+        var thisname = booknames[idx];
+        var option = TagWithText("option",thisname,"");
+        bookoptions.push(option);
+    }
+
+    var select = TagParent("select",bookoptions,"","songselect");
+    select.id = 'book';
+    return select;
+
 }
 
 function AddWsSong(type){

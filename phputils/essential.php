@@ -972,21 +972,26 @@ class VerseInserter{
 class MessuPresentation{
 
     public function __construct ($messuid, $con, $messuheader, $type) {
-            $this->singlesongs = Array();
             $this->id = $messuid;
             $this->messuheader = $messuheader;
             $this->messutype = $type;
-            $yksittaiset = Array("Alkulaulu","Päivän laulu","Loppulaulu");
-            foreach($yksittaiset as $tyyppi){
-                $this->singlesongs[$tyyppi] = new SongDom($tyyppi, $con->select("laulut",Array("nimi"),Array(Array("messu_id","=",$messuid),Array("tyyppi","=",$tyyppi)),'','')->fetchColumn(0));
-            }
-            $this->wssongs  = $this->GetMultiSongs($con,"Ylistyslaulu");
-            $this->comsongs  = $this->GetMultiSongs($con,"Ehtoollislaulu");
-            $this->pyha = new SongDom("Pyhä-hymni", $con->select("laulut",Array("nimi"),Array(Array("messu_id","=",$messuid),Array("tyyppi","=","Pyhä-hymni")),'','')->fetchColumn(0));
-            $this->jk = new SongDom("Jumalan karitsa", $con->select("laulut",Array("nimi"),Array(Array("messu_id","=",$messuid),Array("tyyppi","=","Jumalan karitsa")),'','')->fetchColumn(0));
-
             $this->vastuut = $con->select("vastuut",Array('vastuu','vastuullinen'), Array(Array("messu_id","=",$messuid)),"","")->fetchAll();
             $this->messutitle = $con->select("messut",Array('teema'), Array(Array("id","=",$messuid)),'','')->fetchColumn(0);
+
+            if($type=="parkki")
+                $this->songs  = $this->GetMultiSongs($con,"Laulu");
+            else{
+                $this->singlesongs = Array();
+                $yksittaiset = Array("Alkulaulu","Päivän laulu","Loppulaulu");
+                foreach($yksittaiset as $tyyppi){
+                    $this->singlesongs[$tyyppi] = new SongDom($tyyppi, $con->select("laulut",Array("nimi"),Array(Array("messu_id","=",$messuid),Array("tyyppi","=",$tyyppi)),'','')->fetchColumn(0));
+                }
+                $this->wssongs  = $this->GetMultiSongs($con,"Ylistyslaulu");
+                $this->comsongs  = $this->GetMultiSongs($con,"Ehtoollislaulu");
+                $this->pyha = new SongDom("Pyhä-hymni", $con->select("laulut",Array("nimi"),Array(Array("messu_id","=",$messuid),Array("tyyppi","=","Pyhä-hymni")),'','')->fetchColumn(0));
+                $this->jk = new SongDom("Jumalan karitsa", $con->select("laulut",Array("nimi"),Array(Array("messu_id","=",$messuid),Array("tyyppi","=","Jumalan karitsa")),'','')->fetchColumn(0));
+
+            }
     }
 
 
@@ -1015,20 +1020,27 @@ class MessuPresentation{
     public function CreateHtml($onbackground=false){
         $struct_div = new DomEl('div','');
         $struct_div->AddAttribute('id','structure');
-        $struct_div->AddChild($this->singlesongs["Alkulaulu"]);
-        $struct_div->AddChild($this->singlesongs["Päivän laulu"]);
-        foreach($this->wssongs as $song){
-            $struct_div->AddChild($song);
+        if($this->messutype=="parkki"){
+            foreach($this->songs as $song){
+                $struct_div->AddChild($song);
+            }
         }
-        $struct_div->AddChild($this->pyha);
-        $struct_div->AddChild($this->jk);
-        foreach($this->comsongs as $song){
-            $struct_div->AddChild($song);
-        }
-        $struct_div->AddChild($this->singlesongs["Loppulaulu"]);
+        else{
+            $struct_div->AddChild($this->singlesongs["Alkulaulu"]);
+            $struct_div->AddChild($this->singlesongs["Päivän laulu"]);
+            foreach($this->wssongs as $song){
+                $struct_div->AddChild($song);
+            }
+            $struct_div->AddChild($this->pyha);
+            $struct_div->AddChild($this->jk);
+            foreach($this->comsongs as $song){
+                $struct_div->AddChild($song);
+            }
+            $struct_div->AddChild($this->singlesongs["Loppulaulu"]);
 
 
-        $struct_div->AddChild($this->singlesongs["Loppulaulu"]);
+            $struct_div->AddChild($this->singlesongs["Loppulaulu"]);
+        }
 
         echo $struct_div->Show();
 
@@ -1048,25 +1060,28 @@ class MessuPresentation{
         }
         echo $resp_div->Show();
 
-        #evankeliumi evl:n sivuilta:
-        $address = ParseBibleAddress($address);
-        $booknames = Array('Matt', 'Mark', 'Luuk', 'Joh', 'Apt', 'Room', '1Kor', '2Kor', 'Gal', 'Ef', 'Fil', 'Kol', '1Tess', '2Tess', '1Tim', '2Tim', 'Tit', 'Filem', 'Hepr', 'Jaak', '1Piet', '2Piet', '1Joh', '2Joh', '3Joh', 'Juud', 'Ilm','1Moos', '2Moos', '3Moos', '4Moos', '5Moos', 'Joos', 'Tuom', 'Ruut', '1Sam', '2Sam', '1Kun', '2Kun', '1Aik', '2Aik', 'Esra', 'Neh', 'Est', 'Job', 'Ps', 'Sananl', 'Saarn', 'Laull', 'Jes', 'Jer', 'Valit', 'Hes', 'Dan', 'Hoos', 'Joel', 'Aam', 'Ob', 'Joona', 'Miika', 'Nah', 'Hab', 'Sef', 'Hagg', 'Sak', 'Mal');
-        //if(!in_array($address["book"],$booknames)){
-        //    $msg = "<p style='width:40em;'>Raamattutekstin hakeminen ei onnistu, koska ohjelma ei tunnista kirjaa <strong>". $address["book"] . "</strong>. Hyväksytyt kirjojen lyhenteet ovat: <strong>" . implode($booknames,", ") . "</strong>. Käy korjaamassa Raamattuviittaus portaalin messukohtaisessa näkymässä ja päivitä tämä sivu.</p>";
-        //    die($msg);
-        //};
-        
-        $gospelverses = FetchBibleContent($address["book"] . "." . $address["chapter"], $address["verses"], $onbackground);
+        if($this->messutype!="parkki"){
+            #evankeliumi evl:n sivuilta:
+            $address = ParseBibleAddress($address);
+            $booknames = Array('Matt', 'Mark', 'Luuk', 'Joh', 'Apt', 'Room', '1Kor', '2Kor', 'Gal', 'Ef', 'Fil', 'Kol', '1Tess', '2Tess', '1Tim', '2Tim', 'Tit', 'Filem', 'Hepr', 'Jaak', '1Piet', '2Piet', '1Joh', '2Joh', '3Joh', 'Juud', 'Ilm','1Moos', '2Moos', '3Moos', '4Moos', '5Moos', 'Joos', 'Tuom', 'Ruut', '1Sam', '2Sam', '1Kun', '2Kun', '1Aik', '2Aik', 'Esra', 'Neh', 'Est', 'Job', 'Ps', 'Sananl', 'Saarn', 'Laull', 'Jes', 'Jer', 'Valit', 'Hes', 'Dan', 'Hoos', 'Joel', 'Aam', 'Ob', 'Joona', 'Miika', 'Nah', 'Hab', 'Sef', 'Hagg', 'Sak', 'Mal');
+            //if(!in_array($address["book"],$booknames)){
+            //    $msg = "<p style='width:40em;'>Raamattutekstin hakeminen ei onnistu, koska ohjelma ei tunnista kirjaa <strong>". $address["book"] . "</strong>. Hyväksytyt kirjojen lyhenteet ovat: <strong>" . implode($booknames,", ") . "</strong>. Käy korjaamassa Raamattuviittaus portaalin messukohtaisessa näkymässä ja päivitä tämä sivu.</p>";
+            //    die($msg);
+            //};
+            
+            $gospelverses = FetchBibleContent($address["book"] . "." . $address["chapter"], $address["verses"], $onbackground);
 
-        if (sizeof($gospelverses)>1)
-            $gospeltext =  implode($gospelverses, "¤");
-        else
-            $gospeltext =  ($gospelverses);
+            if (sizeof($gospelverses)>1)
+                $gospeltext =  implode($gospelverses, "¤");
+            else
+                $gospeltext =  ($gospelverses);
 
-        $gospel = new DomEl('p',$gospeltext);
-        $gospel->AddAttribute('id','evankeliumi');
-        $gospel->AddAttribute('address', $address["book"] . "." . $address["chapter"] . ": " . $address["verses"]);
-        $gospel->AddAttribute('role','evankeliumi');
+            $gospel = new DomEl('p',$gospeltext);
+            $gospel->AddAttribute('id','evankeliumi');
+            $gospel->AddAttribute('address', $address["book"] . "." . $address["chapter"] . ": " . $address["verses"]);
+            $gospel->AddAttribute('role','evankeliumi');
+            echo $gospel->Show();
+        }
 
         $title = new DomEl('p',$this->messutitle);
         $title->AddAttribute('id','messutitle');
@@ -1075,7 +1090,6 @@ class MessuPresentation{
         $type = new DomEl('p',$this->messutype);
         $type->AddAttribute('id','messutype');
 
-        echo $gospel->Show();
         echo $title->Show();
         echo $type->Show();
         echo $header->Show();

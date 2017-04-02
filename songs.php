@@ -96,7 +96,7 @@ $url = SaveGetParams();
 </div>
 
 <article class='widetables brightlink' id='maincontainer'>
-        <h2>Majakkamessun laulut</h2>
+        <h2>Messun laulut</h2>
 
             <?php if(!isset($_POST["sbut"])){ ?>
             <div class="instr"> Messun laulujen lisääminen.  <a id='infolink' href='javascript:void(0);' onClick='MoreSongInfo();' >Lue pikaohjeet</a>
@@ -168,11 +168,16 @@ $url = SaveGetParams();
                 $songlist =  WsSongList($con, $pickedid, "Laulu"); 
                 echo $songlist;
             ?>
-            <p ><input type="button" title='Lisää laulu'  class='plusminus' onClick='AddWsSong("Laulu");' value="+"><input type="button" title='Poista viimeinen ylistyslaulu'  onClick='RemoveWsSong("Ylistyslaulu");' value="-"> </p>
-
+            <p ><input type="button" title='Lisää laulu'  class='plusminus' onClick='AddWsSong("Laulu");' value="+"><input type="button" title='Poista viimeinen laulu'  onClick='RemoveWsSong("Laulu");' value="-"> </p>
+            <!--
+            <p ><input type="button" title='Lisää raamatunkohta'  class='plusminus' onClick='AddBibleText();' value="Lisää tähän raamatunkohta">  </p>
+            -->
 
             <p> <input type="button" name="confirmsub" id="confirmsub" onClick="confirmsubmit();" value="Tallenna tiedot">
                 <input type="submit" class="hidden" name="sbut" id="sbut" value="Tallenna tiedot"></p>
+
+
+            <p><a href='javascript:void(0);' onClick='CreateSlides(<?php echo $pickedid; ?>);'>Luo diat</a></p>
 
 
 </article>
@@ -242,19 +247,13 @@ $url = SaveGetParams();
 
 <!--Tallenna muistiin   -->
 
-<div id="ylistys_memo" class="hidden">
+<div id="laulu_memo" class="hidden">
 <?php
-    $ylistys_songlist = str_replace('Ylistyslaulutable','Ylistyslaulutable_memo',$ylistys_songlist);
-    echo $ylistys_songlist;
+    $songlist = str_replace('Laulutable','Laulutable_memo',$songlist);
+    echo $songlist;
 ?>
 </div>
 
-<div id="eht_memo" class="hidden">
-<?php
-    $eht_songlist = str_replace('Ehtoollislaulutable','Ehtoollislaulutable_memo',$eht_songlist);
-    echo $eht_songlist;
-?>
-</div>
 
 </div>
 
