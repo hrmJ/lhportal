@@ -95,10 +95,13 @@ $messu = new MessuPresentation($_GET["id"], $con, "Pyhä parkki", "parkki");
 $messu->UploadTrackingInfo($con);
 $messu->CreateHtml();
 
+
+$songdb = "majakka_auth";
+$songcon =  new DbCon($songdb);
 } #Login
 ?>
 <div id='songs'>
-<?php FetchSongsForSlides($con); ?>
+<?php FetchSongsForSlides($songcon); ?>
 </div>
 
 <script src='presenter.js'></script>

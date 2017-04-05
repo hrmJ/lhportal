@@ -842,8 +842,10 @@ function FetchTechInfo($pickedid, $con, $infostring){
     }
 }
 
-function UpdateSongData($con, $simpleupdate=false){
-    #Syötä laulut messuun id:n perusteella
+function UpdateSongData($con, $simpleupdate=false,$songcon=false){
+    if($songcon==false)
+        $songcon = $con;
+
     if(isset($_POST["pickedid"])){
         #Luo olio (poistaa kaikki vanhat laulut tällä id:llä)
         $inserter = new SongInserter(intval($_POST["pickedid"]), $con);
@@ -902,12 +904,12 @@ function UpdateSongData($con, $simpleupdate=false){
 
             if($insert==True){
                 //Ensin metatiedot
-                $con->insert("songs", Array("title"=>$title,"filename"=>$title, "san"=>$san, "sav"=>$sav,"added"=>$date));
+                $songcon->insert("songs", Array("title"=>$title,"filename"=>$title, "san"=>$san, "sav"=>$sav,"added"=>$date));
                 //Hae uuden biisin id, jos useampia tällä nimellä, ota viimeisin
-                $idrows = $con->select("songs",Array("id"),Array(Array("title","=",$title)),"","ORDER BY ID DESC")->fetchAll();
+                $idrows = $songcon->select("songs",Array("id"),Array(Array("title","=",$title)),"","ORDER BY ID DESC")->fetchAll();
                 //Syötä säkeistöt
                 foreach($verses as $verse){
-                    $con->insert("verses", Array("content"=>$verse,"song_id"=>intval($idrows[0]["id"])));
+                    $songcon->insert("verses", Array("content"=>$verse,"song_id"=>intval($idrows[0]["id"])));
                 }
                 if(!isset($_SESSION['insertedsongs'])){
                     $_SESSION['insertedsongs'][] = $title;
@@ -919,14 +921,14 @@ function UpdateSongData($con, $simpleupdate=false){
     if (isset($_POST["edited_existing"])){
 
         #Poista vanhat säkeistöt kokonaan
-        $con->query = $con->connection->prepare("DELETE FROM verses WHERE song_id = :sid");
-        $con->query->bindParam(':sid', intval($_POST["editedsongid"]), PDO::PARAM_STR);
-        $con->Run();
+        $songcon->query = $songcon->connection->prepare("DELETE FROM verses WHERE song_id = :sid");
+        $songcon->query->bindParam(':sid', intval($_POST["editedsongid"]), PDO::PARAM_STR);
+        $songcon->Run();
 
         #syötä päivitetyt säkeistöt
         $verses = preg_split("/(\\r|\\n){3,}/", $_POST['edited_existing_text']);
         foreach($verses as $verse){
-                $con->insert("verses", Array("content"=>$verse,"song_id"=>intval($_POST["editedsongid"])));
+                $songcon->insert("verses", Array("content"=>$verse,"song_id"=>intval($_POST["editedsongid"])));
         }
     }
     if (isset($_POST["removed_type"])){

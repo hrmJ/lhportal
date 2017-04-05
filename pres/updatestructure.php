@@ -48,15 +48,20 @@ $con = new DbCon();
 
 <?php
 
-$messu = new MessuPresentation($_GET["id"], $con);
+$messu = new MessuPresentation($_GET["id"], $con, "Pyhä parkki", "parkki");
 $messu->UploadTrackingInfo($con);
 $messu->CreateHtml($onbackground=true);
+
+
+$songdb = "majakka_auth";
+$songcon =  new DbCon($songdb);
+
 
 } #Login
 ?>
 
 <div id='songs'>
-<?php FetchSongsForSlides($con); ?>
+<?php FetchSongsForSlides($songcon); ?>
 </div>
 
 <div id='updatecompleted'>

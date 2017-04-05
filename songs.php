@@ -79,14 +79,17 @@ require('menu.php');
 </section>
 
 <form id="sform" method="post" action="<?php echo $url; ?>"> <?php
-UpdateSongData($con, true);
+$songdb = "majakka_auth";
+$songcon =  new DbCon($songdb);
+
+UpdateSongData($con, true, $songcon);
 ?>
 
 
 <div id="songnames">
 <?php
 
-FetchSongNames($con);
+FetchSongNames($songcon);
 $url = SaveGetParams();
 ?>
 </div>
