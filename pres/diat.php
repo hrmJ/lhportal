@@ -96,7 +96,7 @@ $con = new DbCon();
 
 <?php
 
-$messu = new MessuPresentation($_GET["id"], $con);
+$messu = new MessuPresentation($_GET["id"], $con, "Majakkamessu", "majakka");
 $messu->UploadTrackingInfo($con);
 $messu->CreateHtml();
 

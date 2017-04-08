@@ -34,12 +34,6 @@ if (isset($_SESSION['user_id'])){
 #JOS kirjauduttu onnistuneesti
 $con = new DbCon();
 
-    if(isset($_POST["newservices"])){
-        #Jos äsken syötetty uusia messuja:
-        InsertServices($con);
-        echo "<script>window.alert('Uudet messut syötetty onnistuneesti');</script>";
-    }
-
     AddHeader();
     #Jos käyttäjä on päivittänyt jotain tietoja messusta tai messuista, prosessoi dataa:
     UpdateMessudata($con);
@@ -56,7 +50,7 @@ $con = new DbCon();
                 $vastuu = "";
             }
         }
-        $messulist =  CreateMessulist($con, $vastuu);
+        $messulist =  CreateMessulist($con, $vastuu,$url);
         $vastuulist =  True;
     }
     elseif(isset($_GET["messuid"])){
@@ -81,7 +75,7 @@ $con = new DbCon();
         $h3->AddAttribute('class',"editable");
         $h3->AddAttribute('onClick',"AddSaveButton();");
 
-        $messulist =  MessuDetails($_GET["messuid"]);
+        $messulist =  MessuDetails($_GET["messuid"],$url);
         }
 
 ?>
@@ -94,6 +88,8 @@ CreateNavi($vastuulist, $url, False);
 ?>
 
 <article id='maincontainer'>
+
+        <div id="instructiontext">  </div>
 
         <?php
 
@@ -183,6 +179,15 @@ CreateNavi($vastuulist, $url, False);
         var icon = commenticons[idx];
         icon.addEventListener('click',CommentClick,false);
     }
+
+    var instrdiv = document.getElementById("instructiontext");
+    var table = document.getElementById("vastuulisttable");
+    if(table !== undefined){
+        if(table.getElementsByTagName("TR").length<4){
+            instrdiv.appendChild(TagParent("p",[TagWithText("em","Muistathan, että voit lisätä uusia vastuita ja messuja vasemman yläkulman valikosta kohdasta Ylläpito.","")]),"");
+        }
+    }
+
 
 
 </script>
