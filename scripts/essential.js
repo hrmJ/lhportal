@@ -1,5 +1,46 @@
 var songlist_g = null;
+var globalservicelist = null;
 
+function AddNewService(){
+    if (globalservicelist==null){
+        globalservicelist = new DynamicList("addedservices","servicelistparent");
+    }
+    globalservicelist.AddNewPvm();
+}
+
+
+function ShowExtraInfo(){
+     document.getElementById("extrainfospan").style.display = "inline";
+}
+
+
+
+
+function DynamicList(grandpaid,listparentid){
+
+    //Luo lista
+    var grandpa = document.getElementById(grandpaid);
+    var listparent = TagWithText("ul","","");
+    listparent.id = listparentid;
+    grandpa.appendChild(listparent);
+    this.listparent = document.getElementById(listparentid);
+
+    this.AddNewPvm = function(){
+        var pvm = this.AddInput("Päivämäärä","dateinput","pvm_");
+        var name = this.AddInput("Messun aihe","","teema_");
+        var li = TagParent("li",[pvm, name],"");
+        this.listparent.appendChild(li);
+        $(".dateinput").datepicker(); 
+    };
+
+    this.AddInput = function(placeholder,thisclass, thistype){
+        var input = TagWithText("input","",thisclass);
+        input.setAttribute("Placeholder", placeholder);
+        input.setAttribute("name",thistype + (this.listparent.children.length+1));
+        return input;
+    };
+
+}
 
 
 function FixOut(evt, direction){

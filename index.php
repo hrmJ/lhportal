@@ -89,6 +89,7 @@ CreateNavi($vastuulist, $url, False);
 
 <article id='maincontainer'>
 
+
         <div id="instructiontext">  </div>
 
         <?php
@@ -182,13 +183,25 @@ CreateNavi($vastuulist, $url, False);
 
     var instrdiv = document.getElementById("instructiontext");
     var table = document.getElementById("vastuulisttable");
-    if(table !== undefined){
+    if(table !== undefined && table !== null){
         if(table.getElementsByTagName("TR").length<4){
             instrdiv.appendChild(TagParent("p",[TagWithText("em","Muistathan, että voit lisätä uusia vastuita ja messuja vasemman yläkulman valikosta kohdasta Ylläpito.","")]),"");
         }
     }
 
+    <?php
+        //NEWSFEED:
+        if(!isset($h2)){
+    ?>
 
+        $(document).ready(function(){
+            $('<div id="news"><a class="simplelink" href="files/kysely.pptx">Majakkamessun kyselyn tulokset</a></div>').prependTo("#contentlist").addClass("comment_container");
+        });
+
+    <?php
+    }
+
+    ?>
 
 </script>
 

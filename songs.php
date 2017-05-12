@@ -207,7 +207,14 @@ $url = SaveGetParams();
             <p> <input type="button" name="confirmsub" id="confirmsub" onClick="confirmsubmit();" value="Tallenna tiedot">
                 <input type="submit" class="hidden" name="sbut" id="sbut" value="Tallenna tiedot"></p>
 
-            <p><a href='javascript:void(0);' onClick='CreateSlides(<?php echo $pickedid; ?>);'>Luo diat</a></p>
+
+            <div id="slidecreator">
+                <ul>
+                    <li>Valitse tausta</li>
+                    <li>Valitse otsikoiden taustaväri</li>
+                </ul>
+                <p><a href='javascript:void(0);' onClick='CreateSlides(<?php echo $pickedid; ?>);'>Luo diat</a></p>
+            </div>
 
 </article>
 
@@ -252,10 +259,13 @@ $url = SaveGetParams();
 
 
 
-  $( function() {
-    $( ".songeditinput" ).autocomplete({
-      source: songnames
-    });
+  $(document).ready( function() {
+      //Lisää autocomplete-plugi
+        $( ".songeditinput" ).autocomplete({
+          source: songnames
+        });
+      // Dialuontidiv
+        //$("<a>Avaa diojen luontivalikko</a>").wrap()$("#slidecreator").
   } );
 
 </script>

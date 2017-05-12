@@ -12,7 +12,7 @@ function validate_login(){
     return $valid;
 }
 
-function AddHeader($relpath="",$jquery=false){
+function AddHeader($relpath="",$jquery=true){
 
     echo "<!DOCTYPE html>
      <html lang='fi'>

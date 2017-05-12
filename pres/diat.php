@@ -52,11 +52,6 @@ $con = new DbCon();
 
 <section id='leftbanner'>
 
-        <span class='menuleft'>
-            <ul>
-                <li id='homeli' title='Takaisin alkunäkymään'>Majakkamessu</li>
-            </ul>
-        </span>
         <span class='menuright'>
             <ul>
                 <li><a href="javascript:void(0);" OnClick="OpenFunctionMenu();" id="openfunctlink">Toiminnot</a></li>

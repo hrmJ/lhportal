@@ -2,6 +2,7 @@ body{
     font-family:'Quicksand',cursive;
     background:white;
     background: -webkit-radial-gradient(-200% 40%, closest-corner, #FFF002, rgb(218, 218, 218));
+    background-attachment: fixed;
 }
 
 h2{
@@ -15,6 +16,7 @@ h3{
     /* text-shadow: 1px 1px 1px #dadada; */
     text-shadow: black;
 }
+
 
 #selectcontainer span{
     margin-right:3em;
@@ -204,6 +206,7 @@ select{
 
 .rightcontent{
 }
+
 
 #contentlist, #songs{
     max-width: 24em;
