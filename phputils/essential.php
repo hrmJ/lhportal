@@ -20,7 +20,7 @@ function AddHeader($relpath="",$jquery=false){
       <link href='https://fonts.googleapis.com/css?family=Nothing+You+Could+Do|Quicksand' rel='stylesheet'> 
      <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
      <meta name='viewport' content='width=device-width, initial-scale=1'>
-     <link rel='stylesheet' href='$relpath" . "styles/updated.css?v='" . time() .">
+     <link rel='stylesheet' href='$relpath" . "styles/updated.css?v=ljd'" . time() .">
      <link rel='stylesheet' href='$relpath" . "font-awesome-4.6.3/css/font-awesome.min.css'>
      <script src='$relpath" . "scripts/essential.js?v='" . time() ."></script>";
      if($jquery==true){
@@ -59,6 +59,7 @@ function CreateNavi($vastuulist, $url, $songmenu=False){
     $li = new DomEl('li','Majakkaportaali',$ul);
     $li->AddAttribute('id','homeli');
     $li->AddAttribute('title','Takaisin alkunäkymään');
+    $li->AddAttribute('OnClick','window.location="index.php";');
     if($songmenu==True){
         $li = new DomEl('li','Selaa lauluja >',$ul);
         $li->AddAttribute('id','laululista_launcher');
@@ -74,6 +75,18 @@ function CreateNavi($vastuulist, $url, $songmenu=False){
     if($vastuulist == True){
         CreateVastuuList($li);
     }
+
+    $li = new DomEl('li','',$ul);
+    $li->AddAttribute("id","instrli");
+    $li->AddAttribute("title","Lue ohjeet");
+    $a = new DomEl('a','',$li);
+    $a->AddAttribute("href","ohjeet.html");
+    $a->AddAttribute("target","_blank");
+    $a->AddAttribute("id","ohjelinka");
+    $icon = new DomEl('i','',$a);
+    $icon->AddAttribute('class','fa fa-question-circle');
+    $icon->AddAttribute('karia-hidden','true');
+    $icon->AddAttribute("id","ohjelink");
 
         #Tallenna vielä tieto kausista
         $input1 = new DomEl('input','',$form);
@@ -110,7 +123,7 @@ function AddHidden($parent, $name, $value){
     return $input;
 }
 
-function AddSection($submit=False, $sectionclass='',$url="index.php"){
+function AddSection($submit=False, $sectionclass='',$url="index.php", $tableid=""){
     $url = str_replace("&","&amp;",$url);
     $section = new DomEl("section","");
     $section->AddAttribute("id","contentlist");
@@ -123,6 +136,7 @@ function AddSection($submit=False, $sectionclass='',$url="index.php"){
     $form->AddAttribute("action",$url);
 
     $table = new HtmlTable($form);
+    $table->element->AddAttribute("id",$tableid);
 
     if($submit==True){
         $submit = new DomEl("input","",$form);
@@ -162,7 +176,7 @@ function CreateMessulist($con, $vastuu='',$url=''){
     if(!empty($vastuu)){
         $submit=True;
     }
-    $table = AddSection($submit,"rightcontent",$url);
+    $table = AddSection($submit,"rightcontent",$url,"messulisttable");
 
     $months = Array();
     $years = Array();
@@ -254,7 +268,7 @@ function CreateVastuuList($parent){
 function MessuDetails($id, $url=''){
     $con = new DbCon();
     $result = $con->select("vastuut",Array("vastuu","vastuullinen","id"),Array(Array("messu_id","=",$id)))->fetchAll();
-    $table = AddSection(True,"centercontent",$url);
+    $table = AddSection(True,"centercontent",$url,"vastuulisttable");
 
     if(sizeof($result)==0){
         $msg = "<p>Et ole vielä määritellyt yhtään vastuutehtävää. Voit lisätä 
@@ -491,14 +505,17 @@ function ListJobs($con){
 function UpdateMessudata($con){
     //Jos käyttäjä on päivittänyt jotain tietoja messusta tai messuista, prosessoi dataa:
     if(isset($_POST)){
+
             if (array_key_exists("messu_id",$_POST)){
                 #1. Päivitykset messukohtaisesti, kaikki roolit mahdollisia
                     $updatables = ListJobs($con);
                     foreach ($updatables as $vastuu){
-                        if(array_key_exists($vastuu,$_POST)){
-                            if (!empty($_POST[$vastuu])){
+                        #muuta välit alaviivoiksi (?)
+                        $vastuukey = str_replace(" ","_",$vastuu);
+                        if(array_key_exists($vastuukey,$_POST)){
+                            if (!empty($_POST[$vastuukey])){
                                 $con->update("vastuut",
-                                    Array("vastuullinen" =>$_POST[$vastuu]),
+                                    Array("vastuullinen" =>$_POST[$vastuukey]),
                                     Array(Array("messu_id","=",intval($_POST["messu_id"])), Array("vastuu","=",$vastuu)));
                             }
                         }
@@ -825,28 +842,32 @@ function FetchTechInfo($pickedid, $con, $infostring){
     }
 }
 
-function UpdateSongData($con){
-    #Syötä laulut messuun id:n perusteella
+function UpdateSongData($con, $simpleupdate=false,$songcon=false){
+    if($songcon==false)
+        $songcon = $con;
+
     if(isset($_POST["pickedid"])){
         #Luo olio (poistaa kaikki vanhat laulut tällä id:llä)
         $inserter = new SongInserter(intval($_POST["pickedid"]), $con);
         #
-        $inserter->InsertSong("Alkulaulu",$_POST["Alkulaulu"]);
-        $inserter->InsertSong("Päivän laulu",$_POST["Päivän_laulu"]);
-        $inserter->InsertSong("Loppulaulu",$_POST["Loppulaulu"]);
-        if (isset($_POST["new_Pyhä-hymni"])){
-            $con->insert("liturgiset", Array("songtype"=>"Pyhä-hymni","songname"=>$_POST["new_Pyhä-hymni"], "name"=>$_POST["new_Pyhä-hymni"]));
-            $_POST["pyhä-hymni"] = $_POST["new_Pyhä-hymni"];
+        if(!$simpleupdate){
+            $inserter->InsertSong("Alkulaulu",$_POST["Alkulaulu"]);
+            $inserter->InsertSong("Päivän laulu",$_POST["Päivän_laulu"]);
+            $inserter->InsertSong("Loppulaulu",$_POST["Loppulaulu"]);
+            if (isset($_POST["new_Pyhä-hymni"])){
+                $con->insert("liturgiset", Array("songtype"=>"Pyhä-hymni","songname"=>$_POST["new_Pyhä-hymni"], "name"=>$_POST["new_Pyhä-hymni"]));
+                $_POST["pyhä-hymni"] = $_POST["new_Pyhä-hymni"];
+            }
+            if (isset($_POST["new_Jumalan_karitsa"])){
+                $con->insert("liturgiset", Array("songtype"=>"Jumalan karitsa","songname"=>$_POST["new_Jumalan_karitsa"], "name"=>$_POST["new_Jumalan_karitsa"]));
+                $_POST["jumalan_karitsa"] = $_POST["new_Jumalan_karitsa"];
+            }
+            $inserter->InsertSong("Jumalan karitsa",$_POST["jumalan_karitsa"]);
+            $inserter->InsertSong("Pyhä-hymni",$_POST["pyhä-hymni"]);
+            #Tiedot tekniikalle
+            #TODO: jos info-kenttään jotain mutakin...
+            $con->update("messut", Array("info"=>$_POST["techinfo"]),Array(Array("id","=",intval($_POST["pickedid"]))));
         }
-        if (isset($_POST["new_Jumalan_karitsa"])){
-            $con->insert("liturgiset", Array("songtype"=>"Jumalan karitsa","songname"=>$_POST["new_Jumalan_karitsa"], "name"=>$_POST["new_Jumalan_karitsa"]));
-            $_POST["jumalan_karitsa"] = $_POST["new_Jumalan_karitsa"];
-        }
-        $inserter->InsertSong("Jumalan karitsa",$_POST["jumalan_karitsa"]);
-        $inserter->InsertSong("Pyhä-hymni",$_POST["pyhä-hymni"]);
-        #Tiedot tekniikalle
-        #TODO: jos info-kenttään jotain mutakin...
-        $con->update("messut", Array("info"=>$_POST["techinfo"]),Array(Array("id","=",intval($_POST["pickedid"]))));
 
         foreach($_POST as $entry=>$val){
             if(strpos($entry,"Ylistyslaulu") !== false){
@@ -854,6 +875,9 @@ function UpdateSongData($con){
             }
             if(strpos($entry,"Ehtoollislaulu") !== false){
                 $inserter->InsertSong("Ehtoollislaulu",$val);
+            }
+            if(strpos($entry,"Laulu") !== false){
+                $inserter->InsertSong("Laulu",$val);
             }
         }
 
@@ -880,12 +904,12 @@ function UpdateSongData($con){
 
             if($insert==True){
                 //Ensin metatiedot
-                $con->insert("songs", Array("title"=>$title,"filename"=>$title, "san"=>$san, "sav"=>$sav,"added"=>$date));
+                $songcon->insert("songs", Array("title"=>$title,"filename"=>$title, "san"=>$san, "sav"=>$sav,"added"=>$date));
                 //Hae uuden biisin id, jos useampia tällä nimellä, ota viimeisin
-                $idrows = $con->select("songs",Array("id"),Array(Array("title","=",$title)),"","ORDER BY ID DESC")->fetchAll();
+                $idrows = $songcon->select("songs",Array("id"),Array(Array("title","=",$title)),"","ORDER BY ID DESC")->fetchAll();
                 //Syötä säkeistöt
                 foreach($verses as $verse){
-                    $con->insert("verses", Array("content"=>$verse,"song_id"=>intval($idrows[0]["id"])));
+                    $songcon->insert("verses", Array("content"=>$verse,"song_id"=>intval($idrows[0]["id"])));
                 }
                 if(!isset($_SESSION['insertedsongs'])){
                     $_SESSION['insertedsongs'][] = $title;
@@ -897,14 +921,14 @@ function UpdateSongData($con){
     if (isset($_POST["edited_existing"])){
 
         #Poista vanhat säkeistöt kokonaan
-        $con->query = $con->connection->prepare("DELETE FROM verses WHERE song_id = :sid");
-        $con->query->bindParam(':sid', intval($_POST["editedsongid"]), PDO::PARAM_STR);
-        $con->Run();
+        $songcon->query = $songcon->connection->prepare("DELETE FROM verses WHERE song_id = :sid");
+        $songcon->query->bindParam(':sid', intval($_POST["editedsongid"]), PDO::PARAM_STR);
+        $songcon->Run();
 
         #syötä päivitetyt säkeistöt
         $verses = preg_split("/(\\r|\\n){3,}/", $_POST['edited_existing_text']);
         foreach($verses as $verse){
-                $con->insert("verses", Array("content"=>$verse,"song_id"=>intval($_POST["editedsongid"])));
+                $songcon->insert("verses", Array("content"=>$verse,"song_id"=>intval($_POST["editedsongid"])));
         }
     }
     if (isset($_POST["removed_type"])){
@@ -949,20 +973,27 @@ class VerseInserter{
 
 class MessuPresentation{
 
-    public function __construct ($messuid, $con) {
-            $this->singlesongs = Array();
+    public function __construct ($messuid, $con, $messuheader, $type) {
             $this->id = $messuid;
-            $yksittaiset = Array("Alkulaulu","Päivän laulu","Loppulaulu");
-            foreach($yksittaiset as $tyyppi){
-                $this->singlesongs[$tyyppi] = new SongDom($tyyppi, $con->select("laulut",Array("nimi"),Array(Array("messu_id","=",$messuid),Array("tyyppi","=",$tyyppi)),'','')->fetchColumn(0));
-            }
-            $this->wssongs  = $this->GetMultiSongs($con,"Ylistyslaulu");
-            $this->comsongs  = $this->GetMultiSongs($con,"Ehtoollislaulu");
-            $this->pyha = new SongDom("Pyhä-hymni", $con->select("laulut",Array("nimi"),Array(Array("messu_id","=",$messuid),Array("tyyppi","=","Pyhä-hymni")),'','')->fetchColumn(0));
-            $this->jk = new SongDom("Jumalan karitsa", $con->select("laulut",Array("nimi"),Array(Array("messu_id","=",$messuid),Array("tyyppi","=","Jumalan karitsa")),'','')->fetchColumn(0));
-
+            $this->messuheader = $messuheader;
+            $this->messutype = $type;
             $this->vastuut = $con->select("vastuut",Array('vastuu','vastuullinen'), Array(Array("messu_id","=",$messuid)),"","")->fetchAll();
             $this->messutitle = $con->select("messut",Array('teema'), Array(Array("id","=",$messuid)),'','')->fetchColumn(0);
+
+            if($type=="parkki")
+                $this->songs  = $this->GetMultiSongs($con,"Laulu");
+            else{
+                $this->singlesongs = Array();
+                $yksittaiset = Array("Alkulaulu","Päivän laulu","Loppulaulu");
+                foreach($yksittaiset as $tyyppi){
+                    $this->singlesongs[$tyyppi] = new SongDom($tyyppi, $con->select("laulut",Array("nimi"),Array(Array("messu_id","=",$messuid),Array("tyyppi","=",$tyyppi)),'','')->fetchColumn(0));
+                }
+                $this->wssongs  = $this->GetMultiSongs($con,"Ylistyslaulu");
+                $this->comsongs  = $this->GetMultiSongs($con,"Ehtoollislaulu");
+                $this->pyha = new SongDom("Pyhä-hymni", $con->select("laulut",Array("nimi"),Array(Array("messu_id","=",$messuid),Array("tyyppi","=","Pyhä-hymni")),'','')->fetchColumn(0));
+                $this->jk = new SongDom("Jumalan karitsa", $con->select("laulut",Array("nimi"),Array(Array("messu_id","=",$messuid),Array("tyyppi","=","Jumalan karitsa")),'','')->fetchColumn(0));
+
+            }
     }
 
 
@@ -991,20 +1022,27 @@ class MessuPresentation{
     public function CreateHtml($onbackground=false){
         $struct_div = new DomEl('div','');
         $struct_div->AddAttribute('id','structure');
-        $struct_div->AddChild($this->singlesongs["Alkulaulu"]);
-        $struct_div->AddChild($this->singlesongs["Päivän laulu"]);
-        foreach($this->wssongs as $song){
-            $struct_div->AddChild($song);
+        if($this->messutype=="parkki"){
+            foreach($this->songs as $song){
+                $struct_div->AddChild($song);
+            }
         }
-        $struct_div->AddChild($this->pyha);
-        $struct_div->AddChild($this->jk);
-        foreach($this->comsongs as $song){
-            $struct_div->AddChild($song);
-        }
-        $struct_div->AddChild($this->singlesongs["Loppulaulu"]);
+        else{
+            $struct_div->AddChild($this->singlesongs["Alkulaulu"]);
+            $struct_div->AddChild($this->singlesongs["Päivän laulu"]);
+            foreach($this->wssongs as $song){
+                $struct_div->AddChild($song);
+            }
+            $struct_div->AddChild($this->pyha);
+            $struct_div->AddChild($this->jk);
+            foreach($this->comsongs as $song){
+                $struct_div->AddChild($song);
+            }
+            $struct_div->AddChild($this->singlesongs["Loppulaulu"]);
 
 
-        $struct_div->AddChild($this->singlesongs["Loppulaulu"]);
+            $struct_div->AddChild($this->singlesongs["Loppulaulu"]);
+        }
 
         echo $struct_div->Show();
 
@@ -1024,30 +1062,39 @@ class MessuPresentation{
         }
         echo $resp_div->Show();
 
-        #evankeliumi evl:n sivuilta:
-        $address = ParseBibleAddress($address);
-        $booknames = Array('Matt', 'Mark', 'Luuk', 'Joh', 'Apt', 'Room', '1Kor', '2Kor', 'Gal', 'Ef', 'Fil', 'Kol', '1Tess', '2Tess', '1Tim', '2Tim', 'Tit', 'Filem', 'Hepr', 'Jaak', '1Piet', '2Piet', '1Joh', '2Joh', '3Joh', 'Juud', 'Ilm','1Moos', '2Moos', '3Moos', '4Moos', '5Moos', 'Joos', 'Tuom', 'Ruut', '1Sam', '2Sam', '1Kun', '2Kun', '1Aik', '2Aik', 'Esra', 'Neh', 'Est', 'Job', 'Ps', 'Sananl', 'Saarn', 'Laull', 'Jes', 'Jer', 'Valit', 'Hes', 'Dan', 'Hoos', 'Joel', 'Aam', 'Ob', 'Joona', 'Miika', 'Nah', 'Hab', 'Sef', 'Hagg', 'Sak', 'Mal');
-        //if(!in_array($address["book"],$booknames)){
-        //    $msg = "<p style='width:40em;'>Raamattutekstin hakeminen ei onnistu, koska ohjelma ei tunnista kirjaa <strong>". $address["book"] . "</strong>. Hyväksytyt kirjojen lyhenteet ovat: <strong>" . implode($booknames,", ") . "</strong>. Käy korjaamassa Raamattuviittaus portaalin messukohtaisessa näkymässä ja päivitä tämä sivu.</p>";
-        //    die($msg);
-        //};
-        
-        $gospelverses = FetchBibleContent($address["book"] . "." . $address["chapter"], $address["verses"], $onbackground);
+        if($this->messutype!="parkki"){
+            #evankeliumi evl:n sivuilta:
+            $address = ParseBibleAddress($address);
+            $booknames = Array('Matt', 'Mark', 'Luuk', 'Joh', 'Apt', 'Room', '1Kor', '2Kor', 'Gal', 'Ef', 'Fil', 'Kol', '1Tess', '2Tess', '1Tim', '2Tim', 'Tit', 'Filem', 'Hepr', 'Jaak', '1Piet', '2Piet', '1Joh', '2Joh', '3Joh', 'Juud', 'Ilm','1Moos', '2Moos', '3Moos', '4Moos', '5Moos', 'Joos', 'Tuom', 'Ruut', '1Sam', '2Sam', '1Kun', '2Kun', '1Aik', '2Aik', 'Esra', 'Neh', 'Est', 'Job', 'Ps', 'Sananl', 'Saarn', 'Laull', 'Jes', 'Jer', 'Valit', 'Hes', 'Dan', 'Hoos', 'Joel', 'Aam', 'Ob', 'Joona', 'Miika', 'Nah', 'Hab', 'Sef', 'Hagg', 'Sak', 'Mal');
+            //if(!in_array($address["book"],$booknames)){
+            //    $msg = "<p style='width:40em;'>Raamattutekstin hakeminen ei onnistu, koska ohjelma ei tunnista kirjaa <strong>". $address["book"] . "</strong>. Hyväksytyt kirjojen lyhenteet ovat: <strong>" . implode($booknames,", ") . "</strong>. Käy korjaamassa Raamattuviittaus portaalin messukohtaisessa näkymässä ja päivitä tämä sivu.</p>";
+            //    die($msg);
+            //};
+            
+            $gospelverses = FetchBibleContent($address["book"] . "." . $address["chapter"], $address["verses"], $onbackground);
 
-        if (sizeof($gospelverses)>1)
-            $gospeltext =  implode($gospelverses, "¤");
-        else
-            $gospeltext =  ($gospelverses);
+            if (sizeof($gospelverses)>1)
+                $gospeltext =  implode($gospelverses, "¤");
+            else
+                $gospeltext =  ($gospelverses);
 
-        $gospel = new DomEl('p',$gospeltext);
-        $gospel->AddAttribute('id','evankeliumi');
-        $gospel->AddAttribute('address', $address["book"] . "." . $address["chapter"] . ": " . $address["verses"]);
-        $gospel->AddAttribute('role','evankeliumi');
+            $gospel = new DomEl('p',$gospeltext);
+            $gospel->AddAttribute('id','evankeliumi');
+            $gospel->AddAttribute('address', $address["book"] . "." . $address["chapter"] . ": " . $address["verses"]);
+            $gospel->AddAttribute('role','evankeliumi');
+            echo $gospel->Show();
+        }
 
         $title = new DomEl('p',$this->messutitle);
         $title->AddAttribute('id','messutitle');
-        echo $gospel->Show();
+        $header = new DomEl('p',$this->messuheader);
+        $header->AddAttribute('id','messuheader');
+        $type = new DomEl('p',$this->messutype);
+        $type->AddAttribute('id','messutype');
+
         echo $title->Show();
+        echo $type->Show();
+        echo $header->Show();
     }
 
 
