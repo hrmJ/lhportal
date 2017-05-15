@@ -7,8 +7,38 @@ Projektin tarkoitus tehdä seurakuntavastuiden jakamisesta ja viestinnästä hel
 Portaalin data sijaitsee MySQL-tietokannassa, käyttöliittymä on toteutettu
 simppeleillä web-tekniikoilla (css, html, php, js).
 
-# Asennus
+# Kehitysympäristön pystyttäminen
 
+Tässä perustiedot siitä, miten projektin saa käyntiin.
+
+##  Testityökalut
+
+Perusideologiana projektin kehittämisessä on testata koodia mahdollisimman tehokkaasti.
+Tämän toteuttamiseksi voidaan käyttää seuraavia työkaluja.
+
+### Node js
+
+Asennus esim. Ubuntussa:
+
+    apt-get install nodejs npm node
+
+Node pitää mahdollisesti päivittää uusimpaan versioon:
+
+    sudo npm cache clean -f
+    sudo npm install -g n
+    sudo n stable
+
+### Nightmare
+
+Selainpohjainen testaus on toteutettu Nightmare + mocha + chai -yhdistelmällä
+
+    npm install nightmare
+    npm install mocha
+
+
+## Testaaminen
+
+Aja `npm test` projektin juurikansiossa.
 
 
 ## SQL-taulujen luonti
