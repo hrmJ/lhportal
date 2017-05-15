@@ -7,7 +7,8 @@ describe('Basic test suite', function() {
 
     before(function() {
         console.log("Aloitetaan testit. Kirjaudutaan sisään...");
-        this.rootaddress = "lhportal"; // vaihda tarpeen mukaan
+        //this.rootaddress = "lhportal"; // vaihda tarpeen mukaan
+        this.rootaddress = "majakkaportaali"; // vaihda tarpeen mukaan
         this.nightmare = Nightmare({show:false});
         //this.nightmare = Nightmare({show:true});
     });
@@ -18,11 +19,12 @@ describe('Basic test suite', function() {
       // ...
     });
 
-    describe('Test login succeeded', function() {
+    describe('Try logging in', function() {
       it('User sees the header in the top bar as a sign of a succesful login', function(done) {
         this.timeout('10s');
         this.nightmare
             .goto('http://localhost/' + this.rootaddress + '/index.php')
+            .exists("#username")
             .type('#username','testusr')
             .type('#password','testpw')
             .click('#loginbutton')
@@ -33,23 +35,24 @@ describe('Basic test suite', function() {
             .then(function(header) {
                 expect(header).to.equal('Majakkaportaali');
                 done();
-            })
+            }).catch(done);
       });
     });
 
     describe('Newsfeed tests', function() {
-          it('Mobile user sees the newsfeed on top', done => function(done) {
+        describe('', function() {
+          it('The desktop user sees the newsfeed', function(done) {
+            this.timeout('2s');
             this.nightmare
                 .goto('http://localhost/' + this.rootaddress + '/index.php')
-                .evaluate(function () {
-                    return document.querySelector('#homeli');
-                })
-                .then(function(header) {
-                    console.log(header);
+                .exists("#newsfeed")
+                .then(function (elementExists) {
+                    assert.isOk(elementExists,"not ok");
                     done();
                 })
+                .catch(done);
           });
-
+        });
     });
 
     describe.skip('Tests for inserting songs', function() {
