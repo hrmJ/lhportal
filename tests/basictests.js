@@ -1,6 +1,5 @@
 var Nightmare = require('nightmare');
 var expect = require('chai').expect; // jshint ignore:line
-var rootaddress = "lhportal"; // vaihda tarpeen mukaan
 
 describe('Basic test suite', function() {
 
@@ -8,6 +7,7 @@ describe('Basic test suite', function() {
         console.log("Aloitetaan testit. Kirjaudutaan sisään...");
         this.timeout('30s');
         this.nightmare = Nightmare({show:false});
+        this.rootaddress = "lhportal"; // vaihda tarpeen mukaan
     });
 
     after(function() {
