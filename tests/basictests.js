@@ -4,6 +4,7 @@ var expect = require('chai').expect; // jshint ignore:line
 
 describe('Test login page opens', function() {
   it('User sees the title and the version number', function(done) {
+    this.timeout('30s')
     var nightmare = Nightmare({show:false})
     nightmare
       .goto('http://localhost/majakkaportaali/index.php')
