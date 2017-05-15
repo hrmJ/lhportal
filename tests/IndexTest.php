@@ -9,6 +9,9 @@ use PHPUnit\Framework\TestCase;
  * @covers ShowNewsFeed
  */
 
+
+$con = new DbCon();
+
 final class NewsfeedTest extends TestCase
 {
     public function testSimpleTest()

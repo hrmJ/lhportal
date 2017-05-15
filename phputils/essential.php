@@ -1364,6 +1364,11 @@ class NewsFeed
         $this->section->AddAttribute('id','newsfeed');
     }
 
+    public function FetchNewsContent()
+    {
+
+    }
+
     public function output()
     {
         return $this->section->show();
