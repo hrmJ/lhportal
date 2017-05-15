@@ -104,6 +104,10 @@ function CreateNavi($vastuulist, $url, $songmenu=False){
     echo $section->Show();
 }
 
+function ShowNewsFeed(){
+    $thisfeed = new NewsFeed();
+    return $thisfeed->output();
+}
 
 function AttachEditable($parent, $name){
     $input = new DomEl('input','',$parent);
@@ -1349,6 +1353,21 @@ function LoadExistingServices($con){
     }
     return "hidden";
 
+}
+
+class NewsFeed
+{
+
+    public function __construct()
+    {
+        $this->section = new DomEl('section','');
+        $this->section->AddAttribute('id','newsfeed');
+    }
+
+    public function output()
+    {
+        return $this->section->show();
+    }
 }
 
 ?>

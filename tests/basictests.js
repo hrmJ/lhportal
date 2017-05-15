@@ -47,7 +47,7 @@ describe('Basic test suite', function() {
                 .goto('http://localhost/' + this.rootaddress + '/index.php')
                 .exists("#newsfeed")
                 .then(function (elementExists) {
-                    assert.isOk(elementExists,"not ok");
+                    assert.isOk(elementExists,"Cannot find the newsfeed element!");
                     done();
                 })
                 .catch(done);

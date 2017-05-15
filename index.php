@@ -98,6 +98,9 @@ CreateNavi($vastuulist, $url, False);
             echo $h2->Show();
             echo $themeform->Show();
         }
+        else{
+            echo ShowNewsFeed();
+        }
 
         echo $messulist; 
 
@@ -189,17 +192,6 @@ CreateNavi($vastuulist, $url, False);
         }
     }
 
-    <?php
-        //NEWSFEED:
-        if(!isset($h2)){
-    ?>
-
-        $(document).ready(function(){
-            $('<div id="news"><a class="simplelink" href="files/kysely.pptx">Majakkamessun kyselyn tulokset</a></div>').prependTo("#contentlist").addClass("comment_container");
-        });
-
-    <?php
-    }
 
     ?>
 
