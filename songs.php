@@ -96,7 +96,7 @@ $url = SaveGetParams();
 </div>
 
 <article class='widetables brightlink' id='maincontainer'>
-        <h2>Majakkamessun laulut</h2>
+        <h2 id="mainheader">Majakkamessun laulut</h2>
 
             <?php if(!isset($_POST["sbut"])){ ?>
             <div class="instr">Moi! Niin kuin huomaat, messulaulujen ilmoittaminen on vähän muuttunut, mutta älä pelästy. Luulen ihan

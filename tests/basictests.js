@@ -7,11 +7,12 @@ describe('Basic test suite', function() {
     before(function() {
         console.log("Aloitetaan testit. Kirjaudutaan sisään...");
         this.rootaddress = "lhportal"; // vaihda tarpeen mukaan
-        this.nightmare = Nightmare({show:false});
+        this.nightmare = Nightmare({show:true});
     });
 
     after(function() {
-      console.log("Lopetetaan...");
+        this.nightmare.end();
+        console.log("Lopetetaan...");
       // ...
     });
 
@@ -27,9 +28,26 @@ describe('Basic test suite', function() {
             .evaluate(function () {
                 return document.querySelector('#homeli').textContent;
             })
-            .end()
             .then(function(header) {
                 expect(header).to.equal('Majakkaportaali');
+                done();
+            })
+      });
+
+    });
+
+    describe('Tests for inserting songs', function() {
+      it('Users follows the link in the top menu and ends up at songs.php', function(done) {
+        this.timeout('10s');
+        this.nightmare
+            .click('#homeli')
+            .click('#songphplink')
+            .wait(4000)
+            .evaluate(function () {
+                return document.querySelector('#mainheader').textContent;
+            })
+            .then(function(header) {
+                expect(header).to.equal('Majakkamessun laulut');
                 done();
             })
       });
