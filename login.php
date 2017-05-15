@@ -28,7 +28,7 @@ $msg = "Kirjaudu sisään";
             <input type="PASSWORD"" id="password" name="password" value="" maxlength="20" />
         </p>
         <p>
-            <input type="submit" value="Kirjaudu" />
+            <input type="submit" id="loginbutton" value="Kirjaudu" />
         </p>
     <?php
     if(isset($fromsongs)){

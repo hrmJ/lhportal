@@ -45,6 +45,10 @@ Aja `npm test` projektin juurikansiossa.
 
 ks. sql/taulut.sql
 
+## Testikäyttäjän lisääminen
+
+auth/create_user.php
+
 # HUOM!
 
 Tällä hetkellä diojen luonti palvelimella on siirtymävaiheessa, niin että 
