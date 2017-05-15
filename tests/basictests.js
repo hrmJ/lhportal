@@ -1,5 +1,6 @@
 var Nightmare = require('nightmare');
 var expect = require('chai').expect; // jshint ignore:line
+var assert = require('chai').assert; 
 
 
 describe('Basic test suite', function() {
@@ -7,7 +8,8 @@ describe('Basic test suite', function() {
     before(function() {
         console.log("Aloitetaan testit. Kirjaudutaan sisään...");
         this.rootaddress = "lhportal"; // vaihda tarpeen mukaan
-        this.nightmare = Nightmare({show:true});
+        this.nightmare = Nightmare({show:false});
+        //this.nightmare = Nightmare({show:true});
     });
 
     after(function() {
@@ -33,10 +35,24 @@ describe('Basic test suite', function() {
                 done();
             })
       });
+    });
+
+    describe('Newsfeed tests', function() {
+          it('Mobile user sees the newsfeed on top', done => function(done) {
+            this.nightmare
+                .goto('http://localhost/' + this.rootaddress + '/index.php')
+                .evaluate(function () {
+                    return document.querySelector('#homeli');
+                })
+                .then(function(header) {
+                    console.log(header);
+                    done();
+                })
+          });
 
     });
 
-    describe('Tests for inserting songs', function() {
+    describe.skip('Tests for inserting songs', function() {
       it('Users follows the link in the top menu and ends up at songs.php', function(done) {
         this.timeout('10s');
         this.nightmare
