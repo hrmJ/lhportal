@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns="http://xml.phpdox.net/src" full="DbCon" namespace="" name="DbCon" abstract="false" final="false" start="3" end="146">
+  <file path="/home/juho/Projects/lhportal/src/phputils" file="dbutils.php" realpath="/home/juho/Projects/lhportal/src/phputils/dbutils.php" size="5530" time="2017-04-08T07:46:37+00:00" unixtime="1491637597" sha1="163a698d40909a14b014eefb4f938e7386c5127c" relative="phputils/dbutils.php"/>
+  <constructor name="__construct" start="5" end="7" abstract="false" final="false" static="false" visibility="public">
+    <parameter name="dbname" byreference="false" type="string" default="&quot;majakka_auth&quot;"/>
+  </constructor>
+  <method name="Connect" start="9" end="17" abstract="false" final="false" static="false" visibility="public">
+    <parameter name="dbname" byreference="false" type="{unknown}"/>
+    <inline>
+      <comment value="set the error mode to exceptions" line="14"/>
+      <comment value="mysql_set_charset('utf8', $this-&gt;connection);" line="16"/>
+    </inline>
+  </method>
+  <method name="SelectUser" start="19" end="25" abstract="false" final="false" static="false" visibility="public">
+    <parameter name="username" byreference="false" type="{unknown}"/>
+    <parameter name="password" byreference="false" type="{unknown}"/>
+    <inline>
+      <comment value="encrypt" line="21"/>
+    </inline>
+  </method>
+  <method name="CheckLogin" start="27" end="32" abstract="false" final="false" static="false" visibility="public">
+    <parameter name="userid" byreference="false" type="{unknown}"/>
+  </method>
+  <method name="insert" start="34" end="54" abstract="false" final="false" static="false" visibility="public">
+    <parameter name="tablename" byreference="false" type="{unknown}"/>
+    <parameter name="valuedict" byreference="false" type="{unknown}"/>
+    <inline>
+      <comment value="Build the query strings" line="37"/>
+    </inline>
+  </method>
+  <method name="update" start="56" end="75" abstract="false" final="false" static="false" visibility="public">
+    <parameter name="tablename" byreference="false" type="{unknown}"/>
+    <parameter name="valuedict" byreference="false" type="{unknown}"/>
+    <parameter name="wheredict" byreference="false" type="{unknown}"/>
+  </method>
+  <method name="select" start="77" end="87" abstract="false" final="false" static="false" visibility="public">
+    <parameter name="tablename" byreference="false" type="{unknown}"/>
+    <parameter name="columns" byreference="false" type="{unknown}"/>
+    <parameter name="wheredict" byreference="false" type="array" default=""/>
+    <parameter name="distinct" byreference="false" type="string" default="''"/>
+    <parameter name="orderby" byreference="false" type="string" default="''"/>
+    <inline>
+      <comment value="$columns: array, $wheredict: array of arrays, with [0] as column name, [1] as =, not, LIke etc, [2] as the value" line="78"/>
+      <comment value="Build the WHERE clause, if present" line="80"/>
+    </inline>
+  </method>
+  <method name="maxval" start="89" end="94" abstract="false" final="false" static="false" visibility="public">
+    <parameter name="tablename" byreference="false" type="{unknown}"/>
+    <parameter name="colname" byreference="false" type="{unknown}"/>
+  </method>
+  <method name="Run" start="96" end="103" abstract="false" final="false" static="false" visibility="public"/>
+  <method name="BuildwhereClause" start="105" end="131" abstract="false" final="false" static="false" visibility="public">
+    <parameter name="wheredict" byreference="false" type="{unknown}"/>
+  </method>
+  <method name="BindWhereClause" start="133" end="144" abstract="false" final="false" static="false" visibility="public"/>
+</class>

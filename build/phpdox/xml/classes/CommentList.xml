@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns="http://xml.phpdox.net/src" full="CommentList" namespace="" name="CommentList" abstract="false" final="false" start="90" end="98">
+  <file path="/home/juho/Projects/lhportal/src/phputils" file="htmlutils.php" realpath="/home/juho/Projects/lhportal/src/phputils/htmlutils.php" size="4576" time="2017-05-12T18:35:54+00:00" unixtime="1494614154" sha1="8edd5b7429d3a84407da54e989d319ccb232aad1" relative="phputils/htmlutils.php"/>
+  <constructor name="__construct" start="91" end="97" abstract="false" final="false" static="false" visibility="public">
+    <parameter name="par" byreference="false" type="{unknown}"/>
+    <parameter name="comments" byreference="false" type="{unknown}"/>
+    <parameter name="messuid" byreference="false" type="{unknown}"/>
+  </constructor>
+</class>

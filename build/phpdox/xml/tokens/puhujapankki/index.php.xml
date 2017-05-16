@@ -1,0 +1,1032 @@
+<?xml version="1.0"?>
+<source xmlns="http://xml.phpdox.net/token">
+  <file xmlns="http://xml.phpdox.net/src" path="/home/juho/Projects/lhportal/src/puhujapankki" file="index.php" realpath="/home/juho/Projects/lhportal/src/puhujapankki/index.php" size="7017" time="2017-02-14T19:14:11+00:00" unixtime="1487099651" sha1="d48292ea3c08615c8193b89a7b8cb4addfb9abe0" relative="puhujapankki/index.php"/>
+  <line no="1">
+    <token name="T_OPEN_TAG">&lt;?php</token>
+  </line>
+  <line no="2">
+    <token name="T_VARIABLE">$relpath</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_PHPDOX_EQUAL">=</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_CONSTANT_ENCAPSED_STRING">"../"</token>
+    <token name="T_PHPDOX_SEMICOLON">;</token>
+  </line>
+  <line no="3">
+    <token name="T_STRING">session_start</token>
+    <token name="T_PHPDOX_OPEN_BRACKET">(</token>
+    <token name="T_PHPDOX_CLOSE_BRACKET">)</token>
+    <token name="T_PHPDOX_SEMICOLON">;</token>
+  </line>
+  <line no="4">
+    <token name="T_IF">if</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_PHPDOX_OPEN_BRACKET">(</token>
+    <token name="T_ISSET">isset</token>
+    <token name="T_PHPDOX_OPEN_BRACKET">(</token>
+    <token name="T_VARIABLE">$_GET</token>
+    <token name="T_PHPDOX_OPEN_SQUARE">[</token>
+    <token name="T_CONSTANT_ENCAPSED_STRING">"logout"</token>
+    <token name="T_PHPDOX_CLOSE_SQUARE">]</token>
+    <token name="T_PHPDOX_CLOSE_BRACKET">)</token>
+    <token name="T_PHPDOX_CLOSE_BRACKET">)</token>
+    <token name="T_PHPDOX_OPEN_CURLY">{</token>
+  </line>
+  <line no="5">
+    <token name="T_WHITESPACE">    </token>
+    <token name="T_STRING">session_unset</token>
+    <token name="T_PHPDOX_OPEN_BRACKET">(</token>
+    <token name="T_PHPDOX_CLOSE_BRACKET">)</token>
+    <token name="T_PHPDOX_SEMICOLON">;</token>
+  </line>
+  <line no="6">
+    <token name="T_WHITESPACE">    </token>
+    <token name="T_STRING">session_destroy</token>
+    <token name="T_PHPDOX_OPEN_BRACKET">(</token>
+    <token name="T_PHPDOX_CLOSE_BRACKET">)</token>
+    <token name="T_PHPDOX_SEMICOLON">;</token>
+  </line>
+  <line no="7">
+    <token name="T_PHPDOX_CLOSE_CURLY">}</token>
+  </line>
+  <line no="8">
+    <token name="T_REQUIRE">require</token>
+    <token name="T_PHPDOX_OPEN_BRACKET">(</token>
+    <token name="T_CONSTANT_ENCAPSED_STRING">'../phputils/essential.php'</token>
+    <token name="T_PHPDOX_CLOSE_BRACKET">)</token>
+    <token name="T_PHPDOX_SEMICOLON">;</token>
+  </line>
+  <line no="9">
+    <token name="T_COMMENT">#session_unset();</token>
+  </line>
+  <line no="10">
+    <token name="T_IF">if</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_PHPDOX_OPEN_BRACKET">(</token>
+    <token name="T_PHPDOX_EXCLAMATION_MARK">!</token>
+    <token name="T_ISSET">isset</token>
+    <token name="T_PHPDOX_OPEN_BRACKET">(</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_VARIABLE">$_SESSION</token>
+    <token name="T_PHPDOX_OPEN_SQUARE">[</token>
+    <token name="T_CONSTANT_ENCAPSED_STRING">'user_id'</token>
+    <token name="T_PHPDOX_CLOSE_SQUARE">]</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_PHPDOX_CLOSE_BRACKET">)</token>
+    <token name="T_PHPDOX_CLOSE_BRACKET">)</token>
+    <token name="T_PHPDOX_OPEN_CURLY">{</token>
+  </line>
+  <line no="11">
+    <token name="T_WHITESPACE">    </token>
+    <token name="T_IF">if</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_PHPDOX_OPEN_BRACKET">(</token>
+    <token name="T_ISSET">isset</token>
+    <token name="T_PHPDOX_OPEN_BRACKET">(</token>
+    <token name="T_VARIABLE">$_POST</token>
+    <token name="T_PHPDOX_OPEN_SQUARE">[</token>
+    <token name="T_CONSTANT_ENCAPSED_STRING">"username"</token>
+    <token name="T_PHPDOX_CLOSE_SQUARE">]</token>
+    <token name="T_PHPDOX_COMMA">,</token>
+    <token name="T_VARIABLE">$_POST</token>
+    <token name="T_PHPDOX_OPEN_SQUARE">[</token>
+    <token name="T_CONSTANT_ENCAPSED_STRING">"password"</token>
+    <token name="T_PHPDOX_CLOSE_SQUARE">]</token>
+    <token name="T_PHPDOX_CLOSE_BRACKET">)</token>
+    <token name="T_PHPDOX_CLOSE_BRACKET">)</token>
+    <token name="T_PHPDOX_OPEN_CURLY">{</token>
+  </line>
+  <line no="12">
+    <token name="T_WHITESPACE">        </token>
+    <token name="T_VARIABLE">$valid</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_PHPDOX_EQUAL">=</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_STRING">validate_login</token>
+    <token name="T_PHPDOX_OPEN_BRACKET">(</token>
+    <token name="T_VARIABLE">$_POST</token>
+    <token name="T_PHPDOX_OPEN_SQUARE">[</token>
+    <token name="T_CONSTANT_ENCAPSED_STRING">"username"</token>
+    <token name="T_PHPDOX_CLOSE_SQUARE">]</token>
+    <token name="T_PHPDOX_COMMA">,</token>
+    <token name="T_VARIABLE">$_POST</token>
+    <token name="T_PHPDOX_OPEN_SQUARE">[</token>
+    <token name="T_CONSTANT_ENCAPSED_STRING">"password"</token>
+    <token name="T_PHPDOX_CLOSE_SQUARE">]</token>
+    <token name="T_PHPDOX_CLOSE_BRACKET">)</token>
+    <token name="T_PHPDOX_SEMICOLON">;</token>
+  </line>
+  <line no="13">
+    <token name="T_WHITESPACE">        </token>
+    <token name="T_VARIABLE">$loginfail</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_PHPDOX_EQUAL">=</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_STRING">True</token>
+    <token name="T_PHPDOX_SEMICOLON">;</token>
+  </line>
+  <line no="14">
+    <token name="T_WHITESPACE">        </token>
+    <token name="T_IF">if</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_PHPDOX_OPEN_BRACKET">(</token>
+    <token name="T_VARIABLE">$valid</token>
+    <token name="T_PHPDOX_CLOSE_BRACKET">)</token>
+    <token name="T_PHPDOX_OPEN_CURLY">{</token>
+  </line>
+  <line no="15">
+    <token name="T_WHITESPACE">            </token>
+    <token name="T_COMMENT">//if the login info passed validation and no active session, try to login</token>
+  </line>
+  <line no="16">
+    <token name="T_WHITESPACE">            </token>
+    <token name="T_VARIABLE">$username</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_PHPDOX_EQUAL">=</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_STRING">filter_var</token>
+    <token name="T_PHPDOX_OPEN_BRACKET">(</token>
+    <token name="T_VARIABLE">$_POST</token>
+    <token name="T_PHPDOX_OPEN_SQUARE">[</token>
+    <token name="T_CONSTANT_ENCAPSED_STRING">'username'</token>
+    <token name="T_PHPDOX_CLOSE_SQUARE">]</token>
+    <token name="T_PHPDOX_COMMA">,</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_STRING">FILTER_SANITIZE_STRING</token>
+    <token name="T_PHPDOX_CLOSE_BRACKET">)</token>
+    <token name="T_PHPDOX_SEMICOLON">;</token>
+  </line>
+  <line no="17">
+    <token name="T_WHITESPACE">            </token>
+    <token name="T_VARIABLE">$password</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_PHPDOX_EQUAL">=</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_STRING">filter_var</token>
+    <token name="T_PHPDOX_OPEN_BRACKET">(</token>
+    <token name="T_VARIABLE">$_POST</token>
+    <token name="T_PHPDOX_OPEN_SQUARE">[</token>
+    <token name="T_CONSTANT_ENCAPSED_STRING">'password'</token>
+    <token name="T_PHPDOX_CLOSE_SQUARE">]</token>
+    <token name="T_PHPDOX_COMMA">,</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_STRING">FILTER_SANITIZE_STRING</token>
+    <token name="T_PHPDOX_CLOSE_BRACKET">)</token>
+    <token name="T_PHPDOX_SEMICOLON">;</token>
+  </line>
+  <line no="18"/>
+  <line no="19">
+    <token name="T_WHITESPACE">            </token>
+    <token name="T_VARIABLE">$con</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_PHPDOX_EQUAL">=</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_NEW">new</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_STRING">DbCon</token>
+    <token name="T_PHPDOX_OPEN_BRACKET">(</token>
+    <token name="T_PHPDOX_CLOSE_BRACKET">)</token>
+    <token name="T_PHPDOX_SEMICOLON">;</token>
+  </line>
+  <line no="20">
+    <token name="T_WHITESPACE">            </token>
+    <token name="T_VARIABLE">$usr_id</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_PHPDOX_EQUAL">=</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_VARIABLE">$con</token>
+    <token name="T_OBJECT_OPERATOR">-&gt;</token>
+    <token name="T_STRING">SelectUser</token>
+    <token name="T_PHPDOX_OPEN_BRACKET">(</token>
+    <token name="T_VARIABLE">$username</token>
+    <token name="T_PHPDOX_COMMA">,</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_VARIABLE">$password</token>
+    <token name="T_PHPDOX_CLOSE_BRACKET">)</token>
+    <token name="T_PHPDOX_SEMICOLON">;</token>
+  </line>
+  <line no="21"/>
+  <line no="22">
+    <token name="T_WHITESPACE">            </token>
+    <token name="T_IF">if</token>
+    <token name="T_PHPDOX_OPEN_BRACKET">(</token>
+    <token name="T_VARIABLE">$usr_id</token>
+    <token name="T_PHPDOX_CLOSE_BRACKET">)</token>
+    <token name="T_PHPDOX_OPEN_CURLY">{</token>
+  </line>
+  <line no="23">
+    <token name="T_WHITESPACE">                </token>
+    <token name="T_VARIABLE">$_SESSION</token>
+    <token name="T_PHPDOX_OPEN_SQUARE">[</token>
+    <token name="T_CONSTANT_ENCAPSED_STRING">'user_id'</token>
+    <token name="T_PHPDOX_CLOSE_SQUARE">]</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_PHPDOX_EQUAL">=</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_VARIABLE">$usr_id</token>
+    <token name="T_PHPDOX_SEMICOLON">;</token>
+  </line>
+  <line no="24">
+    <token name="T_WHITESPACE">                </token>
+    <token name="T_VARIABLE">$loginfail</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_PHPDOX_EQUAL">=</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_STRING">False</token>
+    <token name="T_PHPDOX_SEMICOLON">;</token>
+  </line>
+  <line no="25">
+    <token name="T_WHITESPACE">            </token>
+    <token name="T_PHPDOX_CLOSE_CURLY">}</token>
+  </line>
+  <line no="26"/>
+  <line no="27">
+    <token name="T_WHITESPACE">        </token>
+    <token name="T_PHPDOX_CLOSE_CURLY">}</token>
+  </line>
+  <line no="28">
+    <token name="T_WHITESPACE">    </token>
+    <token name="T_PHPDOX_CLOSE_CURLY">}</token>
+  </line>
+  <line no="29">
+    <token name="T_WHITESPACE">    </token>
+    <token name="T_IF">if</token>
+    <token name="T_PHPDOX_OPEN_BRACKET">(</token>
+    <token name="T_VARIABLE">$loginfail</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_LOGICAL_OR">or</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_PHPDOX_EXCLAMATION_MARK">!</token>
+    <token name="T_VARIABLE">$valid</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_LOGICAL_OR">or</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_PHPDOX_EXCLAMATION_MARK">!</token>
+    <token name="T_ISSET">isset</token>
+    <token name="T_PHPDOX_OPEN_BRACKET">(</token>
+    <token name="T_VARIABLE">$_POST</token>
+    <token name="T_PHPDOX_OPEN_SQUARE">[</token>
+    <token name="T_CONSTANT_ENCAPSED_STRING">"username"</token>
+    <token name="T_PHPDOX_CLOSE_SQUARE">]</token>
+    <token name="T_PHPDOX_COMMA">,</token>
+    <token name="T_VARIABLE">$_POST</token>
+    <token name="T_PHPDOX_OPEN_SQUARE">[</token>
+    <token name="T_CONSTANT_ENCAPSED_STRING">"password"</token>
+    <token name="T_PHPDOX_CLOSE_SQUARE">]</token>
+    <token name="T_PHPDOX_CLOSE_BRACKET">)</token>
+    <token name="T_PHPDOX_CLOSE_BRACKET">)</token>
+    <token name="T_PHPDOX_OPEN_CURLY">{</token>
+  </line>
+  <line no="30">
+    <token name="T_WHITESPACE">        </token>
+    <token name="T_COMMENT">#Kun saavutaan sivulle 1. kertaa tai kirjautuminen ei onnistunut</token>
+  </line>
+  <line no="31">
+    <token name="T_WHITESPACE">        </token>
+    <token name="T_REQUIRE">require</token>
+    <token name="T_PHPDOX_OPEN_BRACKET">(</token>
+    <token name="T_CONSTANT_ENCAPSED_STRING">'../login.php'</token>
+    <token name="T_PHPDOX_CLOSE_BRACKET">)</token>
+    <token name="T_PHPDOX_SEMICOLON">;</token>
+  </line>
+  <line no="32">
+    <token name="T_WHITESPACE">    </token>
+    <token name="T_PHPDOX_CLOSE_CURLY">}</token>
+  </line>
+  <line no="33">
+    <token name="T_PHPDOX_CLOSE_CURLY">}</token>
+  </line>
+  <line no="34">
+    <token name="T_IF">if</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_PHPDOX_OPEN_BRACKET">(</token>
+    <token name="T_ISSET">isset</token>
+    <token name="T_PHPDOX_OPEN_BRACKET">(</token>
+    <token name="T_VARIABLE">$_SESSION</token>
+    <token name="T_PHPDOX_OPEN_SQUARE">[</token>
+    <token name="T_CONSTANT_ENCAPSED_STRING">'user_id'</token>
+    <token name="T_PHPDOX_CLOSE_SQUARE">]</token>
+    <token name="T_PHPDOX_CLOSE_BRACKET">)</token>
+    <token name="T_PHPDOX_CLOSE_BRACKET">)</token>
+    <token name="T_PHPDOX_OPEN_CURLY">{</token>
+  </line>
+  <line no="35">
+    <token name="T_COMMENT">#JOS kirjauduttu onnistuneesti</token>
+  </line>
+  <line no="36">
+    <token name="T_VARIABLE">$con</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_PHPDOX_EQUAL">=</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_NEW">new</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_STRING">DbCon</token>
+    <token name="T_PHPDOX_OPEN_BRACKET">(</token>
+    <token name="T_PHPDOX_CLOSE_BRACKET">)</token>
+    <token name="T_PHPDOX_SEMICOLON">;</token>
+  </line>
+  <line no="37"/>
+  <line no="38">
+    <token name="T_WHITESPACE">    </token>
+    <token name="T_IF">if</token>
+    <token name="T_PHPDOX_OPEN_BRACKET">(</token>
+    <token name="T_ISSET">isset</token>
+    <token name="T_PHPDOX_OPEN_BRACKET">(</token>
+    <token name="T_VARIABLE">$_POST</token>
+    <token name="T_PHPDOX_OPEN_SQUARE">[</token>
+    <token name="T_CONSTANT_ENCAPSED_STRING">"playeradded"</token>
+    <token name="T_PHPDOX_CLOSE_SQUARE">]</token>
+    <token name="T_PHPDOX_CLOSE_BRACKET">)</token>
+    <token name="T_PHPDOX_CLOSE_BRACKET">)</token>
+    <token name="T_PHPDOX_OPEN_CURLY">{</token>
+  </line>
+  <line no="39">
+    <token name="T_WHITESPACE">        </token>
+    <token name="T_COMMENT">#Jos &#xE4;sken sy&#xF6;tetty uusia messuja:</token>
+  </line>
+  <line no="40">
+    <token name="T_WHITESPACE">        </token>
+    <token name="T_STRING">InsertPlayers</token>
+    <token name="T_PHPDOX_OPEN_BRACKET">(</token>
+    <token name="T_VARIABLE">$con</token>
+    <token name="T_PHPDOX_COMMA">,</token>
+    <token name="T_CONSTANT_ENCAPSED_STRING">"puhuja"</token>
+    <token name="T_PHPDOX_CLOSE_BRACKET">)</token>
+    <token name="T_PHPDOX_SEMICOLON">;</token>
+  </line>
+  <line no="41">
+    <token name="T_WHITESPACE">    </token>
+    <token name="T_PHPDOX_CLOSE_CURLY">}</token>
+  </line>
+  <line no="42">
+    <token name="T_WHITESPACE">    </token>
+    <token name="T_ELSEIF">elseif</token>
+    <token name="T_PHPDOX_OPEN_BRACKET">(</token>
+    <token name="T_ISSET">isset</token>
+    <token name="T_PHPDOX_OPEN_BRACKET">(</token>
+    <token name="T_VARIABLE">$_POST</token>
+    <token name="T_PHPDOX_OPEN_SQUARE">[</token>
+    <token name="T_CONSTANT_ENCAPSED_STRING">"playeredited"</token>
+    <token name="T_PHPDOX_CLOSE_SQUARE">]</token>
+    <token name="T_PHPDOX_CLOSE_BRACKET">)</token>
+    <token name="T_PHPDOX_CLOSE_BRACKET">)</token>
+    <token name="T_PHPDOX_OPEN_CURLY">{</token>
+  </line>
+  <line no="43">
+    <token name="T_WHITESPACE">        </token>
+    <token name="T_STRING">UpdatePlayers</token>
+    <token name="T_PHPDOX_OPEN_BRACKET">(</token>
+    <token name="T_VARIABLE">$con</token>
+    <token name="T_PHPDOX_COMMA">,</token>
+    <token name="T_CONSTANT_ENCAPSED_STRING">"puhuja"</token>
+    <token name="T_PHPDOX_CLOSE_BRACKET">)</token>
+    <token name="T_PHPDOX_SEMICOLON">;</token>
+  </line>
+  <line no="44">
+    <token name="T_WHITESPACE">    </token>
+    <token name="T_PHPDOX_CLOSE_CURLY">}</token>
+  </line>
+  <line no="45"/>
+  <line no="46">
+    <token name="T_WHITESPACE">    </token>
+    <token name="T_COMMENT">#Lataa my&#xF6;s jquery:</token>
+  </line>
+  <line no="47">
+    <token name="T_WHITESPACE">    </token>
+    <token name="T_STRING">AddHeader</token>
+    <token name="T_PHPDOX_OPEN_BRACKET">(</token>
+    <token name="T_VARIABLE">$relpath</token>
+    <token name="T_PHPDOX_COMMA">,</token>
+    <token name="T_STRING">true</token>
+    <token name="T_PHPDOX_CLOSE_BRACKET">)</token>
+    <token name="T_PHPDOX_SEMICOLON">;</token>
+  </line>
+  <line no="48">
+    <token name="T_WHITESPACE">    </token>
+    <token name="T_COMMENT">#Hae url-parametrit talteen</token>
+  </line>
+  <line no="49">
+    <token name="T_WHITESPACE">    </token>
+    <token name="T_VARIABLE">$url</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_PHPDOX_EQUAL">=</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_STRING">SaveGetParams</token>
+    <token name="T_PHPDOX_OPEN_BRACKET">(</token>
+    <token name="T_PHPDOX_CLOSE_BRACKET">)</token>
+    <token name="T_PHPDOX_SEMICOLON">;</token>
+  </line>
+  <line no="50">
+    <token name="T_WHITESPACE">    </token>
+    <token name="T_COMMENT">#Aseta vastuulista tyhj&#xE4;ksi ja muuta t&#xE4;t&#xE4;, jos messulistan&#xE4;kym&#xE4;ss&#xE4;</token>
+  </line>
+  <line no="51">
+    <token name="T_WHITESPACE">    </token>
+    <token name="T_VARIABLE">$vastuulist</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_PHPDOX_EQUAL">=</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_STRING">False</token>
+    <token name="T_PHPDOX_SEMICOLON">;</token>
+  </line>
+  <line no="52"/>
+  <line no="53">
+    <token name="T_WHITESPACE">    </token>
+    <token name="T_FUNCTION">function</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_STRING">PlayerEditInfo</token>
+    <token name="T_PHPDOX_OPEN_BRACKET">(</token>
+    <token name="T_VARIABLE">$idprefix</token>
+    <token name="T_PHPDOX_EQUAL">=</token>
+    <token name="T_CONSTANT_ENCAPSED_STRING">"insert"</token>
+    <token name="T_PHPDOX_CLOSE_BRACKET">)</token>
+    <token name="T_PHPDOX_OPEN_CURLY">{</token>
+  </line>
+  <line no="54">
+    <token name="T_WHITESPACE">        </token>
+  </line>
+  <line no="55">
+    <token name="T_WHITESPACE">    </token>
+    <token name="T_ECHO">echo</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_CONSTANT_ENCAPSED_STRING">'</token>
+  </line>
+  <line no="56">
+    <token name="T_CONSTANT_ENCAPSED_STRING">    &lt;p&gt;</token>
+  </line>
+  <line no="57">
+    <token name="T_CONSTANT_ENCAPSED_STRING">    &lt;label for="playername"&gt;Nimi: &lt;/label&gt;&lt;input type="text" id="'</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_PHPDOX_DOT">.</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_VARIABLE">$idprefix</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_PHPDOX_DOT">.</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_CONSTANT_ENCAPSED_STRING">'_playername" name="playername"&gt;</token>
+  </line>
+  <line no="58">
+    <token name="T_CONSTANT_ENCAPSED_STRING">    &lt;/p&gt;</token>
+  </line>
+  <line no="59"/>
+  <line no="60">
+    <token name="T_CONSTANT_ENCAPSED_STRING">    &lt;p&gt;</token>
+  </line>
+  <line no="61">
+    <token name="T_CONSTANT_ENCAPSED_STRING">    &lt;label for="phone"&gt;Puhelin: &lt;/label&gt;&lt;input type="text" id="'</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_PHPDOX_DOT">.</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_VARIABLE">$idprefix</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_PHPDOX_DOT">.</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_CONSTANT_ENCAPSED_STRING">'_phone" name="phone"&gt;</token>
+  </line>
+  <line no="62">
+    <token name="T_CONSTANT_ENCAPSED_STRING">    &lt;/p&gt;</token>
+  </line>
+  <line no="63"/>
+  <line no="64">
+    <token name="T_CONSTANT_ENCAPSED_STRING">    &lt;p&gt;</token>
+  </line>
+  <line no="65">
+    <token name="T_CONSTANT_ENCAPSED_STRING">    &lt;label for="email"&gt;S&#xE4;hk&#xF6;posti: &lt;/label&gt;&lt;input type="text" name="email" id="'</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_PHPDOX_DOT">.</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_VARIABLE">$idprefix</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_PHPDOX_DOT">.</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_CONSTANT_ENCAPSED_STRING">'_email"&gt;</token>
+  </line>
+  <line no="66">
+    <token name="T_CONSTANT_ENCAPSED_STRING">    &lt;/p&gt;'</token>
+    <token name="T_PHPDOX_SEMICOLON">;</token>
+  </line>
+  <line no="67"/>
+  <line no="68">
+    <token name="T_WHITESPACE">    </token>
+    <token name="T_PHPDOX_CLOSE_CURLY">}</token>
+  </line>
+  <line no="69"/>
+  <line no="70">
+    <token name="T_CLOSE_TAG">?&gt;</token>
+  </line>
+  <line no="71"/>
+  <line no="72">
+    <token name="T_INLINE_HTML">&lt;body&gt;</token>
+  </line>
+  <line no="73"/>
+  <line no="74"/>
+  <line no="75">
+    <token name="T_OPEN_TAG">&lt;?php</token>
+  </line>
+  <line no="76">
+    <token name="T_STRING">CreateNavi</token>
+    <token name="T_PHPDOX_OPEN_BRACKET">(</token>
+    <token name="T_VARIABLE">$vastuulist</token>
+    <token name="T_PHPDOX_COMMA">,</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_VARIABLE">$url</token>
+    <token name="T_PHPDOX_COMMA">,</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_STRING">False</token>
+    <token name="T_PHPDOX_CLOSE_BRACKET">)</token>
+    <token name="T_PHPDOX_SEMICOLON">;</token>
+  </line>
+  <line no="77">
+    <token name="T_CLOSE_TAG">?&gt;</token>
+  </line>
+  <line no="78"/>
+  <line no="79">
+    <token name="T_INLINE_HTML">&lt;div class='hidden' id='instrument_placeholder'&gt;</token>
+  </line>
+  <line no="80"/>
+  <line no="81">
+    <token name="T_OPEN_TAG">&lt;?php</token>
+  </line>
+  <line no="82"/>
+  <line no="83">
+    <token name="T_VARIABLE">$instruments</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_PHPDOX_EQUAL">=</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_VARIABLE">$con</token>
+    <token name="T_OBJECT_OPERATOR">-&gt;</token>
+    <token name="T_STRING">select</token>
+    <token name="T_PHPDOX_OPEN_BRACKET">(</token>
+    <token name="T_CONSTANT_ENCAPSED_STRING">"puheenaiheet"</token>
+    <token name="T_PHPDOX_COMMA">,</token>
+    <token name="T_ARRAY">Array</token>
+    <token name="T_PHPDOX_OPEN_BRACKET">(</token>
+    <token name="T_CONSTANT_ENCAPSED_STRING">"puheenaihe"</token>
+    <token name="T_PHPDOX_CLOSE_BRACKET">)</token>
+    <token name="T_PHPDOX_COMMA">,</token>
+    <token name="T_ARRAY">Array</token>
+    <token name="T_PHPDOX_OPEN_BRACKET">(</token>
+    <token name="T_PHPDOX_CLOSE_BRACKET">)</token>
+    <token name="T_PHPDOX_COMMA">,</token>
+    <token name="T_CONSTANT_ENCAPSED_STRING">"DISTINCT"</token>
+    <token name="T_PHPDOX_COMMA">,</token>
+    <token name="T_CONSTANT_ENCAPSED_STRING">""</token>
+    <token name="T_PHPDOX_CLOSE_BRACKET">)</token>
+    <token name="T_OBJECT_OPERATOR">-&gt;</token>
+    <token name="T_STRING">fetchAll</token>
+    <token name="T_PHPDOX_OPEN_BRACKET">(</token>
+    <token name="T_PHPDOX_CLOSE_BRACKET">)</token>
+    <token name="T_PHPDOX_SEMICOLON">;</token>
+  </line>
+  <line no="84">
+    <token name="T_FOREACH">foreach</token>
+    <token name="T_PHPDOX_OPEN_BRACKET">(</token>
+    <token name="T_VARIABLE">$instruments</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_AS">as</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_VARIABLE">$instrument</token>
+    <token name="T_PHPDOX_CLOSE_BRACKET">)</token>
+    <token name="T_PHPDOX_OPEN_CURLY">{</token>
+  </line>
+  <line no="85">
+    <token name="T_WHITESPACE">    </token>
+    <token name="T_ECHO">echo</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_CONSTANT_ENCAPSED_STRING">"&lt;span class='listedinstrument'&gt;"</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_PHPDOX_DOT">.</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_VARIABLE">$instrument</token>
+    <token name="T_PHPDOX_OPEN_SQUARE">[</token>
+    <token name="T_CONSTANT_ENCAPSED_STRING">"puheenaihe"</token>
+    <token name="T_PHPDOX_CLOSE_SQUARE">]</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_PHPDOX_DOT">.</token>
+    <token name="T_CONSTANT_ENCAPSED_STRING">"&lt;/span&gt;"</token>
+    <token name="T_PHPDOX_SEMICOLON">;</token>
+  </line>
+  <line no="86">
+    <token name="T_PHPDOX_CLOSE_CURLY">}</token>
+  </line>
+  <line no="87">
+    <token name="T_CLOSE_TAG">?&gt;</token>
+  </line>
+  <line no="88"/>
+  <line no="89">
+    <token name="T_INLINE_HTML">&lt;/div&gt;</token>
+  </line>
+  <line no="90"/>
+  <line no="91">
+    <token name="T_INLINE_HTML">&lt;article id='maincontainer'&gt;</token>
+  </line>
+  <line no="92"/>
+  <line no="93">
+    <token name="T_INLINE_HTML">&lt;section id="addnew"&gt;</token>
+  </line>
+  <line no="94">
+    <token name="T_INLINE_HTML">    &lt;h2&gt;Majakan alfakurssin puhujapankki&lt;/h2&gt;</token>
+  </line>
+  <line no="95"/>
+  <line no="96">
+    <token name="T_INLINE_HTML">    &lt;p&gt;</token>
+  </line>
+  <line no="97"/>
+  <line no="98">
+    <token name="T_INLINE_HTML">    Puhujapankin tarkoituksena on pit&#xE4;&#xE4; yll&#xE4; listaa </token>
+  </line>
+  <line no="99">
+    <token name="T_INLINE_HTML">    alfakurssilla k&#xE4;ytett&#xE4;viss&#xE4; olevista  puhujista. Yhteystiedot ovat</token>
+  </line>
+  <line no="100">
+    <token name="T_INLINE_HTML">    luottamuksellisia. Voit muokata puhujia klikkaamalla puhujan rivi&#xE4;.</token>
+  </line>
+  <line no="101"/>
+  <line no="102">
+    <token name="T_INLINE_HTML">    &lt;/p&gt;</token>
+  </line>
+  <line no="103"/>
+  <line no="104">
+    <token name="T_INLINE_HTML">    &lt;form name="addplayer" id="addplayer" method="POST" action="</token>
+    <token name="T_OPEN_TAG">&lt;?php </token>
+    <token name="T_ECHO">echo</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_VARIABLE">$url</token>
+    <token name="T_PHPDOX_SEMICOLON">;</token>
+    <token name="T_CLOSE_TAG">?&gt;</token>
+    <token name="T_INLINE_HTML">"&gt;</token>
+  </line>
+  <line no="105"/>
+  <line no="106">
+    <token name="T_INLINE_HTML">    &lt;h3 onClick="ShowPlayerAdder();" id="addplayerheader"&gt;Lis&#xE4;&#xE4; uusi puhuja &gt;&gt;&lt;/h3&gt;</token>
+  </line>
+  <line no="107"/>
+  <line no="108"/>
+  <line no="109">
+    <token name="T_INLINE_HTML">    &lt;section id="addplayersec"&gt;</token>
+  </line>
+  <line no="110"/>
+  <line no="111">
+    <token name="T_INLINE_HTML">        </token>
+    <token name="T_OPEN_TAG">&lt;?php </token>
+    <token name="T_STRING">PlayerEditInfo</token>
+    <token name="T_PHPDOX_OPEN_BRACKET">(</token>
+    <token name="T_PHPDOX_CLOSE_BRACKET">)</token>
+    <token name="T_PHPDOX_SEMICOLON">;</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_CLOSE_TAG">?&gt;</token>
+  </line>
+  <line no="112"/>
+  <line no="113">
+    <token name="T_INLINE_HTML">        &lt;h4&gt;Aiheet&lt;/h4&gt;</token>
+  </line>
+  <line no="114"/>
+  <line no="115"/>
+  <line no="116">
+    <token name="T_INLINE_HTML">        &lt;div id="addedinstruments"&gt;</token>
+  </line>
+  <line no="117">
+    <token name="T_INLINE_HTML">            &lt;div id="emptyinstrumentspan"&gt;T&#xE4;lle puhujalle ei ole viel&#xE4; lis&#xE4;ttyn&#xE4; yht&#xE4;&#xE4;n aihetta. Lis&#xE4;&#xE4; ainakin yksi aihe (tai muu erikoiskyky) painamalla alla olevaa linkki&#xE4;. &lt;/div&gt;</token>
+  </line>
+  <line no="118">
+    <token name="T_INLINE_HTML">        &lt;/div&gt;</token>
+  </line>
+  <line no="119"/>
+  <line no="120"/>
+  <line no="121">
+    <token name="T_INLINE_HTML">        &lt;div&gt;</token>
+  </line>
+  <line no="122">
+    <token name="T_INLINE_HTML">            &lt;span&gt;</token>
+  </line>
+  <line no="123">
+    <token name="T_INLINE_HTML">                &lt;a href="javascript:void(0);" onClick="AddInstrument();"&gt;Lis&#xE4;&#xE4; aihe&lt;/a&gt;</token>
+  </line>
+  <line no="124">
+    <token name="T_INLINE_HTML">            &lt;/span&gt;</token>
+  </line>
+  <line no="125">
+    <token name="T_INLINE_HTML">        &lt;/div&gt;</token>
+  </line>
+  <line no="126"/>
+  <line no="127"/>
+  <line no="128">
+    <token name="T_INLINE_HTML">        &lt;div id="instrumentadder"&gt;</token>
+  </line>
+  <line no="129">
+    <token name="T_INLINE_HTML">            &lt;p id="instrumentaddparagraph" class="hidden" onkeypress="return event.keyCode != 13;"&gt;</token>
+  </line>
+  <line no="130">
+    <token name="T_INLINE_HTML">                &lt;span&gt;&lt;input type="text" id="instrumentname" placeholder="Mist&#xE4; t&#xE4;m&#xE4; henkil&#xF6; voisi puhua"&gt;&lt;/span&gt;</token>
+  </line>
+  <line no="131">
+    <token name="T_INLINE_HTML">                &lt;span&gt;&lt;input type="button" value="Lis&#xE4;&#xE4;" onClick="ConfirmInstrAdd();"&gt;&lt;/span&gt;</token>
+  </line>
+  <line no="132">
+    <token name="T_INLINE_HTML">            &lt;/p&gt;</token>
+  </line>
+  <line no="133">
+    <token name="T_INLINE_HTML">        &lt;/div&gt;</token>
+  </line>
+  <line no="134"/>
+  <line no="135"/>
+  <line no="136">
+    <token name="T_INLINE_HTML">        &lt;div&gt;</token>
+  </line>
+  <line no="137">
+    <token name="T_INLINE_HTML">            &lt;input type="submit" name= "playeradded" value="Tallenna uusi puhuja"&gt;</token>
+  </line>
+  <line no="138">
+    <token name="T_INLINE_HTML">        &lt;/div&gt;</token>
+  </line>
+  <line no="139"/>
+  <line no="140">
+    <token name="T_INLINE_HTML">        &lt;input type="text" name="instruments" id="repertoire" class="hidden"&gt;</token>
+  </line>
+  <line no="141"/>
+  <line no="142">
+    <token name="T_INLINE_HTML">        &lt;/form&gt;</token>
+  </line>
+  <line no="143">
+    <token name="T_INLINE_HTML">    &lt;/section&gt;</token>
+  </line>
+  <line no="144"/>
+  <line no="145">
+    <token name="T_INLINE_HTML">    &lt;section id="filters"&gt;</token>
+  </line>
+  <line no="146">
+    <token name="T_INLINE_HTML">        &lt;p&gt;</token>
+  </line>
+  <line no="147">
+    <token name="T_INLINE_HTML">            &lt;label for="instrumentfilter"&gt;Suodata aiheen perusteella:&lt;/label&gt;</token>
+  </line>
+  <line no="148">
+    <token name="T_INLINE_HTML">            &lt;input type="text" name="instrumentfilter" id="instrumentfilter" placeholder="hae t&#xE4;st&#xE4; aihetta" OnKeyUp="CheckPlayerFilter(this,'instruments');"&gt;</token>
+  </line>
+  <line no="149">
+    <token name="T_INLINE_HTML">        &lt;/p&gt;</token>
+  </line>
+  <line no="150">
+    <token name="T_INLINE_HTML">        &lt;p&gt;</token>
+  </line>
+  <line no="151">
+    <token name="T_INLINE_HTML">            &lt;label for="playerfilter"&gt;Suodata puhujan nimen perusteella:&lt;/label&gt;</token>
+  </line>
+  <line no="152">
+    <token name="T_INLINE_HTML">            &lt;input type="text" name="playerfilter" id="playerfilter" placeholder="hae t&#xE4;st&#xE4; puhujaa" OnKeyUp="CheckPlayerFilter(this, 'playername');"&gt;</token>
+  </line>
+  <line no="153">
+    <token name="T_INLINE_HTML">        &lt;/p&gt;</token>
+  </line>
+  <line no="154">
+    <token name="T_INLINE_HTML">    &lt;/section&gt;</token>
+  </line>
+  <line no="155"/>
+  <line no="156">
+    <token name="T_INLINE_HTML">&lt;/section&gt;</token>
+  </line>
+  <line no="157"/>
+  <line no="158">
+    <token name="T_INLINE_HTML">&lt;section id="datalist"&gt;</token>
+  </line>
+  <line no="159"/>
+  <line no="160">
+    <token name="T_OPEN_TAG">&lt;?php </token>
+    <token name="T_ECHO">echo</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_STRING">FetchPlayers</token>
+    <token name="T_PHPDOX_OPEN_BRACKET">(</token>
+    <token name="T_VARIABLE">$con</token>
+    <token name="T_PHPDOX_COMMA">,</token>
+    <token name="T_CONSTANT_ENCAPSED_STRING">"puhuja"</token>
+    <token name="T_PHPDOX_CLOSE_BRACKET">)</token>
+    <token name="T_PHPDOX_SEMICOLON">;</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_CLOSE_TAG">?&gt;</token>
+  </line>
+  <line no="161"/>
+  <line no="162">
+    <token name="T_INLINE_HTML">&lt;/section&gt;</token>
+  </line>
+  <line no="163"/>
+  <line no="164">
+    <token name="T_INLINE_HTML">&lt;/article&gt;</token>
+  </line>
+  <line no="165"/>
+  <line no="166">
+    <token name="T_OPEN_TAG">&lt;?php </token>
+    <token name="T_REQUIRE">require</token>
+    <token name="T_PHPDOX_OPEN_BRACKET">(</token>
+    <token name="T_CONSTANT_ENCAPSED_STRING">'../menu.php'</token>
+    <token name="T_PHPDOX_CLOSE_BRACKET">)</token>
+    <token name="T_PHPDOX_SEMICOLON">;</token>
+    <token name="T_CLOSE_TAG">?&gt;</token>
+  </line>
+  <line no="167"/>
+  <line no="168">
+    <token name="T_INLINE_HTML">&lt;script&gt;</token>
+  </line>
+  <line no="169">
+    <token name="T_INLINE_HTML">    //Add listeners</token>
+  </line>
+  <line no="170">
+    <token name="T_INLINE_HTML">    document.getElementById('homeli').addEventListener('click',function(){window.location='index.php';});</token>
+  </line>
+  <line no="171">
+    <token name="T_INLINE_HTML">    var menu_li_items = document.getElementsByClassName('menuli');</token>
+  </line>
+  <line no="172">
+    <token name="T_INLINE_HTML">    for(var row_idx = 0; row_idx &lt; menu_li_items.length;row_idx++){</token>
+  </line>
+  <line no="173">
+    <token name="T_INLINE_HTML">        var row = menu_li_items[row_idx];</token>
+  </line>
+  <line no="174">
+    <token name="T_INLINE_HTML">        row.addEventListener('click',MenuClick,false);</token>
+  </line>
+  <line no="175">
+    <token name="T_INLINE_HTML">    }</token>
+  </line>
+  <line no="176"/>
+  <line no="177"/>
+  <line no="178">
+    <token name="T_INLINE_HTML">&lt;/script&gt;</token>
+  </line>
+  <line no="179"/>
+  <line no="180">
+    <token name="T_INLINE_HTML">&lt;section id="editrowsection"&gt;</token>
+  </line>
+  <line no="181">
+    <token name="T_INLINE_HTML">&lt;span onClick='CloseRowEdit();' class='fa-stack fa-lg close-button'&gt; &lt;i class='fa fa-circle fa-stack-2x'&gt;&lt;/i&gt; &lt;i class='fa fa-times fa-stack-1x fa-inverse'&gt;&lt;/i&gt;&lt;/span&gt;</token>
+  </line>
+  <line no="182"/>
+  <line no="183">
+    <token name="T_INLINE_HTML">&lt;form name="editplayer" id="editplayer" method="POST" action="</token>
+    <token name="T_OPEN_TAG">&lt;?php </token>
+    <token name="T_ECHO">echo</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_VARIABLE">$url</token>
+    <token name="T_PHPDOX_SEMICOLON">;</token>
+    <token name="T_CLOSE_TAG">?&gt;</token>
+    <token name="T_INLINE_HTML">"&gt;</token>
+  </line>
+  <line no="184">
+    <token name="T_INLINE_HTML">    &lt;h4&gt;Muokkaa puhujan tietoja&lt;/h4&gt;</token>
+  </line>
+  <line no="185"/>
+  <line no="186">
+    <token name="T_INLINE_HTML">    &lt;p class="small"&gt;(Peru muokkaus sulkemalla ikkuna ruksista)&lt;/p&gt;</token>
+  </line>
+  <line no="187"/>
+  <line no="188">
+    <token name="T_INLINE_HTML">    &lt;p&gt;&lt;a href="javascript:void(0);" onClick="RemovePlayer()"; class='deletelink'&gt;Poista t&#xE4;m&#xE4; puhuja&lt;/a&gt;&lt;/p&gt;</token>
+  </line>
+  <line no="189"/>
+  <line no="190">
+    <token name="T_INLINE_HTML">    </token>
+    <token name="T_OPEN_TAG">&lt;?php </token>
+    <token name="T_ECHO">echo</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_STRING">PlayerEditInfo</token>
+    <token name="T_PHPDOX_OPEN_BRACKET">(</token>
+    <token name="T_CONSTANT_ENCAPSED_STRING">"edit"</token>
+    <token name="T_PHPDOX_CLOSE_BRACKET">)</token>
+    <token name="T_PHPDOX_SEMICOLON">;</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_CLOSE_TAG">?&gt;</token>
+  </line>
+  <line no="191"/>
+  <line no="192">
+    <token name="T_INLINE_HTML">    &lt;h4&gt;Aiheet&lt;/h4&gt;</token>
+  </line>
+  <line no="193"/>
+  <line no="194">
+    <token name="T_INLINE_HTML">    &lt;p&gt;Poista aihe klikkaamalla sit&#xE4;</token>
+  </line>
+  <line no="195">
+    <token name="T_INLINE_HTML">    &lt;input type="text" name="playerdeleted" value="false" class="hidden" id="playerdeleted"&gt;</token>
+  </line>
+  <line no="196">
+    <token name="T_INLINE_HTML">    &lt;/p&gt;</token>
+  </line>
+  <line no="197"/>
+  <line no="198">
+    <token name="T_INLINE_HTML">    &lt;div id="addedinstruments_edit"&gt;</token>
+  </line>
+  <line no="199">
+    <token name="T_INLINE_HTML">        &lt;div&gt;&lt;/div&gt;</token>
+  </line>
+  <line no="200">
+    <token name="T_INLINE_HTML">    &lt;/div&gt;</token>
+  </line>
+  <line no="201"/>
+  <line no="202"/>
+  <line no="203">
+    <token name="T_INLINE_HTML">    &lt;div&gt;</token>
+  </line>
+  <line no="204">
+    <token name="T_INLINE_HTML">        &lt;span&gt;</token>
+  </line>
+  <line no="205">
+    <token name="T_INLINE_HTML">            &lt;a href="javascript:void(0);" onClick="EditInstrument();"&gt;Lis&#xE4;&#xE4; aihe&lt;/a&gt;</token>
+  </line>
+  <line no="206">
+    <token name="T_INLINE_HTML">        &lt;/span&gt;</token>
+  </line>
+  <line no="207">
+    <token name="T_INLINE_HTML">    &lt;/div&gt;</token>
+  </line>
+  <line no="208"/>
+  <line no="209">
+    <token name="T_INLINE_HTML">    &lt;div id="instrumentadder_edit"&gt;</token>
+  </line>
+  <line no="210">
+    <token name="T_INLINE_HTML">        &lt;p id="instrumentaddparagraph_edit" class="hidden" onkeypress="return event.keyCode != 13;"&gt;</token>
+  </line>
+  <line no="211">
+    <token name="T_INLINE_HTML">            &lt;span&gt;&lt;input type="text" id="instrumentname_edit" placeholder="Mist&#xE4; aiheesta voi puhua?" OnKeyUp="Auto"&gt;&lt;/span&gt;</token>
+  </line>
+  <line no="212">
+    <token name="T_INLINE_HTML">            &lt;span&gt;&lt;input type="button" value="Lis&#xE4;&#xE4;" onClick="ConfirmInstrEdit();"&gt;&lt;/span&gt;</token>
+  </line>
+  <line no="213">
+    <token name="T_INLINE_HTML">        &lt;/p&gt;</token>
+  </line>
+  <line no="214">
+    <token name="T_INLINE_HTML">    &lt;/div&gt;</token>
+  </line>
+  <line no="215"/>
+  <line no="216">
+    <token name="T_INLINE_HTML">    &lt;div&gt;</token>
+  </line>
+  <line no="217">
+    <token name="T_INLINE_HTML">        &lt;input type="submit" name="playeredited" value="Tallenna muutokset" id="savechanges"&gt;</token>
+  </line>
+  <line no="218">
+    <token name="T_INLINE_HTML">    &lt;/div&gt;</token>
+  </line>
+  <line no="219"/>
+  <line no="220">
+    <token name="T_INLINE_HTML">    &lt;input type="text" name="instruments" id="edit_repertoire" class="hidden"&gt;</token>
+  </line>
+  <line no="221">
+    <token name="T_INLINE_HTML">    &lt;input type="text" name="player_id" id="player_id" class="hidden"&gt;</token>
+  </line>
+  <line no="222">
+    <token name="T_INLINE_HTML">&lt;/form&gt;</token>
+  </line>
+  <line no="223">
+    <token name="T_INLINE_HTML">&lt;/section&gt;</token>
+  </line>
+  <line no="224"/>
+  <line no="225">
+    <token name="T_INLINE_HTML">&lt;script&gt;</token>
+  </line>
+  <line no="226">
+    <token name="T_INLINE_HTML">var instrspans = document.getElementsByClassName("listedinstrument");</token>
+  </line>
+  <line no="227">
+    <token name="T_INLINE_HTML">var instrlist = [];</token>
+  </line>
+  <line no="228">
+    <token name="T_INLINE_HTML">for(var i=0;i&lt;instrspans.length;i++){</token>
+  </line>
+  <line no="229">
+    <token name="T_INLINE_HTML">    instrlist.push(instrspans[i].textContent);</token>
+  </line>
+  <line no="230">
+    <token name="T_INLINE_HTML">}</token>
+  </line>
+  <line no="231"/>
+  <line no="232">
+    <token name="T_INLINE_HTML">$("#instrumentname_edit").autocomplete({ source: instrlist });</token>
+  </line>
+  <line no="233">
+    <token name="T_INLINE_HTML">$("#instrumentname").autocomplete({ source: instrlist });</token>
+  </line>
+  <line no="234"/>
+  <line no="235">
+    <token name="T_INLINE_HTML">&lt;/script&gt;</token>
+  </line>
+  <line no="236"/>
+  <line no="237">
+    <token name="T_INLINE_HTML">&lt;/body&gt;</token>
+  </line>
+  <line no="238"/>
+  <line no="239">
+    <token name="T_INLINE_HTML">&lt;/html&gt;</token>
+  </line>
+  <line no="240">
+    <token name="T_OPEN_TAG">&lt;?php</token>
+  </line>
+  <line no="241"/>
+  <line no="242">
+    <token name="T_PHPDOX_CLOSE_CURLY">}</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_COMMENT">#Login</token>
+  </line>
+  <line no="243">
+    <token name="T_CLOSE_TAG">?&gt;</token>
+  </line>
+  <line no="244"/>
+</source>

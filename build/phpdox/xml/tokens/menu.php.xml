@@ -1,0 +1,216 @@
+<?xml version="1.0"?>
+<source xmlns="http://xml.phpdox.net/token">
+  <file xmlns="http://xml.phpdox.net/src" path="/home/juho/Projects/lhportal/src" file="menu.php" realpath="/home/juho/Projects/lhportal/src/menu.php" size="1659" time="2017-05-15T18:38:43+00:00" unixtime="1494873523" sha1="7c79c488feff57fc57be20053468ea75c7b2c36f" relative="menu.php"/>
+  <line no="1">
+    <token name="T_INLINE_HTML">&lt;div id='menu'&gt;</token>
+  </line>
+  <line no="2"/>
+  <line no="3">
+    <token name="T_INLINE_HTML">    </token>
+    <token name="T_OPEN_TAG">&lt;?php</token>
+  </line>
+  <line no="4">
+    <token name="T_WHITESPACE">    </token>
+    <token name="T_IF">if</token>
+    <token name="T_PHPDOX_OPEN_BRACKET">(</token>
+    <token name="T_PHPDOX_EXCLAMATION_MARK">!</token>
+    <token name="T_ISSET">isset</token>
+    <token name="T_PHPDOX_OPEN_BRACKET">(</token>
+    <token name="T_VARIABLE">$relpath</token>
+    <token name="T_PHPDOX_CLOSE_BRACKET">)</token>
+    <token name="T_PHPDOX_CLOSE_BRACKET">)</token>
+    <token name="T_PHPDOX_OPEN_CURLY">{</token>
+  </line>
+  <line no="5">
+    <token name="T_WHITESPACE">        </token>
+    <token name="T_VARIABLE">$relpath</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_PHPDOX_EQUAL">=</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_CONSTANT_ENCAPSED_STRING">""</token>
+    <token name="T_PHPDOX_SEMICOLON">;</token>
+  </line>
+  <line no="6">
+    <token name="T_WHITESPACE">    </token>
+    <token name="T_PHPDOX_CLOSE_CURLY">}</token>
+  </line>
+  <line no="7">
+    <token name="T_WHITESPACE">    </token>
+    <token name="T_VARIABLE">$seasonname</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_PHPDOX_EQUAL">=</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_VARIABLE">$_SESSION</token>
+    <token name="T_PHPDOX_OPEN_SQUARE">[</token>
+    <token name="T_CONSTANT_ENCAPSED_STRING">"kausi"</token>
+    <token name="T_PHPDOX_CLOSE_SQUARE">]</token>
+    <token name="T_PHPDOX_OPEN_SQUARE">[</token>
+    <token name="T_CONSTANT_ENCAPSED_STRING">"nimi"</token>
+    <token name="T_PHPDOX_CLOSE_SQUARE">]</token>
+    <token name="T_PHPDOX_SEMICOLON">;</token>
+  </line>
+  <line no="8">
+    <token name="T_WHITESPACE">    </token>
+    <token name="T_VARIABLE">$nextseason</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_PHPDOX_EQUAL">=</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_VARIABLE">$url</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_PHPDOX_DOT">.</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_CONSTANT_ENCAPSED_STRING">"&amp;kausi=next&amp;"</token>
+    <token name="T_PHPDOX_SEMICOLON">;</token>
+  </line>
+  <line no="9">
+    <token name="T_WHITESPACE">    </token>
+    <token name="T_VARIABLE">$prevseason</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_PHPDOX_EQUAL">=</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_VARIABLE">$url</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_PHPDOX_DOT">.</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_CONSTANT_ENCAPSED_STRING">"&amp;kausi=previous&amp;"</token>
+    <token name="T_PHPDOX_SEMICOLON">;</token>
+  </line>
+  <line no="10">
+    <token name="T_WHITESPACE">    </token>
+    <token name="T_CLOSE_TAG">?&gt;</token>
+  </line>
+  <line no="11">
+    <token name="T_INLINE_HTML">    &lt;ul&gt;</token>
+  </line>
+  <line no="12">
+    <token name="T_INLINE_HTML">        &lt;li class='' title='Vaihda edelliseen tai seuraavaan kauteen'&gt; </token>
+  </line>
+  <line no="13">
+    <token name="T_INLINE_HTML">            &lt;a href="javascript:void(0);" onClick='SwitchSeason("edellinen");'&gt;</token>
+  </line>
+  <line no="14">
+    <token name="T_INLINE_HTML">                &lt;i class="fa fa-backward" title="Vaihda edelliseen kauteen" aria-hidden="true"&gt;&lt;/i&gt;</token>
+  </line>
+  <line no="15">
+    <token name="T_INLINE_HTML">            &lt;/a&gt; </token>
+  </line>
+  <line no="16"/>
+  <line no="17">
+    <token name="T_INLINE_HTML">            &lt;em&gt;</token>
+    <token name="T_OPEN_TAG">&lt;?php </token>
+    <token name="T_ECHO">echo</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_VARIABLE">$seasonname</token>
+    <token name="T_PHPDOX_SEMICOLON">;</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_CLOSE_TAG">?&gt;</token>
+    <token name="T_INLINE_HTML">&lt;/em&gt; </token>
+  </line>
+  <line no="18"/>
+  <line no="19">
+    <token name="T_INLINE_HTML">            &lt;a href="javascript:void(0);" title="Vaihda seuraavaan kauteen" onClick='SwitchSeason("seuraava");'&gt;</token>
+  </line>
+  <line no="20">
+    <token name="T_INLINE_HTML">                &lt;i class="fa fa-forward" aria-hidden="true"&gt;&lt;/i&gt;</token>
+  </line>
+  <line no="21">
+    <token name="T_INLINE_HTML">            &lt;/a&gt; </token>
+  </line>
+  <line no="22">
+    <token name="T_INLINE_HTML">        &lt;/li&gt;</token>
+  </line>
+  <line no="23">
+    <token name="T_INLINE_HTML">        &lt;li class='menuli'&gt;&lt;a href='</token>
+    <token name="T_OPEN_TAG">&lt;?php </token>
+    <token name="T_ECHO">echo</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_VARIABLE">$relpath</token>
+    <token name="T_PHPDOX_SEMICOLON">;</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_CLOSE_TAG">?&gt;</token>
+    <token name="T_INLINE_HTML">index.php'&gt;Yleisn&#xE4;kym&#xE4;&lt;/a&gt;&lt;/li&gt;</token>
+  </line>
+  <line no="24">
+    <token name="T_INLINE_HTML">        &lt;li class='menuli'&gt;&lt;a id='songphplink' href='</token>
+    <token name="T_OPEN_TAG">&lt;?php </token>
+    <token name="T_ECHO">echo</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_VARIABLE">$relpath</token>
+    <token name="T_PHPDOX_SEMICOLON">;</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_CLOSE_TAG">?&gt;</token>
+    <token name="T_INLINE_HTML">songs.php'&gt;Sy&#xF6;t&#xE4; lauluja&lt;/a&gt;&lt;/li&gt;</token>
+  </line>
+  <line no="25">
+    <token name="T_INLINE_HTML">        &lt;li class='menuli'&gt;&lt;a href='</token>
+    <token name="T_OPEN_TAG">&lt;?php </token>
+    <token name="T_ECHO">echo</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_VARIABLE">$relpath</token>
+    <token name="T_PHPDOX_SEMICOLON">;</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_CLOSE_TAG">?&gt;</token>
+    <token name="T_INLINE_HTML">soittajapankki/index.php'&gt;Soittajapankki&lt;/a&gt;&lt;/li&gt;</token>
+  </line>
+  <line no="26">
+    <token name="T_INLINE_HTML">        &lt;li class='menuli'&gt;&lt;a href='</token>
+    <token name="T_OPEN_TAG">&lt;?php </token>
+    <token name="T_ECHO">echo</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_VARIABLE">$relpath</token>
+    <token name="T_PHPDOX_SEMICOLON">;</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_CLOSE_TAG">?&gt;</token>
+    <token name="T_INLINE_HTML">puhujapankki/index.php'&gt;Puhujapankki&lt;/a&gt;&lt;/li&gt;</token>
+  </line>
+  <line no="27">
+    <token name="T_INLINE_HTML">        &lt;li class='menuli' OnClick='ViewMaintenance(this);'&gt;Yll&#xE4;pito&lt;/li&gt;</token>
+  </line>
+  <line no="28">
+    <token name="T_INLINE_HTML">        &lt;li class='menuli'&gt;&lt;a href='</token>
+    <token name="T_OPEN_TAG">&lt;?php </token>
+    <token name="T_ECHO">echo</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_VARIABLE">$relpath</token>
+    <token name="T_PHPDOX_SEMICOLON">;</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_CLOSE_TAG">?&gt;</token>
+    <token name="T_INLINE_HTML">index.php?logout=Yes'&gt;Kirjaudu ulos&lt;/a&gt;&lt;/li&gt;</token>
+  </line>
+  <line no="29">
+    <token name="T_INLINE_HTML">    &lt;/ul&gt;</token>
+  </line>
+  <line no="30"/>
+  <line no="31">
+    <token name="T_INLINE_HTML">        &lt;ul id='maintenancelist'&gt;</token>
+  </line>
+  <line no="32">
+    <token name="T_INLINE_HTML">            &lt;li class='menuli'&gt;&lt;a href='</token>
+    <token name="T_OPEN_TAG">&lt;?php </token>
+    <token name="T_ECHO">echo</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_VARIABLE">$relpath</token>
+    <token name="T_PHPDOX_SEMICOLON">;</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_CLOSE_TAG">?&gt;</token>
+    <token name="T_INLINE_HTML">insert_messudata.php'&gt;Sy&#xF6;t&#xE4; uusia messuja&lt;/a&gt;&lt;/li&gt;</token>
+  </line>
+  <line no="33">
+    <token name="T_INLINE_HTML">            &lt;li class='menuli'&gt;&lt;a href='</token>
+    <token name="T_OPEN_TAG">&lt;?php </token>
+    <token name="T_ECHO">echo</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_VARIABLE">$relpath</token>
+    <token name="T_PHPDOX_SEMICOLON">;</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_CLOSE_TAG">?&gt;</token>
+    <token name="T_INLINE_HTML">uusivastuu.php'&gt;Sy&#xF6;t&#xE4; uusia vastuutyyppej&#xE4;&lt;/a&gt;&lt;/li&gt;</token>
+  </line>
+  <line no="34">
+    <token name="T_INLINE_HTML">        &lt;/ul&gt;</token>
+  </line>
+  <line no="35">
+    <token name="T_INLINE_HTML">&lt;/div&gt;</token>
+  </line>
+  <line no="36"/>
+</source>

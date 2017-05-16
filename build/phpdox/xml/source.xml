@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<source xmlns="http://xml.phpdox.net/src">
+  <dir name="/home/juho/Projects/lhportal/src">
+    <file name="insert_messudata.php" size="3444" time="2017-05-12T18:33:32+00:00" unixtime="1494614012" sha1="017917a679f791dcf62c7ecc5dd15ba93ce44eff" xml="tokens/insert_messudata.php.xml"/>
+    <file name="kulku.php" size="4859" time="2017-01-20T21:38:14+00:00" unixtime="1484948294" sha1="ac641850758e39caf35dad58b0e9789c0859082f" xml="tokens/kulku.php.xml"/>
+    <file name="index.php" size="6938" time="2017-05-15T20:18:52+00:00" unixtime="1494879532" sha1="7cdbefcde538823aefb28a21e8e7106bc0a4acff" xml="tokens/index.php.xml"/>
+    <file name="login.php" size="1323" time="2017-05-15T18:38:43+00:00" unixtime="1494873523" sha1="e91a016d1f59307fd019744362541a168886a551" xml="tokens/login.php.xml"/>
+    <dir name="phputils">
+      <file name="essential.php" size="56252" time="2017-05-16T16:42:30+00:00" unixtime="1494952950" sha1="984d1c4a7a7f98e9c3a62c72dc6a96b6967e4fee" xml="tokens/phputils/essential.php.xml"/>
+      <file name="htmlutils.php" size="4576" time="2017-05-12T18:35:54+00:00" unixtime="1494614154" sha1="8edd5b7429d3a84407da54e989d319ccb232aad1" xml="tokens/phputils/htmlutils.php.xml"/>
+      <file name="dbutils.php" size="5530" time="2017-04-08T07:46:37+00:00" unixtime="1491637597" sha1="163a698d40909a14b014eefb4f938e7386c5127c" xml="tokens/phputils/dbutils.php.xml"/>
+    </dir>
+    <file name="inserter.php" size="2209" time="2016-08-14T18:55:15+00:00" unixtime="1471200915" sha1="5c629eb35adac76a3e893293cfa8e0499242570a" xml="tokens/inserter.php.xml"/>
+    <file name="alkunav.php" size="642" time="2016-08-16T18:37:47+00:00" unixtime="1471372667" sha1="4a2672744175d0b945e239d3df3cc38ae723cb86" xml="tokens/alkunav.php.xml"/>
+    <file name="menu.php" size="1659" time="2017-05-15T18:38:43+00:00" unixtime="1494873523" sha1="7c79c488feff57fc57be20053468ea75c7b2c36f" xml="tokens/menu.php.xml"/>
+    <file name="nav.php" size="31" time="2016-07-03T10:30:00+00:00" unixtime="1467541800" sha1="dabd9710f001b96c6194f1eec28c434784321eb4" xml="tokens/nav.php.xml"/>
+    <file name="songs.php" size="12804" time="2017-05-15T18:38:43+00:00" unixtime="1494873523" sha1="0d06b39dc22071e2a8d2009177acad1c111e0a68" xml="tokens/songs.php.xml"/>
+    <dir name="puhujapankki">
+      <file name="index.php" size="7017" time="2017-02-14T19:14:11+00:00" unixtime="1487099651" sha1="d48292ea3c08615c8193b89a7b8cb4addfb9abe0" xml="tokens/puhujapankki/index.php.xml"/>
+    </dir>
+    <dir name="pres">
+      <file name="updatestructure.php" size="1569" time="2017-04-08T06:35:51+00:00" unixtime="1491633351" sha1="ace63d30ddceabd56ec937b26bcae39eb6fd2521" xml="tokens/pres/updatestructure.php.xml"/>
+      <file name="updatetracker.php" size="1015" time="2017-01-20T21:42:23+00:00" unixtime="1484948543" sha1="7350ad584544537dbd978533160b0524593e9e7b" xml="tokens/pres/updatetracker.php.xml"/>
+      <file name="diat.php" size="3499" time="2017-05-12T18:35:54+00:00" unixtime="1494614154" sha1="a728fe6668f279bb4649ecc9b76a6272a56038c4" xml="tokens/pres/diat.php.xml"/>
+    </dir>
+    <dir name="soittajapankki">
+      <file name="index.php" size="6988" time="2017-02-14T18:13:30+00:00" unixtime="1487096010" sha1="64a1455878c1d0b5af2799fa3dbecf5fca551cf1" xml="tokens/soittajapankki/index.php.xml"/>
+    </dir>
+    <file name="uusivastuu.php" size="4897" time="2017-04-08T07:47:31+00:00" unixtime="1491637651" sha1="0732561669266dbb719e24e773e64f977e0fd901" xml="tokens/uusivastuu.php.xml"/>
+  </dir>
+</source>

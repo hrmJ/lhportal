@@ -1,0 +1,199 @@
+<?xml version="1.0"?>
+<source xmlns="http://xml.phpdox.net/token">
+  <file xmlns="http://xml.phpdox.net/src" path="/home/juho/Projects/lhportal/src" file="login.php" realpath="/home/juho/Projects/lhportal/src/login.php" size="1323" time="2017-05-15T18:38:43+00:00" unixtime="1494873523" sha1="e91a016d1f59307fd019744362541a168886a551" relative="login.php"/>
+  <line no="1">
+    <token name="T_OPEN_TAG">&lt;?php</token>
+  </line>
+  <line no="2">
+    <token name="T_STRING">AddHeader</token>
+    <token name="T_PHPDOX_OPEN_BRACKET">(</token>
+    <token name="T_VARIABLE">$relpath</token>
+    <token name="T_PHPDOX_CLOSE_BRACKET">)</token>
+    <token name="T_PHPDOX_SEMICOLON">;</token>
+  </line>
+  <line no="3">
+    <token name="T_VARIABLE">$msg</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_PHPDOX_EQUAL">=</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_CONSTANT_ENCAPSED_STRING">"Kirjaudu sis&#xE4;&#xE4;n"</token>
+    <token name="T_PHPDOX_SEMICOLON">;</token>
+  </line>
+  <line no="4">
+    <token name="T_CLOSE_TAG">?&gt;</token>
+  </line>
+  <line no="5">
+    <token name="T_INLINE_HTML">&lt;body&gt;</token>
+  </line>
+  <line no="6"/>
+  <line no="7">
+    <token name="T_INLINE_HTML">&lt;section id='leftbanner'&gt;</token>
+  </line>
+  <line no="8">
+    <token name="T_INLINE_HTML">    &lt;span class='menuleft'&gt;</token>
+  </line>
+  <line no="9">
+    <token name="T_INLINE_HTML">    &lt;ul&gt;</token>
+  </line>
+  <line no="10">
+    <token name="T_INLINE_HTML">        &lt;li&gt;Majakkaportaali&lt;/li&gt;</token>
+  </line>
+  <line no="11">
+    <token name="T_INLINE_HTML">    &lt;/ul&gt;</token>
+  </line>
+  <line no="12">
+    <token name="T_INLINE_HTML">    &lt;/span&gt;</token>
+  </line>
+  <line no="13">
+    <token name="T_INLINE_HTML">&lt;/section&gt;</token>
+  </line>
+  <line no="14"/>
+  <line no="15">
+    <token name="T_INLINE_HTML">&lt;article id='maincontainer'&gt;</token>
+  </line>
+  <line no="16">
+    <token name="T_INLINE_HTML">    </token>
+    <token name="T_OPEN_TAG">&lt;?php </token>
+  </line>
+  <line no="17">
+    <token name="T_WHITESPACE">    </token>
+    <token name="T_IF">if</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_PHPDOX_OPEN_BRACKET">(</token>
+    <token name="T_ISSET">isset</token>
+    <token name="T_PHPDOX_OPEN_BRACKET">(</token>
+    <token name="T_VARIABLE">$loginfail</token>
+    <token name="T_PHPDOX_CLOSE_BRACKET">)</token>
+    <token name="T_PHPDOX_CLOSE_BRACKET">)</token>
+  </line>
+  <line no="18">
+    <token name="T_WHITESPACE">        </token>
+    <token name="T_VARIABLE">$msg</token>
+    <token name="T_PHPDOX_EQUAL">=</token>
+    <token name="T_CONSTANT_ENCAPSED_STRING">"V&#xE4;&#xE4;r&#xE4; k&#xE4;ytt&#xE4;j&#xE4;nimi tai salasana, yrit&#xE4; uudestaan."</token>
+    <token name="T_PHPDOX_SEMICOLON">;</token>
+  </line>
+  <line no="19">
+    <token name="T_WHITESPACE">    </token>
+    <token name="T_CLOSE_TAG">?&gt;</token>
+  </line>
+  <line no="20">
+    <token name="T_INLINE_HTML">    &lt;h2&gt;</token>
+    <token name="T_OPEN_TAG">&lt;?php </token>
+    <token name="T_ECHO">echo</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_VARIABLE">$msg</token>
+    <token name="T_PHPDOX_SEMICOLON">;</token>
+    <token name="T_CLOSE_TAG">?&gt;</token>
+    <token name="T_INLINE_HTML">&lt;/h2&gt;</token>
+  </line>
+  <line no="21">
+    <token name="T_INLINE_HTML">    &lt;form action="</token>
+    <token name="T_OPEN_TAG">&lt;?php </token>
+    <token name="T_ECHO">echo</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_VARIABLE">$_SERVER</token>
+    <token name="T_PHPDOX_OPEN_SQUARE">[</token>
+    <token name="T_CONSTANT_ENCAPSED_STRING">'PHP_SELF'</token>
+    <token name="T_PHPDOX_CLOSE_SQUARE">]</token>
+    <token name="T_PHPDOX_SEMICOLON">;</token>
+    <token name="T_CLOSE_TAG">?&gt;</token>
+    <token name="T_INLINE_HTML">" method="post"&gt;</token>
+  </line>
+  <line no="22">
+    <token name="T_INLINE_HTML">        &lt;p&gt;</token>
+  </line>
+  <line no="23">
+    <token name="T_INLINE_HTML">            &lt;label for="username"&gt;K&#xE4;ytt&#xE4;j&#xE4;nimi&lt;/label&gt;</token>
+  </line>
+  <line no="24">
+    <token name="T_INLINE_HTML">            &lt;input type="text" id="username" name="username" value="" maxlength="20" /&gt;</token>
+  </line>
+  <line no="25">
+    <token name="T_INLINE_HTML">        &lt;/p&gt;</token>
+  </line>
+  <line no="26">
+    <token name="T_INLINE_HTML">        &lt;p&gt;</token>
+  </line>
+  <line no="27">
+    <token name="T_INLINE_HTML">            &lt;label for="password"&gt;Salasana&lt;/label&gt;</token>
+  </line>
+  <line no="28">
+    <token name="T_INLINE_HTML">            &lt;input type="PASSWORD"" id="password" name="password" value="" maxlength="20" /&gt;</token>
+  </line>
+  <line no="29">
+    <token name="T_INLINE_HTML">        &lt;/p&gt;</token>
+  </line>
+  <line no="30">
+    <token name="T_INLINE_HTML">        &lt;p&gt;</token>
+  </line>
+  <line no="31">
+    <token name="T_INLINE_HTML">            &lt;input type="submit" id="loginbutton" value="Kirjaudu" /&gt;</token>
+  </line>
+  <line no="32">
+    <token name="T_INLINE_HTML">        &lt;/p&gt;</token>
+  </line>
+  <line no="33">
+    <token name="T_INLINE_HTML">    </token>
+    <token name="T_OPEN_TAG">&lt;?php</token>
+  </line>
+  <line no="34">
+    <token name="T_WHITESPACE">    </token>
+    <token name="T_IF">if</token>
+    <token name="T_PHPDOX_OPEN_BRACKET">(</token>
+    <token name="T_ISSET">isset</token>
+    <token name="T_PHPDOX_OPEN_BRACKET">(</token>
+    <token name="T_VARIABLE">$fromsongs</token>
+    <token name="T_PHPDOX_CLOSE_BRACKET">)</token>
+    <token name="T_PHPDOX_CLOSE_BRACKET">)</token>
+    <token name="T_PHPDOX_OPEN_CURLY">{</token>
+  </line>
+  <line no="35">
+    <token name="T_WHITESPACE">    </token>
+    <token name="T_CLOSE_TAG">?&gt;</token>
+  </line>
+  <line no="36">
+    <token name="T_INLINE_HTML">        &lt;p&gt;</token>
+  </line>
+  <line no="37">
+    <token name="T_INLINE_HTML">            Majakkamessun laululista on muuttanut osaksi Majakkaportaalia ja</token>
+  </line>
+  <line no="38">
+    <token name="T_INLINE_HTML">            siirtynyt kirjautumisen taakse. Jos et tied&#xE4; kirjautumistunnuksia,</token>
+  </line>
+  <line no="39">
+    <token name="T_INLINE_HTML">            tiedustele Juholta (juho.harme *at* gmail.com) /  045 136 1939. Tunnukset</token>
+  </line>
+  <line no="40">
+    <token name="T_INLINE_HTML">            l&#xF6;ytyv&#xE4;t my&#xF6;s majakan vastuunkantajan ABC-vihkosesta.</token>
+  </line>
+  <line no="41">
+    <token name="T_INLINE_HTML">        &lt;/p&gt;</token>
+  </line>
+  <line no="42">
+    <token name="T_INLINE_HTML">    </token>
+    <token name="T_OPEN_TAG">&lt;?php</token>
+  </line>
+  <line no="43">
+    <token name="T_WHITESPACE">    </token>
+    <token name="T_PHPDOX_CLOSE_CURLY">}</token>
+  </line>
+  <line no="44">
+    <token name="T_WHITESPACE">    </token>
+    <token name="T_CLOSE_TAG">?&gt;</token>
+  </line>
+  <line no="45">
+    <token name="T_INLINE_HTML">    &lt;/form&gt;</token>
+  </line>
+  <line no="46">
+    <token name="T_INLINE_HTML">&lt;/article&gt;</token>
+  </line>
+  <line no="47"/>
+  <line no="48">
+    <token name="T_INLINE_HTML">&lt;/body&gt;</token>
+  </line>
+  <line no="49">
+    <token name="T_INLINE_HTML">&lt;/html&gt;</token>
+  </line>
+  <line no="50"/>
+</source>

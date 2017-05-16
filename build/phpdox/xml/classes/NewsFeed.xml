@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns="http://xml.phpdox.net/src" full="NewsFeed" namespace="" name="NewsFeed" abstract="false" final="false" start="1361" end="1380">
+  <file path="/home/juho/Projects/lhportal/src/phputils" file="essential.php" realpath="/home/juho/Projects/lhportal/src/phputils/essential.php" size="56252" time="2017-05-16T16:42:30+00:00" unixtime="1494952950" sha1="984d1c4a7a7f98e9c3a62c72dc6a96b6967e4fee" relative="phputils/essential.php"/>
+  <docblock>
+    <description/>
+    <covers value="ShowNewsFeed"/>
+  </docblock>
+  <constructor name="__construct" start="1364" end="1368" abstract="false" final="false" static="false" visibility="public"/>
+  <method name="FetchNewsContent" start="1370" end="1374" abstract="false" final="false" static="false" visibility="public"/>
+  <method name="output" start="1376" end="1379" abstract="false" final="false" static="false" visibility="public"/>
+</class>

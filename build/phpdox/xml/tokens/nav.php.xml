@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<source xmlns="http://xml.phpdox.net/token">
+  <file xmlns="http://xml.phpdox.net/src" path="/home/juho/Projects/lhportal/src" file="nav.php" realpath="/home/juho/Projects/lhportal/src/nav.php" size="31" time="2016-07-03T10:30:00+00:00" unixtime="1467541800" sha1="dabd9710f001b96c6194f1eec28c434784321eb4" relative="nav.php"/>
+  <line no="1">
+    <token name="T_INLINE_HTML">&lt;a href="index.php"&gt;Alkuun&lt;/a&gt;</token>
+  </line>
+  <line no="2"/>
+</source>

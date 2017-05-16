@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<source xmlns="http://xml.phpdox.net/token">
+  <file xmlns="http://xml.phpdox.net/src" path="/home/juho/Projects/lhportal/src" file="alkunav.php" realpath="/home/juho/Projects/lhportal/src/alkunav.php" size="642" time="2016-08-16T18:37:47+00:00" unixtime="1471372667" sha1="4a2672744175d0b945e239d3df3cc38ae723cb86" relative="alkunav.php"/>
+  <line no="1">
+    <token name="T_INLINE_HTML">&lt;section id='leftbanner'&gt;</token>
+  </line>
+  <line no="2"/>
+  <line no="3"/>
+  <line no="4">
+    <token name="T_INLINE_HTML">    &lt;form action="</token>
+    <token name="T_OPEN_TAG">&lt;?php </token>
+    <token name="T_ECHO">echo</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_VARIABLE">$url</token>
+    <token name="T_PHPDOX_SEMICOLON">;</token>
+    <token name="T_CLOSE_TAG">?&gt;</token>
+    <token name="T_INLINE_HTML">" method="GET"&gt;</token>
+  </line>
+  <line no="5">
+    <token name="T_INLINE_HTML">        &lt;span class='menuleft'&gt;</token>
+  </line>
+  <line no="6">
+    <token name="T_INLINE_HTML">            &lt;ul&gt;</token>
+  </line>
+  <line no="7">
+    <token name="T_INLINE_HTML">                &lt;li&gt;&lt;i class="fa fa-bars" id='settings' aria-hidden="true"&gt;&lt;/i&gt;&lt;/li&gt;</token>
+  </line>
+  <line no="8">
+    <token name="T_INLINE_HTML">                &lt;li id='homeli' title='Takaisin alkun&#xE4;kym&#xE4;&#xE4;n'&gt;Majakkaportaali&lt;/li&gt;</token>
+  </line>
+  <line no="9">
+    <token name="T_INLINE_HTML">            &lt;/ul&gt;</token>
+  </line>
+  <line no="10">
+    <token name="T_INLINE_HTML">        &lt;/span&gt;</token>
+  </line>
+  <line no="11">
+    <token name="T_INLINE_HTML">        &lt;span class='menuright'&gt;</token>
+  </line>
+  <line no="12">
+    <token name="T_INLINE_HTML">            &lt;ul&gt;</token>
+  </line>
+  <line no="13">
+    <token name="T_INLINE_HTML">                &lt;li&gt; </token>
+    <token name="T_OPEN_TAG">&lt;?php </token>
+    <token name="T_ECHO">echo</token>
+    <token name="T_WHITESPACE"> </token>
+    <token name="T_VARIABLE">$vastuulist</token>
+    <token name="T_PHPDOX_SEMICOLON">;</token>
+    <token name="T_WHITESPACE">  </token>
+    <token name="T_CLOSE_TAG">?&gt;</token>
+    <token name="T_INLINE_HTML"> &lt;/li&gt;</token>
+  </line>
+  <line no="14">
+    <token name="T_INLINE_HTML">            &lt;/ul&gt;</token>
+  </line>
+  <line no="15">
+    <token name="T_INLINE_HTML">        &lt;/span&gt;</token>
+  </line>
+  <line no="16">
+    <token name="T_INLINE_HTML">        &lt;input name='kausi' id='kausi_input' class='hidden'&gt;</token>
+  </line>
+  <line no="17">
+    <token name="T_INLINE_HTML">        &lt;input type='submit' name='seasonsubmit' class='hidden' id='seasonsubmit'&gt;</token>
+  </line>
+  <line no="18">
+    <token name="T_INLINE_HTML">    &lt;/form&gt;</token>
+  </line>
+  <line no="19"/>
+  <line no="20">
+    <token name="T_INLINE_HTML">&lt;/section&gt;</token>
+  </line>
+  <line no="21"/>
+  <line no="22"/>
+</source>

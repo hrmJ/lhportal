@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns="http://xml.phpdox.net/src" full="VerseInserter" namespace="" name="VerseInserter" abstract="false" final="false" start="962" end="976">
+  <file path="/home/juho/Projects/lhportal/src/phputils" file="essential.php" realpath="/home/juho/Projects/lhportal/src/phputils/essential.php" size="56252" time="2017-05-16T16:42:30+00:00" unixtime="1494952950" sha1="984d1c4a7a7f98e9c3a62c72dc6a96b6967e4fee" relative="phputils/essential.php"/>
+  <constructor name="__construct" start="964" end="971" abstract="false" final="false" static="false" visibility="public">
+    <parameter name="messuid" byreference="false" type="{unknown}"/>
+    <parameter name="con" byreference="false" type="{unknown}"/>
+    <inline>
+      <comment value="Poista kaikki aikaisemmat tälle päivälle merkityt laulut" line="967"/>
+    </inline>
+  </constructor>
+  <method name="InsertSong" start="973" end="975" abstract="false" final="false" static="false" visibility="public">
+    <parameter name="type" byreference="false" type="{unknown}"/>
+    <parameter name="name" byreference="false" type="{unknown}"/>
+  </method>
+</class>

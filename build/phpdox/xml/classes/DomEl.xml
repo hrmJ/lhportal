@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns="http://xml.phpdox.net/src" full="DomEl" namespace="" name="DomEl" abstract="false" final="false" start="100" end="139">
+  <file path="/home/juho/Projects/lhportal/src/phputils" file="htmlutils.php" realpath="/home/juho/Projects/lhportal/src/phputils/htmlutils.php" size="4576" time="2017-05-12T18:35:54+00:00" unixtime="1494614154" sha1="8edd5b7429d3a84407da54e989d319ccb232aad1" relative="phputils/htmlutils.php"/>
+  <constructor name="__construct" start="102" end="118" abstract="false" final="false" static="false" visibility="public">
+    <parameter name="tag" byreference="false" type="{unknown}"/>
+    <parameter name="text" byreference="false" type="string" default="&quot;&quot;"/>
+    <parameter name="parent" byreference="false" type="{unknown}" default="" constant="Null"/>
+    <parameter name="class" byreference="false" type="string" default="&quot;&quot;"/>
+    <parameter name="id" byreference="false" type="string" default="&quot;&quot;"/>
+    <inline>
+      <comment value="the parent variable is set if the element is nested inside another already created one" line="103"/>
+    </inline>
+  </constructor>
+  <method name="AddAttribute" start="121" end="125" abstract="false" final="false" static="false" visibility="public">
+    <parameter name="attr" byreference="false" type="{unknown}"/>
+    <parameter name="value" byreference="false" type="{unknown}"/>
+  </method>
+  <method name="Show" start="127" end="129" abstract="false" final="false" static="false" visibility="public"/>
+  <method name="AddChild" start="131" end="137" abstract="false" final="false" static="false" visibility="public">
+    <parameter name="el" byreference="false" type="{unknown}"/>
+    <inline>
+      <comment value="ini_set('display_errors', 1);" line="132"/>
+      <comment value="ini_set('display_startup_errors', 1);" line="133"/>
+      <comment value="error_reporting(E_ALL);" line="134"/>
+    </inline>
+  </method>
+  <extenders>
+    <extender full="SongDom" namespace="" name="SongDom"/>
+  </extenders>
+</class>

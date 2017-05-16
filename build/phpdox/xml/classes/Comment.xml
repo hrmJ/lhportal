@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns="http://xml.phpdox.net/src" full="Comment" namespace="" name="Comment" abstract="false" final="false" start="3" end="29">
+  <file path="/home/juho/Projects/lhportal/src/phputils" file="htmlutils.php" realpath="/home/juho/Projects/lhportal/src/phputils/htmlutils.php" size="4576" time="2017-05-12T18:35:54+00:00" unixtime="1494614154" sha1="8edd5b7429d3a84407da54e989d319ccb232aad1" relative="phputils/htmlutils.php"/>
+  <constructor name="__construct" start="6" end="26" abstract="false" final="false" static="false" visibility="public">
+    <parameter name="commentdata" byreference="false" type="{unknown}"/>
+    <inline>
+      <comment value="$persondiv = new DomEl(&quot;div&quot;,&quot;&quot;,$outercont);" line="11"/>
+      <comment value="$persondiv-&gt;AddAttribute('class','commentator');" line="12"/>
+      <comment value="$cdate = strtotime($commentdata[&quot;comment_time&quot;]);" line="13"/>
+      <comment value="$bolded = new DomEl(&quot;span&quot;,$commentdata[&quot;commentator&quot;] . &quot; kommentoi &quot; . date('j.n.Y',$cdate) . &quot;: &quot;, $persondiv);" line="14"/>
+    </inline>
+  </constructor>
+</class>

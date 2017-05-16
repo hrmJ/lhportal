@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<index xmlns="http://xml.phpdox.net/src" basedir="/home/juho/Projects/lhportal/src">
+  <namespace name="">
+    <class name="SongInserter" src="phputils/essential.php" xml="classes/SongInserter.xml"/>
+    <class name="VerseInserter" src="phputils/essential.php" xml="classes/VerseInserter.xml"/>
+    <class name="MessuPresentation" src="phputils/essential.php" xml="classes/MessuPresentation.xml"/>
+    <class name="SongDom" src="phputils/essential.php" xml="classes/SongDom.xml"/>
+    <class name="NewsFeed" src="phputils/essential.php" xml="classes/NewsFeed.xml"/>
+    <class name="Comment" src="phputils/htmlutils.php" xml="classes/Comment.xml"/>
+    <class name="HtmlTable" src="phputils/htmlutils.php" xml="classes/HtmlTable.xml"/>
+    <class name="Row" src="phputils/htmlutils.php" xml="classes/Row.xml"/>
+    <class name="CommentList" src="phputils/htmlutils.php" xml="classes/CommentList.xml"/>
+    <class name="DomEl" src="phputils/htmlutils.php" xml="classes/DomEl.xml"/>
+    <class name="DbCon" src="phputils/dbutils.php" xml="classes/DbCon.xml"/>
+  </namespace>
+</index>

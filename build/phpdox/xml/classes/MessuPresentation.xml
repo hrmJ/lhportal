@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns="http://xml.phpdox.net/src" full="MessuPresentation" namespace="" name="MessuPresentation" abstract="false" final="false" start="978" end="1159">
+  <file path="/home/juho/Projects/lhportal/src/phputils" file="essential.php" realpath="/home/juho/Projects/lhportal/src/phputils/essential.php" size="56252" time="2017-05-16T16:42:30+00:00" unixtime="1494952950" sha1="984d1c4a7a7f98e9c3a62c72dc6a96b6967e4fee" relative="phputils/essential.php"/>
+  <constructor name="__construct" start="980" end="1001" abstract="false" final="false" static="false" visibility="public">
+    <parameter name="messuid" byreference="false" type="{unknown}"/>
+    <parameter name="con" byreference="false" type="{unknown}"/>
+    <parameter name="messuheader" byreference="false" type="{unknown}"/>
+    <parameter name="type" byreference="false" type="{unknown}"/>
+  </constructor>
+  <method name="GetMultiSongs" start="1004" end="1018" abstract="false" final="false" static="false" visibility="public">
+    <parameter name="con" byreference="false" type="{unknown}"/>
+    <parameter name="tyyppi" byreference="false" type="{unknown}"/>
+    <inline>
+      <comment value="Nimeämiseroja js:n ja php:n välillä, TODO poista tämä. --&gt;" line="1006"/>
+      <comment value="&lt;--" line="1011"/>
+    </inline>
+  </method>
+  <method name="PrintSongInfo" start="1020" end="1024" abstract="false" final="false" static="false" visibility="public">
+    <parameter name="name" byreference="false" type="{unknown}"/>
+    <parameter name="role" byreference="false" type="{unknown}"/>
+  </method>
+  <method name="CreateHtml" start="1026" end="1102" abstract="false" final="false" static="false" visibility="public">
+    <parameter name="onbackground" byreference="false" type="boolean" default="false"/>
+    <inline>
+      <comment value="Normivastuut" line="1053"/>
+    </inline>
+  </method>
+  <method name="UploadTrackingInfo" start="1105" end="1157" abstract="false" final="false" static="false" visibility="public">
+    <parameter name="con" byreference="false" type="{unknown}"/>
+    <inline>
+      <comment value="Tallenna tiedot messun etenemisen seuraamista varten" line="1106"/>
+      <comment value="1. Poista mahdolliset vanhat tiedot tästä messusta" line="1108"/>
+      <comment value="$con-&gt;insert(&quot;messukulku&quot;, Array(&quot;messu_id&quot;=&gt;$this-&gt;id,&quot;&quot;=&gt;$date,&quot;content&quot;=&gt;$_POST[&quot;newcomment_text&quot;],&quot;commentator&quot;=&gt;$_POST[&quot;commentator&quot;],&quot;theme&quot;=&gt;$_POST[&quot;commenttheme&quot;]));" line="1146"/>
+      <comment value="$struct_div-&gt;AddChild($this-&gt;singlesongs[&quot;Alkulaulu&quot;]);" line="1147"/>
+      <comment value="$struct_div-&gt;AddChild($this-&gt;singlesongs[&quot;Päivän laulu&quot;]);" line="1148"/>
+      <comment value="foreach($this-&gt;wssongs as $song){" line="1149"/>
+      <comment value="$struct_div-&gt;AddChild($song);" line="1150"/>
+      <comment value="}" line="1151"/>
+      <comment value="$struct_div-&gt;AddChild($this-&gt;pyha);" line="1152"/>
+      <comment value="$struct_div-&gt;AddChild($this-&gt;jk);" line="1153"/>
+      <comment value="foreach($this-&gt;comsongs as $song){" line="1154"/>
+      <comment value="$struct_div-&gt;AddChild($song);" line="1155"/>
+      <comment value="}" line="1156"/>
+    </inline>
+  </method>
+</class>
