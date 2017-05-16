@@ -1355,6 +1355,9 @@ function LoadExistingServices($con){
 
 }
 
+/**
+ * @covers ShowNewsFeed
+ */
 class NewsFeed
 {
 
@@ -1366,6 +1369,7 @@ class NewsFeed
 
     public function FetchNewsContent()
     {
+        $this->section = new DomEl('section','');
 
     }
 

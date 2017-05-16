@@ -42,7 +42,7 @@ describe('Basic test suite', function() {
     describe('Newsfeed tests', function() {
         describe('', function() {
           it('The desktop user sees the newsfeed', function(done) {
-            this.timeout('2s');
+            this.timeout('4s');
             this.nightmare
                 .goto('http://localhost/' + this.rootaddress + '/index.php')
                 .exists("#newsfeed")
