@@ -35,10 +35,31 @@ Selainpohjainen testaus on toteutettu Nightmare + mocha + chai -yhdistelmällä
     npm install nightmare
     npm install mocha
 
+### Phpunit
+
+Php-testien kanssa alkuun pääsee [phpunitilla](https://phpunit.de/getting-started.html)
+
+HUOM!  Vaatii php:n >= 5.6
+
+Asennus on simppeli, lataa vain paketti, jonka valinnaan mukaan voi kopioida /usr/local/bin-kansioon
+
+    wget https://phar.phpunit.de/phpunit.phar 
+    chmod +x phpunit.phar
+    sudo mv phpunit.phar /usr/local/bin/phpunit
+
+Aja testit (esimerkiksi) komennolla
+
+    phpunit --bootstrap src/phputils/essential.php --testdox tests/IndexTest
 
 ## Testaaminen
 
 Aja `npm test` projektin juurikansiossa.
+
+## Dokumentaation luonti
+
+Javascript-dokumentaatio jsDocilla
+PHP-dokumentaatio phpdoxilla
+
 
 
 ## SQL-taulujen luonti
