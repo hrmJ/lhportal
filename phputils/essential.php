@@ -271,10 +271,18 @@ function MessuDetails($id, $url=''){
     $table = AddSection(True,"centercontent",$url,"vastuulisttable");
 
     if(sizeof($result)==0){
-        $msg = "<p>Et ole vielä määritellyt yhtään vastuutehtävää. Voit lisätä 
-            vastuutehtäviä <a class='simplelink' href='uusivastuu.php'>Tästä linkistä</a>. </p>";
-        return $msg;
+        $vastuut = $con->select('vastuut',Array('vastuu'),Array(),"distinct")->fetchAll();
+        foreach($vastuut as $vastuu){
+            $con->insert("vastuut", Array("messu_id"=>$id,"vastuu"=>$vastuu["vastuu"],"vastuullinen"=>""));
+        }
+        $result = $con->select("vastuut",Array("vastuu","vastuullinen","id"),Array(Array("messu_id","=",$id)))->fetchAll();
+        if(sizeof($vastuut)==0){
+            $msg = "<p>Et ole vielä määritellyt yhtään vastuutehtävää. Voit lisätä 
+                vastuutehtäviä <a class='simplelink' href='uusivastuu.php'>Tästä linkistä</a>. </p>";
+            return $msg;
+        }
     }
+
     foreach($result as $row){
         $tr = $table->AddRow(Array($row["vastuu"],$row["vastuullinen"]));
         if (empty($row["vastuullinen"])){
