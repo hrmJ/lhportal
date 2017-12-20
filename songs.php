@@ -53,7 +53,7 @@ $con = new DbCon();
 
 <?php
 $kausi = SetSeason($con);
-$vastuulist = CreateNavi(False, $url, True);
+$vastuulist = CreateNavi(False, "", True);
 require('menu.php');
 ?>
 
@@ -78,7 +78,7 @@ require('menu.php');
     </div>
 </section>
 
-<form id="sform" method="post" action="<?php echo $url; ?>"> <?php
+<form id="sform" method="post" action=""> <?php
 UpdateSongData($con);
 ?>
 

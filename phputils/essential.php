@@ -356,6 +356,7 @@ function GetDateList($con){
     }
     else{
         $dateset = False;
+        $datechange = False;
     }
     $select = new DomEl("select");
     $select->AddAttribute('id',"pvmlist");
@@ -397,10 +398,12 @@ function SongListForInsertion($pickedid, $con, $songtypes){
         #Säilytä järjestys ja täytä kaikki tietokannasta löytyvät
         $tr = $table->AddRow(Array($songtype,"",""));
         $songtitle = "";
+        $thisrow = Null;
         foreach($result as $row){
             #Käy jokaisen laulutyypin osalta läpi koko tietokantatulos ja täytä, jos löytyy
             if($row["tyyppi"]==$songtype){
                 $songtitle = $row["nimi"];
+                $thisrow = $row;
                 break;
             }
         }
@@ -409,7 +412,7 @@ function SongListForInsertion($pickedid, $con, $songtypes){
         $input->AddAttribute("class", "linestyle songeditinput");
         $tr->cells[0]->AddAttribute("class","left");
         $tr->cells[1]->AddAttribute("class","right");
-        CreateLyricsLink($tr, $row["nimi"]);
+        CreateLyricsLink($tr, $thisrow["nimi"]);
 
     }
 
@@ -480,7 +483,7 @@ function SongList($con, $id){
 }
 
 function SaveGetParams(){
-    $urlparams .= "?";
+    $urlparams = "?";
 
     if (isset($_GET)){
         //Tallenna parametrit, jotta sama sivu latautuisi myös tallennettaessa tietoja
@@ -708,7 +711,7 @@ function Liturgiset($con, $type, $pickedid){
     foreach($versions as $version){
         $option = new DomEl('option',$version["name"],$select);
         $option->AddAttribute("id","link_" . $version["songname"]);
-        if(isset($result)){
+        if(isset($result[0])){
             #Valtse valmiiksi jumalan karisa/pyhä, jos jo asetettu
             if($version["songname"]==$result[0]["nimi"]){
                 $option->AddAttribute("selected","selected");

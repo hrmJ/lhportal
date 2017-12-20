@@ -6,7 +6,7 @@ if (isset($_GET["logout"])){
 }
 require('../phputils/essential.php');
 $embed=True;
-require('biblecrawl.php');
+require('htmlslides/biblecrawl.php');
 #session_unset();
 if (!isset( $_SESSION['user_id'] )){
     if (isset($_POST["username"],$_POST["password"])){
@@ -43,7 +43,7 @@ $con = new DbCon();
  <link rel="stylesheet" href="../font-awesome-4.6.3/css/font-awesome.min.css">
 <link href="https://fonts.googleapis.com/css?family=Nothing+You+Could+Do|Quicksand" rel="stylesheet">
 <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
-<link rel="stylesheet" href="tyylit2.css">
+<link rel="stylesheet" href="htmlslides/tyylit2.css">
 <title>Majakkamessu</title>
 </head>
 
@@ -101,7 +101,7 @@ $messu->CreateHtml();
 <?php FetchSongsForSlides($con); ?>
 </div>
 
-<script src='presenter.js'></script>
+<script src='htmlslides/presenter.js'></script>
 
 <iframe id="updaterframe"></iframe>
 

@@ -4,12 +4,12 @@ if (isset($_GET["logout"])){
     session_unset();
     session_destroy();
 }
+$loginfail = True;
 require('phputils/essential.php');
 #session_unset();
 if (!isset( $_SESSION['user_id'] )){
     if (isset($_POST["username"],$_POST["password"])){
         $valid = validate_login($_POST["username"],$_POST["password"]);
-        $loginfail = True;
         if ($valid){
             //if the login info passed validation and no active session, try to login
             $username = filter_var($_POST['username'], FILTER_SANITIZE_STRING);
