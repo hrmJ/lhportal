@@ -1122,4 +1122,16 @@ function SongList(){
         };
     }
 
+$(document).ready(function(){
+    // Häckäillään kolehti-infon syötöt jqueryllä
+    // Alkaa huomata, että intressit ovat uuden portaalin kehittämisessä...
+    $("select[name='kolehtikohde']").on("change",function(){
+        console.log("moro");
+    });
 
+    $(".unhider").click(function(){
+        $(this).parents("div").next().slideToggle();
+
+    });
+
+})

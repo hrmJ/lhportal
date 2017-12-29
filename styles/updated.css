@@ -1278,3 +1278,22 @@ a.boxclose{
 }
 
 
+.below_hidden{
+    margin-top:1em;
+    padding-top:1em;
+    border-top:1px solid grey;
+    display:none;
+}
+
+.labeldiv{
+    display:flex;
+}
+.labeldiv > div:first-child{
+    width:7em;
+    margin-right:0.3em;
+}
+
+.some_mtop{
+    margin-top:1em;
+}
+

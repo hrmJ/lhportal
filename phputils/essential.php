@@ -21,15 +21,15 @@ function AddHeader($relpath="",$jquery=true){
      <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
      <meta name='viewport' content='width=device-width, initial-scale=1'>
      <link rel='stylesheet' href='$relpath" . "styles/updated.css?v=ljd'" . time() .">
-     <link rel='stylesheet' href='$relpath" . "font-awesome-4.6.3/css/font-awesome.min.css'>
-     <script src='$relpath" . "scripts/essential.js?v='" . time() ."></script>";
+     <link rel='stylesheet' href='$relpath" . "font-awesome-4.6.3/css/font-awesome.min.css'>";
      if($jquery==true){
          echo '<script src="//code.jquery.com/jquery-1.10.2.js"></script>
                <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
                <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
                ';
      }
-    echo"<title>Majakkaportaali 0.1</title></head>";
+    echo "<script src='$relpath" . "scripts/essential.js?v='" . time() ."></script>";
+    echo "<title>Majakkaportaali 0.1</title></head>";
 
      #<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
      #<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>

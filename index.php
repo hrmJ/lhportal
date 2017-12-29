@@ -97,6 +97,27 @@ CreateNavi($vastuulist, $url, False);
         if(isset($h2)){
             echo $h2->Show();
             echo $themeform->Show();
+            ?>
+            <div class="some_mtop" ><a class="unhider" href="javascript:void(0)">Näytä kolehtitiedot</a></div>
+            <div class="below_hidden">
+                <div class='labeldiv'>
+                    <div>Kolehtikohde</div>
+                    <div>
+                        <select name="kolehtikohde">
+                            <option>Myanmar</option>
+                            <option>Kimbilio</option>
+                        </select>
+                    </div>
+                </div>
+                <div class='labeldiv'>
+                    <div>Kerättiin (€):</div>
+                    <div>
+                        <input type="number" name="kolehti_amount" value="0" step="0.10">
+                    </div>
+                    <div><button id="save_kolehti">Tallenna</button></div>
+                </div>
+            </div>
+            <?php
         }
 
         echo $messulist; 
@@ -124,6 +145,7 @@ CreateNavi($vastuulist, $url, False);
             ?>
             </div>
             </form>
+            <div>Moro</div>
             <form name='comment_edit_form' id='comment_edit_form' method="post" action="<?php echo $url;?>">
             <?php
                 LoadComments($con);
@@ -198,10 +220,23 @@ CreateNavi($vastuulist, $url, False);
             $('<div id="news"><a class="simplelink" href="files/kysely.pptx">Majakkamessun kyselyn tulokset</a></div>').prependTo("#contentlist").addClass("comment_container");
         });
 
+
     <?php
+    }
+        else{
+
+    ?>
+
+        
+        
+        
+    <?php
+        
     }
 
     ?>
+
+
 
 </script>
 

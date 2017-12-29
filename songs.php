@@ -5,6 +5,8 @@ if (isset($_GET["logout"])){
     session_destroy();
 }
 require('phputils/essential.php');
+$loginfail = True;
+$valid = False;
 #session_unset();
 if (!isset( $_SESSION['user_id'] )){
     if (isset($_POST["username"],$_POST["password"])){
@@ -209,10 +211,6 @@ $url = SaveGetParams();
 
 
             <div id="slidecreator">
-                <ul>
-                    <li>Valitse tausta</li>
-                    <li>Valitse otsikoiden taustaväri</li>
-                </ul>
                 <p><a href='javascript:void(0);' onClick='CreateSlides(<?php echo $pickedid; ?>);'>Luo diat</a></p>
             </div>
 
