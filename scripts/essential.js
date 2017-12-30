@@ -23,8 +23,8 @@ var globalservicelist = null;
                                 var newval = $(this).parents(".other-option").find("input").val();
                                 //TODO: make this not depend on the select tag's name
                                 $("<option value=" + newval + "> " + newval + "</option>")
-                                    .insertBefore($("select[name='addedclass']").find("option:last-child"));
-                                $("select[name='addedclass']").each(function(){
+                                    .insertBefore($("select[name='kolehti_tavoite']").find("option:last-child"));
+                                $("select[name='kolehti_tavoite']").each(function(){
                                     try{
                                         $(this).select_withtext("refresh");
                                     }
