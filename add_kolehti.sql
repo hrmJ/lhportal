@@ -1,2 +1,2 @@
 ALTER TABLE messut ADD COLUMN kolehtikohde varchar(99) DEFAULT NULL;
-ALTER TABLE messut ADD COLUMN kolehtia_keratty int(10) DEFAULT 0;
+ALTER TABLE messut ADD COLUMN kolehtia_keratty decimal(60,2) DEFAULT 0;

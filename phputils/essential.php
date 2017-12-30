@@ -24,8 +24,10 @@ function AddHeader($relpath="",$jquery=true){
      <link rel='stylesheet' href='$relpath" . "font-awesome-4.6.3/css/font-awesome.min.css'>";
      if($jquery==true){
          echo '<script src="//code.jquery.com/jquery-1.10.2.js"></script>
-               <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-               <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+               <!-- <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script> -->
+               <script src="scripts/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+               <!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"> -->
+               <link rel="stylesheet" href="scripts/jquery-ui-1.12.1.custom/jquery-ui.min.css">
                ';
      }
     echo "<script src='$relpath" . "scripts/essential.js?v='" . time() ."></script>";

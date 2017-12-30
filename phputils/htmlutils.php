@@ -120,7 +120,7 @@ class DomEl{
 
     public function AddAttribute($attr, $value){
         $domAttribute = $this->dom->createAttribute($attr);
-        $domAttribute->value = $value;
+        $domAttribute->value = htmlspecialchars($value);
         $this->el->appendChild($domAttribute);
     }
 

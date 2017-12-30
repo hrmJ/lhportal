@@ -1112,6 +1112,10 @@ a.boxclose{
     width:15em;
 }
 
+label{
+    margin-right:1em;
+}
+
 #filters{
     margin-bottom:2em;
     font-size:80%;
@@ -1279,15 +1283,22 @@ a.boxclose{
 
 
 .below_hidden{
+    position:relative;
     margin-top:1em;
-    padding-top:1em;
-    border-top:1px solid grey;
+    padding:1em;
+    background:#635f5f91;
     display:none;
+    border-radius:10px;
+    color:white;
+    font-size:0.8em;
 }
 
 .labeldiv{
-    display:flex;
+    display: flex;
+    width: 100%;
+    align-items: center;
 }
+
 .labeldiv > div:first-child{
     width:7em;
     margin-right:0.3em;
@@ -1297,3 +1308,21 @@ a.boxclose{
     margin-top:1em;
 }
 
+.tempdiv{
+    display:none;
+    background: #a76f6fed;
+    border-radius: 5px;
+    padding: 1em;
+    color: white;
+    position: absolute;
+    z-index: 10;
+    left: 5%;
+    top: -5%;
+}
+
+input[name='kolehti_amount']{
+    width:4em;
+    margin-right:1em;
+}
+
+.ui-widget{font-size:11px !important;} 

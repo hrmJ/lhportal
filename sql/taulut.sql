@@ -34,6 +34,8 @@ CREATE TABLE messut (
   pvm date NOT NULL,
   teema varchar(100) NOT NULL,
   info varchar(9999),
+  kolehtikohde varchar(99) DEFAULT NULL,
+  kolehtia_keratty decimal(60,2) DEFAULT 0,
   PRIMARY KEY (id)
 );
 

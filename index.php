@@ -110,11 +110,21 @@ CreateNavi($vastuulist, $url, False);
                     </div>
                 </div>
                 <div class='labeldiv'>
-                    <div>Kerättiin (€):</div>
+                    <div>Tarkempi tavoite</div>
                     <div>
-                        <input type="number" name="kolehti_amount" value="0" step="0.10">
+                        <select name="kolehti_tavoite">
+                            <option>Ekat 1000 €</option>
+                            <option>porakaivo</option>
+                            <option>Uusi tavoite</option>
+                        </select>
                     </div>
-                    <div><button id="save_kolehti">Tallenna</button></div>
+                </div>
+                <div class="labeldiv">
+                     <div>Kerättiin (€):</div> 
+                    <div><input type="text" pattern="[0-9]+([\.,][0-9]+)?" name="kolehti_amount" value="0" step="0.10"></div>
+                </div>
+                <div class="some_mtop">
+                    <button id="save_kolehti">Tallenna</button>
                 </div>
             </div>
             <?php
