@@ -1350,9 +1350,15 @@ $(document).ready(function(){
             {"id":$("input[name='messu_id_comments']").val(),
             "keratty":$("[name='kolehti_amount']").val().replace(",","."),
             "kohde":$("[name='kolehtikohde']").val(),
+            "tavoite":$("[name='kolehti_tavoite']").val(),
+            "total_goal":$("[name='total_goal']").val(),
             },
+            /**
+             *
+             * Näytä ilmoitus päivityksestä ja piilota 2 sekunnin kuluttua
+             *
+             */
             function(data){
-                console.log(data);
                 $("<div class='tempdiv'>Kolehtitiedot päivitetty.</div>").prependTo(button.parent());
                 $(".tempdiv").fadeIn("slow");
                 setTimeout(function(){
