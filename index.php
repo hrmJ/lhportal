@@ -111,13 +111,12 @@ CreateNavi($vastuulist, $url, False);
                 </div>
                 <div class='labeldiv'>
                     <div>Tarkempi tavoite</div>
-                    <div>
+                    <div id='tarkempitavoite'>
                         <select name="kolehti_tavoite">
-                            <option>Ekat 1000 €</option>
-                            <option>porakaivo</option>
                             <option>Uusi tavoite</option>
                         </select>
                     </div>
+                    <div>Kokonaistavoite</div><div><input name="total_goal"></div>
                 </div>
                 <div class="labeldiv">
                      <div>Kerättiin (€):</div> 

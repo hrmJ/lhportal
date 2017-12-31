@@ -123,6 +123,15 @@ CREATE TABLE liturgiset (
   PRIMARY KEY (id)
 );
 
+
+CREATE TABLE kolehtitavoitteet (
+  id int(10) unsigned NOT NULL AUTO_INCREMENT,
+  kohde varchar(100) DEFAULT NULL,
+  tavoite varchar(100) DEFAULT NULL,
+  tavoitemaara decimal(60,2) DEFAULT 0,
+  PRIMARY KEY (id)
+);
+
 --CREATE UNIQUE INDEX idx_liturgiset ON liturgiset(name);
 
 INSERT INTO `liturgiset` (`songtype`, `songname`, `name`) VALUES ('Jumalan karitsa', 'jk_v1', 'Versio 1 (Riemumessusta)') ON DUPLICATE KEY UPDATE name=name;

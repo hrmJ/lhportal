@@ -1297,12 +1297,19 @@ label{
     display: flex;
     width: 100%;
     align-items: center;
+    flex-flow: row wrap;
 }
 
 .labeldiv > div:first-child{
     width:7em;
     margin-right:0.3em;
 }
+
+.labeldiv > div:nth-child(3){
+    margin-left:0.3em;
+    margin-right:0.3em;
+}
+
 
 .some_mtop{
     margin-top:1em;

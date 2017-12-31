@@ -1312,11 +1312,35 @@ $(document).ready(function(){
      * Päivittää tiedon johonkin kohteeseen kerätystä kokonaismäärästä kolehtia.
      *
      */
-    function UpdateKolehtiAmount(){
-    
+    function UpdateKolehtiTavoite(){
+       $.getJSON("ajax/get_kolehti.php",{"kohde":$("[name='kolehtikohde']").val()},function(data){
+           var $select = $("<select name='kolehti_tavoite'>");
+           var target_goal = Number();
+           $.each(data,function(idx, el){
+               $select.append("<option value='"+el.tavoite+"'>"+el.tavoite+" (yhteensä kerätty "+el.amount+"€)</option>");
+               target_goal = parseFloat(el.goal);
+           });
+           $select.append("<option>Uusi tavoite</option>");
+           $("#tarkempitavoite").html("").append($select);
+           $select.select_withtext();
+           UpdateTavoiteMaara();
+       });
     }
 
-    $("[name='kolehti_tavoite']").select_withtext();
+    /**
+     *
+     * Hakee tähän kohteeseen liittyvän kokonaistavoitesumman
+     * ja syöttää sen tekstikenttään.
+     *
+     */
+    function UpdateTavoiteMaara(){
+       $.getJSON("ajax/get_kolehti.php",{"goal":$("[name='kolehti_tavoite']").val(),"kohde":$("[name='kolehtikohde']").val()},function(data){
+           $("[name='total_goal']").val(data);
+       });
+    }
+
+    UpdateKolehtiTavoite();
+
     $("[name='kolehtikohde']").selectmenu();
     $("[name='kolehtikohde'],[name='kolehti_tavoite']").on("selectmenuchange",function(){console.log("mmoo");});
 
