@@ -22,7 +22,7 @@ var globalservicelist = null;
                                 //Lisää äsken lisätty uusi arvo KAIKKIIN tällä sivulla oleviin select-elementteihin, joissa addedclass-nimi
                                 var newval = $(this).parents(".other-option").find("input").val();
                                 //TODO: make this not depend on the select tag's name
-                                $("<option value=" + newval + "> " + newval + "</option>")
+                                $("<option value='" + newval + "'> " + newval + "</option>")
                                     .insertBefore($("select[name='kolehti_tavoite']").find("option:last-child"));
                                 $("select[name='kolehti_tavoite']").each(function(){
                                     try{
@@ -125,7 +125,6 @@ var globalservicelist = null;
 				},
 				role: "listbox",
 				select: function( event, ui ) {
-                    console.log("sel");
 					event.preventDefault();
 
 					// Support: IE8
@@ -1322,7 +1321,8 @@ $(document).ready(function(){
            });
            $select.append("<option>Uusi tavoite</option>");
            $("#tarkempitavoite").html("").append($select);
-           $select.select_withtext();
+           //Luo ui-selectemnu lisävalintamahdollisuudella ja lisää oikea select-tapahtuma
+           $select.select_withtext({select:function(){UpdateTavoiteMaara()}});
            UpdateTavoiteMaara();
        });
     }
@@ -1334,7 +1334,8 @@ $(document).ready(function(){
      *
      */
     function UpdateTavoiteMaara(){
-       $.getJSON("ajax/get_kolehti.php",{"goal":$("[name='kolehti_tavoite']").val(),"kohde":$("[name='kolehtikohde']").val()},function(data){
+       var params = {"goal":$("[name='kolehti_tavoite']").val(),"kohde":$("[name='kolehtikohde']").val()};
+       $.getJSON("ajax/get_kolehti.php",params,function(data){
            $("[name='total_goal']").val(data);
        });
     }
@@ -1342,7 +1343,10 @@ $(document).ready(function(){
     UpdateKolehtiTavoite();
 
     $("[name='kolehtikohde']").selectmenu();
-    $("[name='kolehtikohde'],[name='kolehti_tavoite']").on("selectmenuchange",function(){console.log("mmoo");});
+    $("[name='kolehtikohde']").on("selectmenuchange",function(){
+        //Päivitä tallennetut tavoitteet ja kokonaismäärät aina, kun kolehtikohdetta tai -tavoitetta muutettu.
+        UpdateKolehtiTavoite();
+    });
 
     $("#save_kolehti").click(function(){
         var button = $(this);
@@ -1364,6 +1368,7 @@ $(document).ready(function(){
                 setTimeout(function(){
                     $(".tempdiv").fadeOut("slow");
                 },2000);
+                UpdateKolehtiTavoite();
         });
     });
 
