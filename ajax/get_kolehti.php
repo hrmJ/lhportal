@@ -13,7 +13,8 @@ else{
     //Katso, mikä kohde ja tavoite tässä messussa
     $current_params = $con->select('messut',Array('kolehtikohde','kolehtitavoite'),Array(Array("id","=",$_GET["messu_id"])))->fetch();
     //Hae kaikki tavoitteet, jotta niitä voidaan vaihdella
-    $tavoitteet = $con->select('kolehtitavoitteet',Array('kohde','tavoite'),Array(Array("kohde","=",$current_params["kolehtikohde"])),"distinct")->fetchAll();
+    $kohde = ($_GET["kohde"] === "from_db" ? $current_params["kolehtikohde"] : $_GET["kohde"]);
+    $tavoitteet = $con->select('kolehtitavoitteet',Array('kohde','tavoite'),Array(Array("kohde","=",$kohde)),"distinct")->fetchAll();
     $output = Array();
     foreach($tavoitteet as $key => $tavoite){
         $tab = Array("kohde"=>$current_params["kolehtikohde"],"tavoite"=>$tavoite["tavoite"],"selected" => false);

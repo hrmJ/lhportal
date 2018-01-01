@@ -1311,15 +1311,17 @@ $(document).ready(function(){
      * Päivittää tiedon johonkin kohteeseen kerätystä kokonaismäärästä kolehtia.
      *
      */
-    function UpdateKolehtiTavoite(){
-       $.getJSON("ajax/get_kolehti.php",{"messu_id":$("[name='messu_id_comments']").val(),"kohde":$("[name='kolehtikohde']").val()},function(data){
+    function UpdateKolehtiTavoite(fetchkohde){
+       var kohde = (!fetchkohde ? $("[name='kolehtikohde']").val() : "from_db");
+       $.getJSON("ajax/get_kolehti.php",{"messu_id":$("[name='messu_id_comments']").val(),"kohde":kohde},function(data){
            var $select = $("<select name='kolehti_tavoite'>");
            var target_goal = Number();
            var kohde = String();
-           var tavoite = String();
+           if(fetchkohde){
+               var tavoite = String();
+           }
            $.each(data,function(idx, el){
                var selected = (el.selected ? " selected " : "");
-               console.log(el.selected);
                $select.append("<option "  + selected + "value='"+el.tavoite+"'>"+el.tavoite+" (yhteensä kerätty "+el.amount+"€)</option>");
                target_goal = parseFloat(el.goal);
                if(!kohde){
@@ -1330,7 +1332,9 @@ $(document).ready(function(){
            $("#tarkempitavoite").html("").append($select);
            //Luo ui-selectemnu lisävalintamahdollisuudella ja lisää oikea select-tapahtuma
            $select.select_withtext({select:function(){UpdateTavoiteMaara()}});
-           $("[name='kolehtikohde']").val(kohde).selectmenu("refresh");
+           if(fetchkohde){
+               $("[name='kolehtikohde']").val(kohde).selectmenu("refresh");
+           }
            UpdateTavoiteMaara();
        });
     }
@@ -1348,11 +1352,12 @@ $(document).ready(function(){
        });
     }
 
-    UpdateKolehtiTavoite();
+    UpdateKolehtiTavoite(true);
 
     $("[name='kolehtikohde']").selectmenu();
     $("[name='kolehtikohde']").on("selectmenuchange",function(){
         //Päivitä tallennetut tavoitteet ja kokonaismäärät aina, kun kolehtikohdetta tai -tavoitetta muutettu.
+        console.log("changed..")
         UpdateKolehtiTavoite();
     });
 
