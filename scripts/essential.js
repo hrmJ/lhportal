@@ -1361,6 +1361,11 @@ $(document).ready(function(){
         UpdateKolehtiTavoite();
     });
 
+    $.getJSON("ajax/get_kolehti.php",{"just_amount":true,"messu_id":$("[name='messu_id_comments']").val()},
+        function(data){
+            $("[name='kolehti_amount']").val(data);
+    });
+
     $("#save_kolehti").click(function(){
         var button = $(this);
         $.post("ajax/update_kolehti.php",

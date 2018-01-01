@@ -3,7 +3,10 @@
 
 require('../phputils/dbutils.php');
 $con = new DbCon();
-if(isset($_GET["goal"])){
+if(isset($_GET["just_amount"])){
+    $output = $con->select('messut',Array('kolehtia_keratty'),Array(Array("id","=",$_GET["messu_id"])))->fetchColumn();
+}
+else if(isset($_GET["goal"])){
     $output = $con->select('kolehtitavoitteet',Array('tavoitemaara'),Array(Array("tavoite","=",$_GET["goal"]),Array("kohde","=",$_GET["kohde"])))->fetchColumn();
     if($output === false){
         $output = 0;
