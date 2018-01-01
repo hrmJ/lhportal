@@ -1312,17 +1312,25 @@ $(document).ready(function(){
      *
      */
     function UpdateKolehtiTavoite(){
-       $.getJSON("ajax/get_kolehti.php",{"kohde":$("[name='kolehtikohde']").val()},function(data){
+       $.getJSON("ajax/get_kolehti.php",{"messu_id":$("[name='messu_id_comments']").val(),"kohde":$("[name='kolehtikohde']").val()},function(data){
            var $select = $("<select name='kolehti_tavoite'>");
            var target_goal = Number();
+           var kohde = String();
+           var tavoite = String();
            $.each(data,function(idx, el){
-               $select.append("<option value='"+el.tavoite+"'>"+el.tavoite+" (yhteensä kerätty "+el.amount+"€)</option>");
+               var selected = (el.selected ? " selected " : "");
+               console.log(el.selected);
+               $select.append("<option "  + selected + "value='"+el.tavoite+"'>"+el.tavoite+" (yhteensä kerätty "+el.amount+"€)</option>");
                target_goal = parseFloat(el.goal);
+               if(!kohde){
+                   kohde = el.kohde;
+               }
            });
            $select.append("<option>Uusi tavoite</option>");
            $("#tarkempitavoite").html("").append($select);
            //Luo ui-selectemnu lisävalintamahdollisuudella ja lisää oikea select-tapahtuma
            $select.select_withtext({select:function(){UpdateTavoiteMaara()}});
+           $("[name='kolehtikohde']").val(kohde).selectmenu("refresh");
            UpdateTavoiteMaara();
        });
     }
