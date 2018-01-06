@@ -1349,6 +1349,9 @@ $(document).ready(function(){
        $.getJSON("ajax/get_kolehti.php",params,function(data){
            $("[name='total_goal']").val(data.tavoitemaara);
            $("[name='kolehti_description']").val(data.kuvaus);
+           //Hack??
+           $("[name='kolehti_tavoite']").select_withtext("destroy");
+           $("[name='kolehti_tavoite']").select_withtext({select:function(){UpdateTavoiteMaara()}});
        });
     }
 
@@ -1386,6 +1389,7 @@ $(document).ready(function(){
                 setTimeout(function(){
                     $(".tempdiv").fadeOut("slow");
                 },2000);
+            UpdateKolehtiTavoite();
         });
     });
 
