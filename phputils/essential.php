@@ -239,7 +239,7 @@ function CreateMessulist($con, $vastuu='',$url=''){
 }
 
 
-function CreateVastuuList($parent){
+function CreateVastuuList($parent=null){
     $date = date('Y-m-d');
     $con = new DbCon();
     $result = $con->select("vastuut",Array("vastuu"),Array(),"DISTINCT")->fetchAll();

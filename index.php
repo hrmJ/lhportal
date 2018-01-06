@@ -158,7 +158,6 @@ CreateNavi($vastuulist, $url, False);
             ?>
             </div>
             </form>
-            <div>Moro</div>
             <form name='comment_edit_form' id='comment_edit_form' method="post" action="<?php echo $url;?>">
             <?php
                 LoadComments($con);

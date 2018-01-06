@@ -1314,7 +1314,7 @@ $(document).ready(function(){
      */
     function UpdateKolehtiTavoite(fetchkohde){
        var kohde = (!fetchkohde ? $("[name='kolehtikohde']").val() : "from_db");
-       $.getJSON("ajax/get_kolehti.php",{"messu_id":$("[name='messu_id_comments']").val(),"kohde":kohde},function(data){
+       $.getJSON("ajax/get_kolehti.php",{"messu_id":$("[name='messu_id_comments']").val(),"kohde":kohde,"fallback":$("[name='kolehtikohde']").val()},function(data){
            var $select = $("<select name='kolehti_tavoite'>");
            var target_goal = Number();
            var kohde = String();
@@ -1333,9 +1333,7 @@ $(document).ready(function(){
            $("#tarkempitavoite").html("").append($select);
            //Luo ui-selectemnu lisävalintamahdollisuudella ja lisää oikea select-tapahtuma
            $select.select_withtext({select:function(){UpdateTavoiteMaara()}});
-           if(fetchkohde){
-               $("[name='kolehtikohde']").val(kohde).selectmenu("refresh");
-           }
+           $("[name='kolehtikohde']").val(kohde).selectmenu("refresh");
            UpdateTavoiteMaara();
        });
     }
