@@ -119,6 +119,10 @@ CreateNavi($vastuulist, $url, False);
                     <div>Kokonaistavoite</div><div><input name="total_goal"></div>
                 </div>
                 <div class="labeldiv">
+                     <div>Tavoitteen kuvaus:</div> 
+                    <div><textarea name="kolehti_description" placeholder="Kirjoita tähän halutessasi kuvaus tästä nykyisestä tavoitteesta: mitä tämän asian kerääminen merkitsisi / mitä sillä voitaisiin saada aikaan kolehtikohteessa."></textarea></div>
+                </div>
+                <div class="labeldiv">
                      <div>Kerättiin (€):</div> 
                     <div><input type="text" pattern="[0-9]+([\.,][0-9]+)?" name="kolehti_amount" value="0" step="0.10"></div>
                 </div>

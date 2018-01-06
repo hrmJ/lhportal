@@ -23,7 +23,7 @@ function AddHeader($relpath="",$jquery=true){
      <link rel='stylesheet' href='$relpath" . "styles/updated.css?v=ljd'" . time() .">
      <link rel='stylesheet' href='$relpath" . "font-awesome-4.6.3/css/font-awesome.min.css'>";
      if($jquery==true){
-         echo '<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+         echo '<script src="scripts/jquery-3.2.1.min.js"></script>
                <!-- <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script> -->
                <script src="scripts/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
                <!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"> -->
@@ -988,6 +988,7 @@ class MessuPresentation{
 
     public function __construct ($messuid, $con, $messuheader, $type) {
             $this->id = $messuid;
+            $this->con = $con;
             $this->messuheader = $messuheader;
             $this->messutype = $type;
             $this->vastuut = $con->select("vastuut",Array('vastuu','vastuullinen'), Array(Array("messu_id","=",$messuid)),"","")->fetchAll();
@@ -1075,6 +1076,39 @@ class MessuPresentation{
         }
         echo $resp_div->Show();
 
+
+        #Kolehti
+        $kolehti_params = $this->con->select('messut',Array('kolehtikohde','kolehtitavoite'),Array(Array("id","=",$this->id)))->fetch();
+        $keratty = $this->con->select('messut',Array('SUM(kolehtia_keratty)'),
+            Array(Array("kolehtikohde","=",$kolehti_params["kolehtikohde"]),
+            Array("kolehtitavoite","=",$kolehti_params["kolehtitavoite"])
+        ))->fetchColumn();
+        $total = $this->con->select('messut',Array('kolehtikohde','kolehtitavoite'),Array(Array("id","=",$this->id)))->fetch();
+        $kolehtitavoite = $this->con->select('kolehtitavoitteet',Array('tavoitemaara'),
+            Array(Array("tavoite","=",$kolehti_params["kolehtitavoite"]),
+            Array("kohde","=",$kolehti_params["kolehtikohde"])))->fetchColumn();
+
+        $kolehti_div = new DomEl('div','');
+        $kolehti_div->AddAttribute('id','kolehti');
+
+        foreach($kolehti_params as $key=>$param){
+            if(!in_array($key,Array("0","1"))){
+                $el = new DomEl('span', $param);
+                $el-> AddAttribute("class",$key);
+                $kolehti_div->AddChild($el);
+            }
+        }
+        $el = new DomEl('span', $kolehtitavoite);
+        $el-> AddAttribute("class","tavoitemaara");
+        $kolehti_div->AddChild($el);
+
+        $el = new DomEl('span', $keratty);
+        $el-> AddAttribute("class","kerattymaara");
+        $kolehti_div->AddChild($el);
+
+        echo $kolehti_div->Show();
+
+
         if($this->messutype!="parkki"){
             #evankeliumi evl:n sivuilta:
             $address = ParseBibleAddress($address);
@@ -1096,6 +1130,8 @@ class MessuPresentation{
             $gospel->AddAttribute('address', $address["book"] . "." . $address["chapter"] . ": " . $address["verses"]);
             $gospel->AddAttribute('role','evankeliumi');
             echo $gospel->Show();
+
+            $gospel = new DomEl('p',$gospeltext);
         }
 
         $title = new DomEl('p',$this->messutitle);

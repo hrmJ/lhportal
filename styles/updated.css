@@ -1298,11 +1298,17 @@ label{
     width: 100%;
     align-items: center;
     flex-flow: row wrap;
+    margin-bottom:1em;
 }
 
 .labeldiv > div:first-child{
     width:7em;
     margin-right:0.3em;
+}
+
+textarea[name='kolehti_description']{
+    width:26em;
+    height:8em;
 }
 
 .labeldiv > div:nth-child(3){

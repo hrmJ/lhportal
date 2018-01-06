@@ -11,10 +11,10 @@ $tavoite_id = $con->select("kolehtitavoitteet", Array("id"),Array(Array("tavoite
 
 if(!$tavoite_id){
     //Jos syötetään uusi tavoitemäärä
-    $con->insert("kolehtitavoitteet", Array("tavoite" => $_POST["tavoite"], "kohde" => $_POST["kohde"], "tavoitemaara" => $_POST["total_goal"]));
+    $con->insert("kolehtitavoitteet", Array("kuvaus" => $_POST["kuvaus"], "tavoite" => $_POST["tavoite"], "kohde" => $_POST["kohde"], "tavoitemaara" => $_POST["total_goal"]));
 }
 else{
     //Jos muutetaan jo asetettua tavoitemäärää
-    $con->update("kolehtitavoitteet", Array("tavoitemaara" => $_POST["total_goal"]) , Array(Array("id","=",$tavoite_id)));
+    $con->update("kolehtitavoitteet", Array("kuvaus" => $_POST["kuvaus"], "tavoitemaara" => $_POST["total_goal"]) , Array(Array("id","=",$tavoite_id)));
 }
 ?>
