@@ -1312,20 +1312,32 @@ $(document).ready(function(){
      * Päivittää tiedon johonkin kohteeseen kerätystä kokonaismäärästä kolehtia.
      *
      */
-    function UpdateKolehtiTavoite(){
-       $.getJSON("ajax/get_kolehti.php",{"kohde":$("[name='kolehtikohde']").val(),"messu_id":$("[name='messu_id_comments']").val()},
-           function(data){
-               var $select = $("<select name='kolehti_tavoite'>");
-               var target_goal = Number();
-               $.each(data,function(idx, el){
-                   $select.append("<option value='"+el.tavoite+"'>"+el.tavoite+" (yhteensä kerätty "+el.amount+"€)</option>");
-                   target_goal = parseFloat(el.goal);
-               });
-               $select.append("<option>Uusi tavoite</option>");
-               $("#tarkempitavoite").html("").append($select);
-               $select.select_withtext();
-               UpdateTavoiteMaara();
+    function UpdateKolehtiTavoite(fetchkohde){
+       var kohde = (!fetchkohde ? $("[name='kolehtikohde']").val() : "from_db");
+       $.getJSON("ajax/get_kolehti.php",{"messu_id":$("[name='messu_id_comments']").val(),"kohde":kohde},function(data){
+           var $select = $("<select name='kolehti_tavoite'>");
+           var target_goal = Number();
+           var kohde = String();
+           if(fetchkohde){
+               var tavoite = String();
+           }
+           $.each(data,function(idx, el){
+               var selected = (el.selected ? " selected " : "");
+               $select.append("<option "  + selected + "value='"+el.tavoite+"'>"+el.tavoite+" (yhteensä kerätty "+el.amount+"€)</option>");
+               target_goal = parseFloat(el.goal);
+               if(!kohde){
+                   kohde = el.kohde;
+               }
            });
+           $select.append("<option>Uusi tavoite</option>");
+           $("#tarkempitavoite").html("").append($select);
+           //Luo ui-selectemnu lisävalintamahdollisuudella ja lisää oikea select-tapahtuma
+           $select.select_withtext({select:function(){UpdateTavoiteMaara()}});
+           if(fetchkohde){
+               $("[name='kolehtikohde']").val(kohde).selectmenu("refresh");
+           }
+           UpdateTavoiteMaara();
+       });
     }
 
     /**
@@ -1335,18 +1347,25 @@ $(document).ready(function(){
      *
      */
     function UpdateTavoiteMaara(){
-        console.log("MORO");
-       $.getJSON("ajax/get_kolehti.php",{"goal":$("[name='kolehti_tavoite']").val(),"kohde":$("[name='kolehtikohde']").val()},function(data){
-           console.log(data);
+       var params = {"goal":$("[name='kolehti_tavoite']").val(),"kohde":$("[name='kolehtikohde']").val()};
+       $.getJSON("ajax/get_kolehti.php",params,function(data){
            $("[name='total_goal']").val(data.tavoitemaara);
            $("[name='kolehti_description']").val(data.kuvaus);
        });
     }
 
-    UpdateKolehtiTavoite();
+    UpdateKolehtiTavoite(true);
 
     $("[name='kolehtikohde']").selectmenu();
-    $("[name='kolehtikohde'],[name='kolehti_tavoite']").on("selectmenuchange",function(){console.log("mmoo");});
+    $("[name='kolehtikohde']").on("selectmenuchange",function(){
+        //Päivitä tallennetut tavoitteet ja kokonaismäärät aina, kun kolehtikohdetta tai -tavoitetta muutettu.
+        UpdateKolehtiTavoite();
+    });
+
+    $.getJSON("ajax/get_kolehti.php",{"just_amount":true,"messu_id":$("[name='messu_id_comments']").val()},
+        function(data){
+            $("[name='kolehti_amount']").val(data);
+    });
 
     $("#save_kolehti").click(function(){
         var button = $(this);
