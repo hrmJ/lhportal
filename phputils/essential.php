@@ -1084,10 +1084,9 @@ class MessuPresentation{
             Array("kolehtitavoite","=",$kolehti_params["kolehtitavoite"])
         ))->fetchColumn();
         $total = $this->con->select('messut',Array('kolehtikohde','kolehtitavoite'),Array(Array("id","=",$this->id)))->fetch();
-        $kolehtitavoite = $this->con->select('kolehtitavoitteet',Array('tavoitemaara'),
+        $kolehtitavoite = $this->con->select('kolehtitavoitteet',Array('tavoitemaara','kuvaus'),
             Array(Array("tavoite","=",$kolehti_params["kolehtitavoite"]),
-            Array("kohde","=",$kolehti_params["kolehtikohde"])))->fetchColumn();
-
+            Array("kohde","=",$kolehti_params["kolehtikohde"])))->fetch();
         $kolehti_div = new DomEl('div','');
         $kolehti_div->AddAttribute('id','kolehti');
 
@@ -1098,9 +1097,14 @@ class MessuPresentation{
                 $kolehti_div->AddChild($el);
             }
         }
-        $el = new DomEl('span', $kolehtitavoite);
+        $el = new DomEl('span', $kolehtitavoite["tavoitemaara"]);
         $el-> AddAttribute("class","tavoitemaara");
         $kolehti_div->AddChild($el);
+
+        $el = new DomEl('span', $kolehtitavoite["kuvaus"]);
+        $el-> AddAttribute("class","tavoitekuvaus");
+        $kolehti_div->AddChild($el);
+
 
         $el = new DomEl('span', $keratty);
         $el-> AddAttribute("class","kerattymaara");

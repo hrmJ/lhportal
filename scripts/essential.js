@@ -1333,7 +1333,8 @@ $(document).ready(function(){
            $("#tarkempitavoite").html("").append($select);
            //Luo ui-selectemnu lisävalintamahdollisuudella ja lisää oikea select-tapahtuma
            $select.select_withtext({select:function(){UpdateTavoiteMaara()}});
-           $("[name='kolehtikohde']").val(kohde).selectmenu("refresh");
+           $("[name='kolehtikohde']").selectmenu("destroy");
+           $("[name='kolehtikohde']").val(kohde).selectmenu();
            UpdateTavoiteMaara();
        });
     }
