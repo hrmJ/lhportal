@@ -21,12 +21,13 @@ else{
     $output = Array();
     foreach($tavoitteet as $key => $tavoite){
         $tab = Array("kohde"=>$current_params["kolehtikohde"],"tavoite"=>$tavoite["tavoite"],"selected" => false, "kuvaus" => $tavoite["kuvaus"]);
-        $amounts = $con->select('messut',Array('kolehtia_keratty'),Array(Array("kolehtitavoite","=",$tavoite["tavoite"]),Array("kolehtikohde","=",$_GET["kohde"])),"distinct")->fetchAll();
-        $total = 0;
-        foreach($amounts as $amount){
-            $total += $amount["kolehtia_keratty"];
+        $tab["amount"]  = $con->select('messut',Array('SUM(kolehtia_keratty)'),
+            Array(Array("kolehtikohde","=",$tavoite["kohde"]),
+            Array("kolehtitavoite","=",$tavoite["tavoite"])
+        ))->fetchColumn();
+        if(!$tab["amount"]){
+            $tab["amount"] = 0;
         }
-        $tab["amount"] = $total;
         if($tavoite["tavoite"] === $current_params["kolehtitavoite"] and $tavoite["kohde"] == $current_params["kolehtikohde"]){
             $tab["selected"] = true;
         }
