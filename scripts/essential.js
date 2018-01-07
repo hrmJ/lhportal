@@ -1333,8 +1333,13 @@ $(document).ready(function(){
            $("#tarkempitavoite").html("").append($select);
            //Luo ui-selectemnu lisävalintamahdollisuudella ja lisää oikea select-tapahtuma
            $select.select_withtext({select:function(){UpdateTavoiteMaara()}});
-           $("[name='kolehtikohde']").selectmenu("destroy");
-           $("[name='kolehtikohde']").val(kohde).selectmenu();
+           $("[name='kolehtikohde']").selectmenu("refresh");
+           if(["Myanmar","Kimbilio"].indexOf(kohde)){
+               $("[name='kolehtikohde']").val(kohde).selectmenu("refresh");
+           }
+           else{
+               $("[name='kolehtikohde']").val("Myanmar").selectmenu("refresh");
+           }
            UpdateTavoiteMaara();
        });
     }

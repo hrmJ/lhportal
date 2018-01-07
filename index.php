@@ -187,8 +187,10 @@ CreateNavi($vastuulist, $url, False);
     var editables = document.getElementsByClassName('editable');
     for(var row_idx = 0; row_idx < editables.length;row_idx++){
         var editable = editables[row_idx];
-        var e_row = editable.parentElement.parentElement;
-        e_row.addEventListener('click',edit,false);
+        if (editable.tagName=="TD"){
+            var editable = editable.parentElement.parentElement;
+        }
+        editable.addEventListener('click',edit,false);
     }
 
     var vastuulist = document.getElementById('vastuulist');

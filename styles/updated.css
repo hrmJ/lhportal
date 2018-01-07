@@ -264,6 +264,10 @@ input[type=text].linestyle{
   outline: none;
 }
 
+.below_hidden input[type=text].linestyle{
+  color: black;
+}
+
 /*
 input[type=text].linestyle:not(:focus){
     color:white;
