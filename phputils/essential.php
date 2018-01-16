@@ -43,7 +43,7 @@ function CreateNavi($vastuulist, $url, $songmenu=False){
     $section->AddAttribute('id','leftbanner');
 
     $form = new DomEl('form','',$section);
-    $form->AddAttribute('action',$url);
+    $form->AddAttribute('action','URL_RPL');
     $form->AddAttribute('method','GET');
 
     $span = new DomEl('span','',$form);
@@ -126,7 +126,6 @@ function AddHidden($parent, $name, $value){
 }
 
 function AddSection($submit=False, $sectionclass='',$url="index.php", $tableid=""){
-    $url = str_replace("&","&amp;",$url);
     $section = new DomEl("section","");
     $section->AddAttribute("id","contentlist");
     $section->AddAttribute("class",$sectionclass);
@@ -135,7 +134,7 @@ function AddSection($submit=False, $sectionclass='',$url="index.php", $tableid="
     $form->AddAttribute("id","updater");
     $form->AddAttribute("name","contentlist");
     $form->AddAttribute("method","post");
-    $form->AddAttribute("action",$url);
+    $form->AddAttribute("action","URL_RPL");
 
     $table = new HtmlTable($form);
     $table->element->AddAttribute("id",$tableid);
@@ -201,13 +200,15 @@ function CreateMessulist($con, $vastuu='',$url=''){
         if (!empty($vastuu)) {
             //Jos halutaan filtteröidä vastuun ukaan
             $vastuures = $con->select("vastuut",Array("vastuullinen"),Array(Array("messu_id","=",$row["id"]),Array("vastuu","=",$vastuu)))->fetchAll();
-            $tr = $table->AddRow(Array(implode($pvm_list, "."),$vastuures[0]["vastuullinen"]));
-            $tr->cells[0]->AddAttribute("class","pvm left");
-            $tr->cells[1]->AddAttribute("class","editable right");
-            $tr->cells[1]->AddAttribute("name",$row["pvm"]);
-            AddHidden($tr->cells[0],"id_" . $row["pvm"], $row["id"]);
-            if (empty($vastuures[0]["vastuullinen"]))
-                $input = AttachEditable($tr->cells[1], $row["pvm"]);
+            if($vastuures){
+                $tr = $table->AddRow(Array(implode($pvm_list, "."),$vastuures[0]["vastuullinen"]));
+                $tr->cells[0]->AddAttribute("class","pvm left");
+                $tr->cells[1]->AddAttribute("class","editable right");
+                $tr->cells[1]->AddAttribute("name",$row["pvm"]);
+                AddHidden($tr->cells[0],"id_" . $row["pvm"], $row["id"]);
+                if (empty($vastuures[0]["vastuullinen"]))
+                    $input = AttachEditable($tr->cells[1], $row["pvm"]);
+            }
         }
         else{
             //Jos katsellaan vain listaa ilman filtteriä

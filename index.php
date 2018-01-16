@@ -65,7 +65,7 @@ $con = new DbCon();
         $themeform->AddAttribute("id","themeupdater");
         $themeform->AddAttribute("name","themeform");
         $themeform->AddAttribute("method","post");
-        $themeform->AddAttribute("action",$url);
+        $themeform->AddAttribute("action","URL_RPL");
 
         #Is this safe from injections?
         $idfield = AddHidden($themeform,"theme_messu_id",$_GET["messuid"]);
@@ -174,6 +174,16 @@ CreateNavi($vastuulist, $url, False);
 <?php require('menu.php');?>
 
 <script>
+    //HACK: setting form urls without ampersands
+
+        $(document).ready(function(){
+        
+            $("[action='URL_RPL']").each(function(){
+                $(this).attr("action","<?php echo $url; ?>")
+            });
+        
+        });
+
     //Add listeners
     document.getElementById('homeli').addEventListener('click',function(){window.location='index.php';});
     var messurows = document.getElementsByClassName('messurow');
