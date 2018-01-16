@@ -30,7 +30,7 @@ function AddHeader($relpath="",$jquery=true){
                <link rel="stylesheet" href="scripts/jquery-ui-1.12.1.custom/jquery-ui.min.css">
                ';
      }
-    echo "<script src='$relpath" . "scripts/essential.js?v='" . time() ."></script>";
+    echo "<script src='$relpath" . "scripts/essential.js?v=axxxooo'" . time() ."></script>";
     echo "<title>Majakkaportaali 0.1</title></head>";
 
      #<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -1084,7 +1084,7 @@ class MessuPresentation{
             Array("kolehtitavoite","=",$kolehti_params["kolehtitavoite"])
         ))->fetchColumn();
         $total = $this->con->select('messut',Array('kolehtikohde','kolehtitavoite'),Array(Array("id","=",$this->id)))->fetch();
-        $kolehtitavoite = $this->con->select('kolehtitavoitteet',Array('tavoitemaara','kuvaus'),
+        $kolehtitavoite = $this->con->select('kolehtitavoitteet',Array('tavoitemaara','kuvaus','kuva'),
             Array(Array("tavoite","=",$kolehti_params["kolehtitavoite"]),
             Array("kohde","=",$kolehti_params["kolehtikohde"])))->fetch();
         $kolehti_div = new DomEl('div','');
@@ -1103,6 +1103,10 @@ class MessuPresentation{
 
         $el = new DomEl('span', $kolehtitavoite["kuvaus"]);
         $el-> AddAttribute("class","tavoitekuvaus");
+        $kolehti_div->AddChild($el);
+
+        $el = new DomEl('span', $kolehtitavoite["kuva"]);
+        $el-> AddAttribute("class","tavoitekuva");
         $kolehti_div->AddChild($el);
 
 
