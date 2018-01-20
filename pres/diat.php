@@ -44,6 +44,7 @@ $con = new DbCon();
 <link href="https://fonts.googleapis.com/css?family=Nothing+You+Could+Do|Quicksand" rel="stylesheet">
 <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
 <link rel="stylesheet" href="htmlslides/tyylit2.css">
+<script src="../scripts/jquery-3.2.1.min.js"></script>
 <title>Majakkamessu</title>
 </head>
 
@@ -104,6 +105,16 @@ $messu->CreateHtml();
 <script src='htmlslides/presenter.js'></script>
 
 <iframe id="updaterframe"></iframe>
+
+
+<script>
+
+
+
+
+
+
+</script>
 
 </body>
 </html>
