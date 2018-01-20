@@ -1127,20 +1127,13 @@ class MessuPresentation{
             //    die($msg);
             //};
             
-            $gospelverses = FetchBibleContent($address["book"] . "." . $address["chapter"], $address["verses"], $onbackground);
-
-            if (sizeof($gospelverses)>1)
-                $gospeltext =  implode($gospelverses, "¤");
-            else
-                $gospeltext =  ($gospelverses);
-
-            $gospel = new DomEl('p',$gospeltext);
+            $gospel = new DomEl('div',"");
             $gospel->AddAttribute('id','evankeliumi');
-            $gospel->AddAttribute('address', $address["book"] . "." . $address["chapter"] . ": " . $address["verses"]);
+            $gospel->AddAttribute('book', $address["book"]);
+            $gospel->AddAttribute('chapter', $address["chapter"]);
+            $gospel->AddAttribute('verses', $address["verses"]);
             $gospel->AddAttribute('role','evankeliumi');
             echo $gospel->Show();
-
-            $gospel = new DomEl('p',$gospeltext);
         }
 
         $title = new DomEl('p',$this->messutitle);

@@ -6,7 +6,6 @@ if (isset($_GET["logout"])){
 }
 require('../phputils/essential.php');
 $embed=True;
-require('biblecrawl.php');
 #session_unset();
 if (!isset( $_SESSION['user_id'] )){
     if (isset($_POST["username"],$_POST["password"])){
@@ -48,7 +47,7 @@ $con = new DbCon();
 
 <?php
 
-$messu = new MessuPresentation($_GET["id"], $con);
+$messu = new MessuPresentation($_GET["id"], $con, "","majakka");
 $messu->UploadTrackingInfo($con);
 $messu->CreateHtml($onbackground=true);
 
