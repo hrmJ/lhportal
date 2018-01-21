@@ -37,6 +37,7 @@ if (isset($_SESSION['user_id'])){
 #JOS kirjauduttu onnistuneesti
 $con = new DbCon();
 
+$url = SaveGetParams();
 ?>
 
 <html lang="fi">
@@ -89,7 +90,6 @@ UpdateSongData($con);
 <?php
 
 FetchSongNames($con);
-$url = SaveGetParams();
 ?>
 </div>
 

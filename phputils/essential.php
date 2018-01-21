@@ -365,7 +365,7 @@ function GetDateList($con){
     $select->AddAttribute('id',"pvmlist");
     $select->AddAttribute('name',"pvmlist");
     $date = date('Y-m-d');
-    $pickedid = False;
+    $pickedid = $messut[0]["id"];
     foreach($messut as $messu){
         $litext = FormatPvm($messu["pvm"]);
         $option = new DomEl('option',$litext,$select);
