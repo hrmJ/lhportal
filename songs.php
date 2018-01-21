@@ -258,6 +258,11 @@ FetchSongNames($con);
 
 
   $(document).ready( function() {
+
+        $("[action='URL_RPL']").each(function(){
+            $(this).attr("action","<?php echo $url; ?>")
+        });
+
       //Lisää autocomplete-plugi
         $( ".songeditinput" ).autocomplete({
           source: songnames
