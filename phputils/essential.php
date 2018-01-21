@@ -665,7 +665,10 @@ function GetSeason($con, $date, $change='None'){
 
 
     #Palauta lähimmin osunut kausi (=0)
-    return $result[0];
+    if($result)
+        return $result[0];
+    else
+        return Null;
     #$recordDate = date("y-m-d", $datetime);
 }
 
